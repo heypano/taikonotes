@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 /**
  * React class to Show a Taiko Grid
@@ -10,13 +10,15 @@ const TaikoGrid = props => {
     cells.push(<Cell key={i} index={i} numCells={numCells}></Cell>);
   }
   return (
-    <table className="grid grid-cols-8 md:grid-cols-16 border border-blue-800">
+    <div className="grid grid-cols-8 md:grid-cols-16 border border-blue-800">
       {cells}
-    </table>
+    </div>
   );
 };
 
 const Cell = ({ index, numCells }) => {
+  const [clicked, setClicked] = useState(false);
+
   let extraClass = "";
   if (index < 16) {
     extraClass += "border-t-0";
@@ -24,7 +26,17 @@ const Cell = ({ index, numCells }) => {
   if (index < 16) {
     extraClass += "border-t-0";
   }
-  return <div className="border border-blue-800 h-10 "></div>;
+  return (
+    <div
+      className={`border border-blue-800 h-10 cursor-pointer ${
+        clicked ? "bg-gray-900 hover:bg-gray-600" : "hover:bg-gray-300"
+      }`}
+      onClick={() => {
+        console.log(clicked);
+        setClicked(!clicked);
+      }}
+    ></div>
+  );
 };
 
 export default TaikoGrid;
