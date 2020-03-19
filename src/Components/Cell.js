@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Cell = ({ index, divideEvery }) => {
+const Cell = ({ index, divideEvery, cellsPerLine }) => {
   const [clicked, setClicked] = useState(false);
   let unclickedClass = "hover:bg-gray-300";
   let clickedClass = "bg-gray-900 hover:bg-gray-600 selected";

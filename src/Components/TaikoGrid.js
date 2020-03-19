@@ -31,8 +31,8 @@ const TaikoGrid = props => {
       <Cell
         key={i}
         index={i}
-        numCells={numCells}
         divideEvery={settings.divideEvery}
+        cellsPerLine={settings.cellsPerLine}
       ></Cell>
     );
   }
