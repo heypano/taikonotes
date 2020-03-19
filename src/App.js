@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import TaikoGrid from "./Components/TaikoGrid";
 import PageContainer from "./Components/PageContainer";
 
