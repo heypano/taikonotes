@@ -71,8 +71,8 @@ class TaikoGrid extends React.Component {
       <div>
         <div className="container settings mt-3 mb-3 p-3 flex flex-row">
           <img
-            src={`${process.env.PUBLIC_URL}/favicon/taiko_sakura.svg`}
-            className="w-1/12"
+            src={`${process.env.PUBLIC_URL}/favicon/taiko.svg`}
+            className="w-1/12 pr-2"
           />
           <TaikoGridSettings
             settings={this.state.settings}
