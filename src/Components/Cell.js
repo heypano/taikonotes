@@ -1,28 +1,31 @@
 import React, { useState } from "react";
 
-const randomColors = true;
-const proggressiveColor = true;
+const randomColors = false;
+const proggressiveColor = false;
 let lastC1 = getRandomColorNumber();
 let lastC2 = getRandomColorNumber();
 let lastC3 = getRandomColorNumber();
 
 const Cell = ({ index, divideEvery, cellsPerLine }) => {
   const [clicked, setClicked] = useState(false);
-  const [bg, setBg] = useState("transparent");
+  const [bg, setBg] = useState(null);
   let unclickedClass = "hover:bg-gray-300";
   let clickedClass = "bg-gray-900 hover:bg-gray-600 selected";
   if (index % divideEvery === 0) {
     unclickedClass = "bg-gray-300 hover:bg-gray-600";
   }
+  const styleObject = bg
+    ? {
+        backgroundColor: bg
+      }
+    : {};
 
   return (
     <div
       className={`border border-blue-800 h-10 cursor-pointer ${
         clicked ? clickedClass : unclickedClass
       }`}
-      style={{
-        backgroundColor: bg
-      }}
+      style={styleObject}
       onClick={() => {
         if (randomColors) {
           setBg(getRandomColor());
