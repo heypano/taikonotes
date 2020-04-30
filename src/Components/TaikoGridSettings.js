@@ -16,42 +16,43 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
       onSubmit={onSubmit}
     >
       <div className="flex flex-row justify-between">
-        <div>
-          <label>Cells Per Line</label>
-        </div>
-        <div>
-          <select
-            name="cellsPerLine"
-            className="p-8 w-12"
-            onChange={onFormChange}
-            value={settings.cellsPerLine}
-          >
-            {numerators.map(key => (
-              <option key={`cellsPerLine_${key}`} value={key}>
-                {key}
-              </option>
-            ))}
-          </select>
-        </div>
+        <label>Cells Per Line</label>
+        <select
+          name="cellsPerLine"
+          className="p-8 w-12"
+          onChange={onFormChange}
+          value={settings.cellsPerLine}
+        >
+          {numerators.map(key => (
+            <option key={`cellsPerLine_${key}`} value={key}>
+              {key}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="flex flex-row justify-between">
-        <div>
-          <label>Divide every</label>
-        </div>
-        <div>
-          <select
-            name="divideEvery"
-            className="p-8 w-12"
-            onChange={onFormChange}
-            value={settings.divideEvery}
-          >
-            {numerators.map(key => (
-              <option key={`defaultDivideEvery_${key}`} value={key}>
-                {key}
-              </option>
-            ))}
-          </select>
-        </div>
+        <label>Divide every</label>
+        <select
+          name="divideEvery"
+          className="p-8 w-12"
+          onChange={onFormChange}
+          value={settings.divideEvery}
+        >
+          {numerators.map(key => (
+            <option key={`defaultDivideEvery_${key}`} value={key}>
+              {key}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex flex-row justify-between items-end mt-3">
+        <label>Available Sounds</label>
+        <input
+          name="sounds"
+          className="border-black border p-1"
+          onChange={onFormChange}
+          value={settings.sounds}
+        />
       </div>
       <div>
         <input type="submit" />

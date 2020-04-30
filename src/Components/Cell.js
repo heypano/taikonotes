@@ -1,18 +1,27 @@
 import React, { useState } from "react";
 
-const randomColors = false;
-const proggressiveColor = false;
-let lastC1 = getRandomColorNumber();
-let lastC2 = getRandomColorNumber();
-let lastC3 = getRandomColorNumber();
+/**
+ * Return the next sound
+ * @param {[]} sounds
+ * @param {number} lastSelected
+ * @returns {number}
+ */
+const getNextSound = (sounds, lastSelected) => {
+  if (lastSelected == null) {
+    return 0;
+  } else if (lastSelected + 1 < sounds.length) {
+    return lastSelected + 1;
+  } else {
+    return null;
+  }
+};
 
-const Cell = ({ index, divideEvery, cellsPerLine }) => {
-  const [clicked, setClicked] = useState(false);
+const Cell = ({ index, divideEvery, cellsPerLine, sounds }) => {
+  const [selectedSoundIndex, setSelectedSoundIndex] = useState(null);
   const [bg, setBg] = useState(null);
-  let unclickedClass = "hover:bg-gray-300";
-  let clickedClass = "bg-gray-900 hover:bg-gray-600 selected";
+  let backgroundClass = "hover:bg-gray-300";
   if (index % divideEvery === 0) {
-    unclickedClass = "bg-gray-300 hover:bg-gray-600";
+    backgroundClass = "bg-gray-300 hover:bg-gray-600";
   }
   const styleObject = bg
     ? {
@@ -22,45 +31,20 @@ const Cell = ({ index, divideEvery, cellsPerLine }) => {
 
   return (
     <div
-      className={`border border-blue-800 h-10 cursor-pointer ${
-        clicked ? clickedClass : unclickedClass
-      }`}
+      className={`flex flex-row justify-center items-center select-none border border-blue-800 h-10 cursor-pointer ${backgroundClass}`}
       style={styleObject}
       onClick={() => {
-        if (randomColors) {
-          setBg(getRandomColor());
-        }
-        if (proggressiveColor) {
-          setBg(getProgressiveColor());
-        }
-        setClicked(!clicked);
+        const nextSound = getNextSound(sounds, selectedSoundIndex);
+        setSelectedSoundIndex(nextSound);
       }}
-    ></div>
+      onContextMenu={e => {
+        e.preventDefault();
+        setSelectedSoundIndex(null);
+      }}
+    >
+      {sounds[selectedSoundIndex]}
+    </div>
   );
 };
-
-function getProgressiveColor() {
-  const which = Math.floor(Math.random() * Math.floor(3));
-  const c1 = which === 0 ? getNext(lastC1) : lastC1;
-  const c2 = which === 1 ? getNext(lastC2) : lastC2;
-  const c3 = which === 2 ? getNext(lastC3) : lastC3;
-  return `rgb(${c1},${c2},${c3})`;
-}
-
-function getRandomColor() {
-  const c1 = getRandomColorNumber();
-  const c2 = getRandomColorNumber();
-  const c3 = getRandomColorNumber();
-  return `rgb(${c1},${c2},${c3})`;
-}
-
-function getRandomColorNumber() {
-  return Math.floor(Math.random() * Math.floor(256));
-}
-
-function getNext(num) {
-  const result = num + Math.floor(getRandomColorNumber());
-  return result % 256;
-}
 
 export default Cell;

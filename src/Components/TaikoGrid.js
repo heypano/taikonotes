@@ -11,7 +11,8 @@ class TaikoGrid extends React.Component {
     const initialSettings = {
       cellsPerLine: "16",
       divideEvery: "4",
-      totalLines: "4"
+      totalLines: "4",
+      sounds: "don, kon, ka"
     };
     this.state = {
       settings: initialSettings
@@ -54,8 +55,14 @@ class TaikoGrid extends React.Component {
 
   render() {
     const cells = [];
-    const { cellsPerLine, totalLines, divideEvery } = this.state.settings;
+    const {
+      cellsPerLine,
+      totalLines,
+      divideEvery,
+      sounds
+    } = this.state.settings;
     const numCells = cellsPerLine * totalLines;
+    const soundArray = sounds.split(",").map(s => s.trim());
     for (let i = 0; i < numCells; i++) {
       cells.push(
         <Cell
@@ -63,6 +70,7 @@ class TaikoGrid extends React.Component {
           index={i}
           divideEvery={divideEvery}
           cellsPerLine={cellsPerLine}
+          sounds={soundArray}
         ></Cell>
       );
     }
