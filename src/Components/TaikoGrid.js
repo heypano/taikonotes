@@ -17,9 +17,11 @@ class TaikoGrid extends React.Component {
     this.state = {
       settings: initialSettings
     };
+    this.cells = [];
     this.addLine = this.addLine.bind(this);
     this.removeLine = this.removeLine.bind(this);
     this.setSettings = this.setSettings.bind(this);
+    this.submitTest = this.submitTest.bind(this);
   }
 
   /**
@@ -53,6 +55,21 @@ class TaikoGrid extends React.Component {
     });
   }
 
+  submitTest() {
+    const data = {
+      ...this.state.settings,
+      song: {
+        main: this.getCellIndices()
+      }
+    };
+
+    console.log(data);
+  }
+
+  getCellIndices() {
+    return this.cells.map(({ current }) => current.getCurrentSoundIndex());
+  }
+
   render() {
     const cells = [];
     const {
@@ -63,9 +80,14 @@ class TaikoGrid extends React.Component {
     } = this.state.settings;
     const numCells = cellsPerLine * totalLines;
     const soundArray = sounds.split(",").map(s => s.trim());
+
+    this.cells = [];
     for (let i = 0; i < numCells; i++) {
+      const cellRef = React.createRef();
+      this.cells.push(cellRef);
       cells.push(
         <Cell
+          ref={cellRef}
           key={i}
           index={i}
           divideEvery={divideEvery}
@@ -100,6 +122,7 @@ class TaikoGrid extends React.Component {
             ➕
           </a>
         </div>
+        <a onClick={this.submitTest}>SSSS</a>
       </div>
     );
   }

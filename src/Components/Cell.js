@@ -24,7 +24,9 @@ class Cell extends React.Component {
     }
   }
 
-  getCurrentSound;
+  getCurrentSoundIndex() {
+    return this.state.selectedSoundIndex;
+  }
 
   render() {
     let { index, divideEvery, sounds } = this.props;
