@@ -19,7 +19,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
         <label>Cells Per Line</label>
         <select
           name="cellsPerLine"
-          className="p-8 w-12"
+          className="p-2 "
           onChange={onFormChange}
           value={settings.cellsPerLine}
         >
@@ -34,7 +34,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
         <label>Divide every</label>
         <select
           name="divideEvery"
-          className="p-8 w-12"
+          className="p-2 "
           onChange={onFormChange}
           value={settings.divideEvery}
         >

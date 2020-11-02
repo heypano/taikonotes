@@ -29,10 +29,13 @@ class Cell extends React.Component {
   }
 
   render() {
-    let { index, divideEvery, sounds } = this.props;
+    let { index, divideEvery, sounds, isPlaying } = this.props;
     let backgroundClass = "hover:bg-gray-300";
     if (index % divideEvery === 0) {
       backgroundClass = "bg-gray-300 hover:bg-gray-600";
+    }
+    if (isPlaying) {
+      backgroundClass = "bg-red-300 hover:bg-red-600";
     }
 
     return (
