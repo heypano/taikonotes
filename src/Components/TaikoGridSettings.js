@@ -11,10 +11,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
   };
 
   return (
-    <form
-      className="w-full md:w-6/12 lg:w-4/12 border border-blue-300 p-2 flex flex-col justify-center"
-      onSubmit={onSubmit}
-    >
+    <form onSubmit={onSubmit} className="flex flex-col ">
       <div className="flex flex-row justify-between">
         <label>Cells Per Line</label>
         <select
@@ -53,9 +50,6 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
           onChange={onFormChange}
           value={settings.sounds}
         />
-      </div>
-      <div>
-        <input type="submit" />
       </div>
     </form>
   );

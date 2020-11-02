@@ -1,6 +1,7 @@
 import React from "react";
 import Cell from "./Cell";
 import TaikoGridSettings from "./TaikoGridSettings";
+import Button from "./Button";
 
 const chihat = new Audio("/drum-sounds-master/closed-hihat.mp3");
 const snare = new Audio("/drum-sounds-master/acoustic-snare.mp3");
@@ -65,13 +66,15 @@ class TaikoGrid extends React.Component {
     });
   }
 
-  submitTest() {
+  submitTest(e) {
+    e.preventDefault();
     const data = {
       ...this.state.settings,
       song: {
         main: this.getCellIndices()
       }
     };
+    console.log(data);
   }
 
   playSong() {
@@ -147,34 +150,32 @@ class TaikoGrid extends React.Component {
             src={`${process.env.PUBLIC_URL}/favicon/Taiko.svg`}
             className="w-1/12 pr-2"
           />
-          <TaikoGridSettings
-            settings={this.state.settings}
-            setSettings={this.setSettings}
-          />
-          <div className="w-full md:w-6/12 lg:w-4/12 flex flex-row justify-between">
-            <a onClick={this.submitTest} className="cursor-pointer">
-              Submit
-            </a>
-            <a onClick={this.stopSong} className="cursor-pointer">
-              Stop
-            </a>
-            <a onClick={this.playSong} className="cursor-pointer">
+          <div className="w-full md:w-6/12 lg:w-4/12 border border-blue-300 p-2 mr-auto w-full">
+            <TaikoGridSettings
+              settings={this.state.settings}
+              setSettings={this.setSettings}
+            />
+          </div>
+          <div className="w-full md:w-6/12 lg:w-4/12 flex flex-col justify-between">
+            {/*<Button onClick={this.submitTest}>Submit</Button>*/}
+            <Button onClick={this.playSong} className="m-4">
               Play
-            </a>
+            </Button>
+            <Button onClick={this.stopSong} className="m-4">
+              Stop
+            </Button>
+            <Button onClick={this.addLine} className="m-4">
+              Add Line
+            </Button>
+            <Button onClick={this.removeLine} className="m-4">
+              Remove Line
+            </Button>
           </div>
         </div>
         <div
           className={`grid grid-cols-${cellsPerLine} border border-blue-800`}
         >
           {cells}
-        </div>
-        <div className="flex flex-row justify-between">
-          <a className="text-5xl cursor-pointer" onClick={this.removeLine}>
-            ➖
-          </a>
-          <a className="text-5xl cursor-pointer" onClick={this.addLine}>
-            ➕
-          </a>
         </div>
       </div>
     );
