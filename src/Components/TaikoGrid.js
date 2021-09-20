@@ -8,8 +8,15 @@ import {
   useSections,
   setSoundIndex,
   setTotalLines,
+  setMainState,
 } from "../redux/mainSlice";
 import Button from "./Button";
+import {
+  getMainFromLocal,
+  getMainState,
+  saveMainToLocal,
+  store,
+} from "../redux/store";
 
 const chihat = new Audio("/drum-sounds-master/closed-hihat.mp3");
 const snare = new Audio("/drum-sounds-master/acoustic-snare.mp3");
@@ -27,7 +34,8 @@ const TaikoGrid = (props) => {
     () => [null, ...sounds.split(",").map((s) => s.trim())],
     [sounds]
   );
-  console.log(sections);
+
+  console.log("entire taiko grid rerender");
 
   return (
     <div>
@@ -45,22 +53,23 @@ const TaikoGrid = (props) => {
           />
         </div>
         <div className="w-full md:w-6/12 lg:w-4/12 flex flex-col justify-between">
-          {/*<Button*/}
-          {/*  onClick={() =>*/}
-          {/*    dispatch(setSettings({ totalLines: totalLines + 1 }))*/}
-          {/*  }*/}
-          {/*  className="m-4"*/}
-          {/*>*/}
-          {/*  Add Line*/}
-          {/*</Button>*/}
-          {/*<Button*/}
-          {/*  onClick={() =>*/}
-          {/*    dispatch(setSettings({ totalLines: totalLines - 1 }))*/}
-          {/*  }*/}
-          {/*  className="m-4"*/}
-          {/*>*/}
-          {/*  Remove Line*/}
-          {/*</Button>*/}
+          <Button
+            onClick={() => {
+              saveMainToLocal();
+            }}
+            className="m-4"
+          >
+            Save
+          </Button>
+          <Button
+            onClick={() => {
+              const state = getMainFromLocal();
+              dispatch(setMainState(state));
+            }}
+            className="m-4"
+          >
+            Load
+          </Button>
         </div>
       </div>
       <div>

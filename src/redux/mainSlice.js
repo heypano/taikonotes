@@ -109,6 +109,9 @@ export const mainSlice = createSlice({
       cell.soundIndex = soundIndex;
       state.sections[sectionIndex].cells[cellIndex] = cell;
     },
+    setMainState: (state, action) => {
+      return action.payload;
+    },
   },
 });
 
@@ -120,6 +123,7 @@ export const {
   setSounds,
   setSettings,
   setSoundIndex,
+  setMainState,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;
