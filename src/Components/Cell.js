@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import * as PropTypes from "prop-types";
 
 const Cell = (props) => {
-  const [selectedSoundIndex, setSelectedSoundIndex] = useState(0);
-
-  let { sounds, isPlaying, isStartingCell } = props;
+  let { sound, onClick, onContextMenu, isPlaying, isStartingCell } = props;
   let backgroundClass;
   if (isPlaying) {
     backgroundClass = "bg-red-300 hover:bg-red-600";
@@ -17,23 +15,19 @@ const Cell = (props) => {
   return (
     <div
       className={`flex flex-row justify-center items-center select-none border border-blue-800 h-10 cursor-pointer ${backgroundClass}`}
-      onClick={() => {
-        const nextSoundsIndex = (selectedSoundIndex + 1) % sounds.length;
-        setSelectedSoundIndex(nextSoundsIndex);
-      }}
-      onContextMenu={(e) => {
-        e.preventDefault();
-        setSelectedSoundIndex(null);
-      }}
+      onClick={onClick}
+      onContextMenu={onContextMenu}
     >
-      {sounds[selectedSoundIndex]}
+      {sound}
     </div>
   );
 };
 
 Cell.propTypes = {
   isStartingCell: PropTypes.bool,
-  sounds: PropTypes.any,
+  sound: PropTypes.node,
+  onClick: PropTypes.func,
+  onContextMenu: PropTypes.func,
 };
 
 export default Cell;

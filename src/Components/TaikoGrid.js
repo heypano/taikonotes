@@ -3,7 +3,13 @@ import Cell from "./Cell";
 import TaikoGridSettings from "./TaikoGridSettings";
 import Button from "./Button";
 import { useDispatch } from "react-redux";
-import { setTotalLines, useSettings, setSettings } from "../redux/mainSlice";
+import {
+  setTotalLines,
+  useSettings,
+  setSettings,
+  useSections,
+  setSoundIndex,
+} from "../redux/mainSlice";
 
 const chihat = new Audio("/drum-sounds-master/closed-hihat.mp3");
 const snare = new Audio("/drum-sounds-master/acoustic-snare.mp3");
@@ -14,6 +20,7 @@ const notes = [chihat, snare, bass];
 const TaikoGrid = (props) => {
   const dispatch = useDispatch();
   const settings = useSettings();
+  const sections = useSections();
   const { cellsPerLine, divideEvery, totalLines, sounds } = settings;
 
   const numCells = cellsPerLine * totalLines;
@@ -21,18 +28,7 @@ const TaikoGrid = (props) => {
     () => [null, ...sounds.split(",").map((s) => s.trim())],
     [sounds]
   );
-
-  const cells = [];
-  for (let i = 0; i < numCells; i++) {
-    cells.push(
-      <Cell
-        key={i}
-        isStartingCell={i % divideEvery === 0}
-        cellsPerLine={cellsPerLine}
-        sounds={soundArray}
-      ></Cell>
-    );
-  }
+  console.log(sections);
 
   return (
     <div>
@@ -68,8 +64,52 @@ const TaikoGrid = (props) => {
           </Button>
         </div>
       </div>
-      <div className={`grid grid-cols-${cellsPerLine} border border-blue-800`}>
-        {cells}
+      <div>
+        {sections.map((section, sectionIndex) => {
+          const { name: sectionName, cells } = section;
+          const sectionCells = [];
+          for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
+            const cell = cells[cellIndex] || {};
+            const { soundIndex = 0 } = cell;
+            sectionCells.push(
+              <Cell
+                key={`cell_${sectionIndex}_${cellIndex}`}
+                isStartingCell={cellIndex % divideEvery === 0}
+                cellsPerLine={cellsPerLine}
+                sound={soundArray[soundIndex]}
+                onClick={() => {
+                  const nextSoundsIndex = (soundIndex + 1) % soundArray.length;
+                  dispatch(
+                    setSoundIndex({
+                      cellIndex,
+                      sectionIndex,
+                      soundIndex: nextSoundsIndex,
+                    })
+                  );
+                }}
+                onContextMenu={() =>
+                  dispatch(
+                    setSoundIndex({
+                      cellIndex,
+                      sectionIndex,
+                      soundIndex: 0,
+                    })
+                  )
+                }
+              ></Cell>
+            );
+          }
+          return (
+            <div key={`section_${sectionIndex}`}>
+              <div>{sectionName}</div>
+              <div
+                className={`grid grid-cols-${cellsPerLine} border border-blue-800`}
+              >
+                {sectionCells}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
