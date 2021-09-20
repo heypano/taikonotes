@@ -18,12 +18,12 @@ class TaikoGrid extends React.Component {
       cellsPerLine: "16",
       divideEvery: "4",
       totalLines: "4",
-      sounds: "hihat, snare, bass"
+      sounds: "hihat, snare, bass",
     };
     this.state = {
       settings: initialSettings,
       noteIndex: null,
-      isPlaying: false
+      isPlaying: false,
     };
     this.cells = [];
     this.addLine = this.addLine.bind(this);
@@ -42,7 +42,7 @@ class TaikoGrid extends React.Component {
   setSettings(settings) {
     this.setState({
       ...this.state,
-      settings: settings
+      settings: settings,
     });
   }
 
@@ -52,7 +52,7 @@ class TaikoGrid extends React.Component {
   addLine() {
     this.setSettings({
       ...this.state.settings,
-      totalLines: +this.state.settings.totalLines + 1 + ""
+      totalLines: +this.state.settings.totalLines + 1 + "",
     });
   }
 
@@ -62,7 +62,7 @@ class TaikoGrid extends React.Component {
   removeLine() {
     this.setSettings({
       ...this.state.settings,
-      totalLines: +this.state.settings.totalLines - 1 + ""
+      totalLines: +this.state.settings.totalLines - 1 + "",
     });
   }
 
@@ -71,8 +71,8 @@ class TaikoGrid extends React.Component {
     const data = {
       ...this.state.settings,
       song: {
-        main: this.getCellIndices()
-      }
+        main: this.getCellIndices(),
+      },
     };
     console.log(data);
   }
@@ -81,7 +81,7 @@ class TaikoGrid extends React.Component {
     if (this.playTimer) {
       this.setState({
         isPlaying: true,
-        noteIndex: null
+        noteIndex: null,
       });
     } else {
       this.playTimer = setInterval(() => {
@@ -91,7 +91,7 @@ class TaikoGrid extends React.Component {
           : 0;
         this.setState({
           isPlaying: true,
-          noteIndex: noteIndex
+          noteIndex: noteIndex,
         });
         if (Number.isInteger(song[noteIndex]) && notes[song[noteIndex]]) {
           notes[song[noteIndex]].currentTime = 0;
@@ -107,7 +107,7 @@ class TaikoGrid extends React.Component {
     }
     this.setState({
       isPlaying: false,
-      noteIndex: null
+      noteIndex: null,
     });
   }
 
@@ -124,7 +124,7 @@ class TaikoGrid extends React.Component {
     const { noteIndex, isPlaying, settings } = this.state;
     const { cellsPerLine, totalLines, divideEvery, sounds } = settings;
     const numCells = cellsPerLine * totalLines;
-    const soundArray = sounds.split(",").map(s => s.trim());
+    const soundArray = sounds.split(",").map((s) => s.trim());
 
     this.cells = [];
     for (let i = 0; i < numCells; i++) {
@@ -137,7 +137,7 @@ class TaikoGrid extends React.Component {
           index={i}
           divideEvery={divideEvery}
           cellsPerLine={cellsPerLine}
-          sounds={soundArray}
+          sounds={[null, ...soundArray]}
           isPlaying={isPlaying && i === noteIndex}
         ></Cell>
       );
@@ -158,12 +158,12 @@ class TaikoGrid extends React.Component {
           </div>
           <div className="w-full md:w-6/12 lg:w-4/12 flex flex-col justify-between">
             {/*<Button onClick={this.submitTest}>Submit</Button>*/}
-            <Button onClick={this.playSong} className="m-4">
-              Play
-            </Button>
-            <Button onClick={this.stopSong} className="m-4">
-              Stop
-            </Button>
+            {/*<Button onClick={this.playSong} className="m-4">*/}
+            {/*  Play*/}
+            {/*</Button>*/}
+            {/*<Button onClick={this.stopSong} className="m-4">*/}
+            {/*  Stop*/}
+            {/*</Button>*/}
             <Button onClick={this.addLine} className="m-4">
               Add Line
             </Button>
