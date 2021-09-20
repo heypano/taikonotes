@@ -1,36 +1,63 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export const name = "main";
+
 const initialState = {
-  value: 66,
+  settings: {
+    cellsPerLine: 16,
+    divideEvery: 4,
+    totalLines: 4,
+    sounds: "don, kon, ka, su, doko, kara",
+  },
 };
 
-export const useCustomValue = () => {
-  return useSelector((state) => state[name].value);
+export const useSettings = () => {
+  return useSelector((state) => {
+    const { cellsPerLine, divideEvery, totalLines, sounds } = state[
+      name
+    ].settings;
+    return {
+      cellsPerLine,
+      divideEvery,
+      totalLines,
+      sounds,
+    };
+  });
 };
 
 export const mainSlice = createSlice({
   name,
   initialState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
+    setSettings: (state, action) => {
+      Object.keys(action.payload).forEach((key) => {
+        state.settings[key] = action.payload[key];
+      });
     },
-    decrement: (state) => {
-      state.value -= 1;
+    setCellsPerLine: (state, action) => {
+      state.settings.cellsPerLine = action.payload;
     },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    setDivideEvery: (state, action) => {
+      state.settings.divideEvery = action.payload;
+    },
+    setTotalLines: (state, action) => {
+      state.settings.totalLines = action.payload;
+    },
+    setSounds: (state, action) => {
+      state.settings.sounds = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = mainSlice.actions;
+export const {
+  setCellsPerLine,
+  setDivideEvery,
+  setTotalLines,
+  setSounds,
+  setSettings,
+} = mainSlice.actions;
 
 export default mainSlice.reducer;
