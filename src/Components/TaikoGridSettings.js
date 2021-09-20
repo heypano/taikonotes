@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { numerators } from "../Data/settings";
+const numerators = [...Array(20).keys()].map((key) => key + 1);
+// export const denominators = [4, 8, 16];
 
 const TaikoGridSettings = ({ settings, setSettings }) => {
-  const onSubmit = e => {};
-  const onFormChange = e => {
+  const onSubmit = (e) => {};
+  const onFormChange = (e) => {
     setSettings({
       ...settings,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -20,7 +21,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
           onChange={onFormChange}
           value={settings.cellsPerLine}
         >
-          {numerators.map(key => (
+          {numerators.map((key) => (
             <option key={`cellsPerLine_${key}`} value={key}>
               {key}
             </option>
@@ -35,7 +36,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
           onChange={onFormChange}
           value={settings.divideEvery}
         >
-          {numerators.map(key => (
+          {numerators.map((key) => (
             <option key={`defaultDivideEvery_${key}`} value={key}>
               {key}
             </option>
