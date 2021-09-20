@@ -7,8 +7,51 @@ export const name = "main";
 const initialState = {
   sections: [
     {
-      name: "My Section",
+      name: "Line A",
       cells: [
+        {
+          soundIndex: 2,
+        },
+        null,
+        {
+          soundIndex: 2,
+        },
+        null,
+        {
+          soundIndex: 1,
+        },
+        {
+          soundIndex: 3,
+        },
+        {
+          soundIndex: 1,
+        },
+        {
+          soundIndex: 2,
+        },
+      ],
+    },
+    {
+      name: "Line B",
+      cells: [
+        {
+          soundIndex: 1,
+        },
+        {
+          soundIndex: 2,
+        },
+        null,
+        null,
+        {
+          soundIndex: 1,
+        },
+        null,
+        {
+          soundIndex: 3,
+        },
+        {
+          soundIndex: 1,
+        },
         {
           soundIndex: 2,
         },

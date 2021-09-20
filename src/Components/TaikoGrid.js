@@ -101,9 +101,9 @@ const TaikoGrid = (props) => {
           }
           return (
             <div key={`section_${sectionIndex}`}>
-              <div>{sectionName}</div>
+              <h2 className="text-2xl mb-2">{sectionName}</h2>
               <div
-                className={`grid grid-cols-${cellsPerLine} border border-blue-800`}
+                className={`mb-8 grid grid-cols-${cellsPerLine} border border-blue-800`}
               >
                 {sectionCells}
               </div>
