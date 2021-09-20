@@ -31,22 +31,14 @@ export const mainSlice = createSlice({
   name,
   initialState,
   reducers: {
+    // Only sets the keys provided
     setSettings: (state, action) => {
       Object.keys(action.payload).forEach((key) => {
         state.settings[key] = action.payload[key];
       });
     },
-    setCellsPerLine: (state, action) => {
-      state.settings.cellsPerLine = action.payload;
-    },
-    setDivideEvery: (state, action) => {
-      state.settings.divideEvery = action.payload;
-    },
     setTotalLines: (state, action) => {
       state.settings.totalLines = action.payload;
-    },
-    setSounds: (state, action) => {
-      state.settings.sounds = action.payload;
     },
   },
 });

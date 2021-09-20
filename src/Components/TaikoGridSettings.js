@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 const numerators = [...Array(20).keys()].map((key) => key + 1);
 // export const denominators = [4, 8, 16];
 
@@ -6,7 +6,6 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
   const onSubmit = (e) => {};
   const onFormChange = (e) => {
     setSettings({
-      ...settings,
       [e.target.name]: e.target.value,
     });
   };

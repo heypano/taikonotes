@@ -3,14 +3,7 @@ import Cell from "./Cell";
 import TaikoGridSettings from "./TaikoGridSettings";
 import Button from "./Button";
 import { useDispatch } from "react-redux";
-import {
-  setCellsPerLine,
-  setDivideEvery,
-  setTotalLines,
-  setSounds,
-  useSettings,
-  setSettings,
-} from "../redux/mainSlice";
+import { setTotalLines, useSettings, setSettings } from "../redux/mainSlice";
 
 const chihat = new Audio("/drum-sounds-master/closed-hihat.mp3");
 const snare = new Audio("/drum-sounds-master/acoustic-snare.mp3");
@@ -20,7 +13,8 @@ const notes = [chihat, snare, bass];
 
 const TaikoGrid = (props) => {
   const dispatch = useDispatch();
-  const { cellsPerLine, divideEvery, totalLines, sounds } = useSettings();
+  const settings = useSettings();
+  const { cellsPerLine, divideEvery, totalLines, sounds } = settings;
 
   const numCells = cellsPerLine * totalLines;
   const soundArray = useMemo(
@@ -49,41 +43,27 @@ const TaikoGrid = (props) => {
         />
         <div className="w-full md:w-6/12 lg:w-4/12 border border-blue-300 p-2 mr-auto w-full">
           <TaikoGridSettings
-            settings={{
-              cellsPerLine,
-              divideEvery,
-              totalLines,
-              sounds,
-            }}
-            setSettings={({
-              cellsPerLine,
-              divideEvery,
-              totalLines,
-              sounds,
-            }) => {
-              dispatch(
-                setSettings({
-                  cellsPerLine,
-                  divideEvery,
-                  totalLines,
-                  sounds,
-                })
-              );
+            settings={settings}
+            setSettings={(s) => {
+              dispatch(setSettings(s));
             }}
           />
         </div>
         <div className="w-full md:w-6/12 lg:w-4/12 flex flex-col justify-between">
-          {/*<Button onClick={this.submitTest}>Submit</Button>*/}
-          {/*<Button onClick={this.playSong} className="m-4">*/}
-          {/*  Play*/}
-          {/*</Button>*/}
-          {/*<Button onClick={this.stopSong} className="m-4">*/}
-          {/*  Stop*/}
-          {/*</Button>*/}
-          <Button onClick={() => setTotalLines(totalLines + 1)} className="m-4">
+          <Button
+            onClick={() =>
+              dispatch(setSettings({ totalLines: totalLines + 1 }))
+            }
+            className="m-4"
+          >
             Add Line
           </Button>
-          <Button onClick={() => setTotalLines(totalLines - 1)} className="m-4">
+          <Button
+            onClick={() =>
+              dispatch(setSettings({ totalLines: totalLines - 1 }))
+            }
+            className="m-4"
+          >
             Remove Line
           </Button>
         </div>
