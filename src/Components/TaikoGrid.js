@@ -134,8 +134,7 @@ class TaikoGrid extends React.Component {
         <Cell
           ref={cellRef}
           key={i}
-          index={i}
-          divideEvery={divideEvery}
+          isStartingCell={i % divideEvery === 0}
           cellsPerLine={cellsPerLine}
           sounds={[null, ...soundArray]}
           isPlaying={isPlaying && i === noteIndex}

@@ -4,11 +4,11 @@ import * as PropTypes from "prop-types";
 const Cell = (props) => {
   const [selectedSoundIndex, setSelectedSoundIndex] = useState(0);
 
-  let { index, divideEvery, sounds, isPlaying } = props;
+  let { sounds, isPlaying, isStartingCell } = props;
   let backgroundClass;
   if (isPlaying) {
     backgroundClass = "bg-red-300 hover:bg-red-600";
-  } else if (index % divideEvery === 0) {
+  } else if (isStartingCell) {
     backgroundClass = "bg-gray-300 hover:bg-blue-400";
   } else {
     backgroundClass = "hover:bg-blue-400";
@@ -32,9 +32,7 @@ const Cell = (props) => {
 };
 
 Cell.propTypes = {
-  index: PropTypes.any,
-  divideEvery: PropTypes.any,
-  cellsPerLine: PropTypes.any,
+  isStartingCell: PropTypes.bool,
   sounds: PropTypes.any,
 };
 
