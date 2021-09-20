@@ -145,7 +145,7 @@ class TaikoGrid extends React.Component {
 
     return (
       <div>
-        <div className="container settings mt-3 mb-3 p-3 flex flex-row">
+        <div className="settings mt-3 mb-3 p-3 flex flex-row">
           <img
             src={`${process.env.PUBLIC_URL}/favicon/Taiko.svg`}
             className="w-1/12 pr-2"

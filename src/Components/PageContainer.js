@@ -5,7 +5,7 @@ import React from 'react';
  */
 const PageContainer = ({children}) => {
     return (
-        <div className="container">
+        <div className="container mx-auto">
             {children}
         </div>
     )
