@@ -1,15 +1,15 @@
 import React, { useMemo } from "react";
 import Cell from "./Cell";
 import TaikoGridSettings from "./TaikoGridSettings";
-import Button from "./Button";
 import { useDispatch } from "react-redux";
 import {
-  setTotalLines,
   useSettings,
   setSettings,
   useSections,
   setSoundIndex,
+  setTotalLines,
 } from "../redux/mainSlice";
+import Button from "./Button";
 
 const chihat = new Audio("/drum-sounds-master/closed-hihat.mp3");
 const snare = new Audio("/drum-sounds-master/acoustic-snare.mp3");
@@ -21,9 +21,8 @@ const TaikoGrid = (props) => {
   const dispatch = useDispatch();
   const settings = useSettings();
   const sections = useSections();
-  const { cellsPerLine, divideEvery, totalLines, sounds } = settings;
+  const { cellsPerLine, divideEvery, sounds } = settings;
 
-  const numCells = cellsPerLine * totalLines;
   const soundArray = useMemo(
     () => [null, ...sounds.split(",").map((s) => s.trim())],
     [sounds]
@@ -46,28 +45,29 @@ const TaikoGrid = (props) => {
           />
         </div>
         <div className="w-full md:w-6/12 lg:w-4/12 flex flex-col justify-between">
-          <Button
-            onClick={() =>
-              dispatch(setSettings({ totalLines: totalLines + 1 }))
-            }
-            className="m-4"
-          >
-            Add Line
-          </Button>
-          <Button
-            onClick={() =>
-              dispatch(setSettings({ totalLines: totalLines - 1 }))
-            }
-            className="m-4"
-          >
-            Remove Line
-          </Button>
+          {/*<Button*/}
+          {/*  onClick={() =>*/}
+          {/*    dispatch(setSettings({ totalLines: totalLines + 1 }))*/}
+          {/*  }*/}
+          {/*  className="m-4"*/}
+          {/*>*/}
+          {/*  Add Line*/}
+          {/*</Button>*/}
+          {/*<Button*/}
+          {/*  onClick={() =>*/}
+          {/*    dispatch(setSettings({ totalLines: totalLines - 1 }))*/}
+          {/*  }*/}
+          {/*  className="m-4"*/}
+          {/*>*/}
+          {/*  Remove Line*/}
+          {/*</Button>*/}
         </div>
       </div>
       <div>
         {sections.map((section, sectionIndex) => {
-          const { name: sectionName, cells } = section;
+          const { name: sectionName, cells, totalLines } = section;
           const sectionCells = [];
+          const numCells = cellsPerLine * totalLines;
           for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
             const cell = cells[cellIndex] || {};
             const { soundIndex = 0 } = cell;
@@ -100,12 +100,39 @@ const TaikoGrid = (props) => {
             );
           }
           return (
-            <div key={`section_${sectionIndex}`}>
+            <div key={`section_${sectionIndex}`} className="mb-8">
               <h2 className="text-2xl mb-2">{sectionName}</h2>
               <div
-                className={`mb-8 grid grid-cols-${cellsPerLine} border border-blue-800`}
+                className={`grid grid-cols-${cellsPerLine} border border-blue-800`}
               >
                 {sectionCells}
+              </div>
+              <div>
+                <Button
+                  onClick={() => {
+                    dispatch(
+                      setTotalLines({
+                        sectionIndex,
+                        totalLines: totalLines - 1,
+                      })
+                    );
+                  }}
+                >
+                  -
+                </Button>
+                <Button
+                  className="mr-2"
+                  onClick={() => {
+                    dispatch(
+                      setTotalLines({
+                        sectionIndex,
+                        totalLines: totalLines + 1,
+                      })
+                    );
+                  }}
+                >
+                  +
+                </Button>
               </div>
             </div>
           );

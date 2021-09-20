@@ -8,6 +8,7 @@ const initialState = {
   sections: [
     {
       name: "Line A",
+      totalLines: 3,
       cells: [
         {
           soundIndex: 2,
@@ -33,6 +34,7 @@ const initialState = {
     },
     {
       name: "Line B",
+      totalLines: 3,
       cells: [
         {
           soundIndex: 1,
@@ -68,13 +70,10 @@ const initialState = {
 
 export const useSettings = () => {
   return useSelector((state) => {
-    const { cellsPerLine, divideEvery, totalLines, sounds } = state[
-      name
-    ].settings;
+    const { cellsPerLine, divideEvery, sounds } = state[name].settings;
     return {
       cellsPerLine,
       divideEvery,
-      totalLines,
       sounds,
     };
   });
@@ -98,7 +97,8 @@ export const mainSlice = createSlice({
       });
     },
     setTotalLines: (state, action) => {
-      state.settings.totalLines = action.payload;
+      const { sectionIndex, totalLines } = action.payload;
+      state.sections[sectionIndex].totalLines = Math.max(totalLines, 0);
     },
     setSoundIndex: (state, action) => {
       const { sectionIndex, cellIndex, soundIndex } = action.payload;
