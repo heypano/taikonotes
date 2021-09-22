@@ -11,18 +11,14 @@ import {
   setMainState,
 } from "../redux/mainSlice";
 import Button from "./Button";
-import {
-  getMainFromLocal,
-  getMainState,
-  saveMainToLocal,
-  store,
-} from "../redux/store";
+import { getMainFromLocal, saveMainToLocal } from "../redux/store";
 
 const chihat = new Audio("/drum-sounds-master/closed-hihat.mp3");
 const snare = new Audio("/drum-sounds-master/acoustic-snare.mp3");
 const bass = new Audio("/drum-sounds-master/bass-drum-1.mp3");
 
 const notes = [chihat, snare, bass];
+console.log(notes);
 
 const TaikoGrid = (props) => {
   const dispatch = useDispatch();
@@ -43,6 +39,7 @@ const TaikoGrid = (props) => {
         <img
           src={`${process.env.PUBLIC_URL}/favicon/Taiko.svg`}
           className="w-1/12 pr-2"
+          alt="taiko logo"
         />
         <div className="w-full md:w-6/12 lg:w-4/12 border border-blue-300 p-2 mr-auto w-full">
           <TaikoGridSettings
@@ -64,6 +61,7 @@ const TaikoGrid = (props) => {
           <Button
             onClick={() => {
               const state = getMainFromLocal();
+              console.log(state);
               dispatch(setMainState(state));
             }}
             className="m-4"
