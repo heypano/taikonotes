@@ -18,7 +18,6 @@ const PopupMenu = ({
   const onClickOutside = useCallback(
     (e) => {
       onOpenChange(false);
-      e.preventDefault();
       e.stopPropagation();
     },
     [onOpenChange]
@@ -29,13 +28,17 @@ const PopupMenu = ({
 
   useEffect(() => {
     if (ref.current && menuCoordinates) {
-      const left = Math.min(
-        menuCoordinates[0],
-        window.innerWidth - ref.current.clientWidth - 30
+      const minLeft = 10;
+      const minTop = 10;
+      const maxLeft = window.innerWidth - ref.current.clientWidth;
+      const maxTop = window.innerHeight - ref.current.clientHeight;
+      const left = Math.max(
+        Math.min(menuCoordinates[0] - maxTop, maxLeft),
+        minLeft
       );
-      const top = Math.min(
-        menuCoordinates[1] - 50,
-        window.innerHeight - ref.current.clientHeight
+      const top = Math.max(
+        Math.min(menuCoordinates[1] - minTop, maxTop),
+        minTop
       );
       setActualPosition({ left, top });
     } else {
@@ -46,9 +49,7 @@ const PopupMenu = ({
     open && (
       <div
         ref={ref}
-        className={`popupmenu grid grid-rows-4 grid-cols-${tooltipColumns} w-max grid-flow-col max-h-48 ${
-          actualPosition ? "" : "invisible"
-        }`}
+        className={`popupmenu grid grid-rows-4 grid-cols-${tooltipColumns} w-max grid-flow-col max-h-48 `}
         style={actualPosition}
       >
         {soundArray.map((soundNote, soundIndex) => (

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .popupmenu {
-  @apply absolute;
+  @apply fixed;
   @apply rounded shadow-lg bg-gray-50;
   @apply transition delay-150 duration-300 ease-in-out;
   animation: fadeIn 0.2s;
