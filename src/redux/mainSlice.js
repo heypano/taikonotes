@@ -239,7 +239,7 @@ export const useCell = (sectionIndex, cellIndex) =>
 const getNewSection = (index = 0) => ({
   cells: [],
   id: index,
-  name: `Line ${index}`,
+  sectionName: `Line ${index}`,
   totalLines: 1,
 });
 

@@ -32327,7 +32327,7 @@ video {
           animation: fadeIn 0.2s;
 }
 
-.slowFade {
+.fadeBg {
   transition-property: background-color;
   transition-duration: 0.7s;
 }
