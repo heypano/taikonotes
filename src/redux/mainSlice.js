@@ -14,6 +14,7 @@ export const initialState = {
         null,
         {
           soundIndex: 3,
+          intensity: 1,
         },
         {
           soundIndex: 1,
@@ -23,6 +24,7 @@ export const initialState = {
         },
         {
           soundIndex: 3,
+          intensity: 1,
         },
         {
           soundIndex: 1,
@@ -32,10 +34,12 @@ export const initialState = {
         },
         {
           soundIndex: 1,
+          intensity: 1,
         },
         null,
         {
           soundIndex: 1,
+          intensity: 1,
         },
         null,
         {
@@ -46,6 +50,7 @@ export const initialState = {
         },
         {
           soundIndex: 1,
+          intensity: 1,
         },
         null,
         {
@@ -65,9 +70,11 @@ export const initialState = {
         },
         {
           soundIndex: 3,
+          intensity: 1,
         },
         {
           soundIndex: 11,
+          intensity: 1,
         },
         null,
         {
@@ -75,12 +82,14 @@ export const initialState = {
         },
         {
           soundIndex: 2,
+          intensity: 1,
         },
         {
           soundIndex: 0,
         },
         {
           soundIndex: 3,
+          intensity: 1,
         },
         {
           soundIndex: 7,
@@ -96,6 +105,7 @@ export const initialState = {
         },
         {
           soundIndex: 1,
+          intensity: 1,
         },
         null,
         null,
@@ -104,25 +114,30 @@ export const initialState = {
         },
         {
           soundIndex: 1,
+          intensity: 1,
         },
         {
           soundIndex: 12,
         },
         {
           soundIndex: 10,
+          intensity: 1,
         },
         {
           soundIndex: 1,
+          intensity: 1,
         },
         {
           soundIndex: 7,
         },
         {
           soundIndex: 2,
+          intensity: 1,
         },
         null,
         {
           soundIndex: 1,
+          intensity: 1,
         },
         null,
         {
@@ -130,18 +145,22 @@ export const initialState = {
         },
         {
           soundIndex: 4,
+          intensity: 1,
         },
         {
           soundIndex: 4,
+          intensity: 1,
         },
         {
           soundIndex: 7,
         },
         {
           soundIndex: 3,
+          intensity: 1,
         },
         {
           soundIndex: 1,
+          intensity: 1,
         },
         null,
         {
@@ -152,6 +171,7 @@ export const initialState = {
         },
         {
           soundIndex: 3,
+          intensity: 1,
         },
         null,
         {
@@ -159,11 +179,13 @@ export const initialState = {
         },
         {
           soundIndex: 1,
+          intensity: 1,
         },
         null,
         null,
         {
           soundIndex: 1,
+          intensity: 1,
         },
       ],
       id: 1,
@@ -244,9 +266,16 @@ export const mainSlice = createSlice({
     },
     setSoundIndex: (state, action) => {
       const { sectionIndex, cellIndex, soundIndex } = action.payload;
-      const section = state.sections[sectionIndex] || getNewSection();
+      const section = state.sections[sectionIndex];
       const cell = section.cells[cellIndex] || {};
       cell.soundIndex = soundIndex;
+      state.sections[sectionIndex].cells[cellIndex] = cell;
+    },
+    setIntensity: (state, action) => {
+      const { sectionIndex, cellIndex, intensity } = action.payload;
+      const section = state.sections[sectionIndex];
+      const cell = section.cells[cellIndex] || {};
+      cell.intensity = intensity;
       state.sections[sectionIndex].cells[cellIndex] = cell;
     },
     setMainState: (state, action) => action.payload,
@@ -267,6 +296,7 @@ export const {
   setSounds,
   setSettings,
   setSoundIndex,
+  setIntensity,
   setMainState,
   addSection,
   removeLastSection,

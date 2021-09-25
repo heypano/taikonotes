@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useState } from "react";
 import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { setSoundIndex, useCell } from "../redux/mainSlice";
+import { setIntensity, setSoundIndex, useCell } from "../redux/mainSlice";
 import PopupMenu from "./PopupMenu";
 
 const Cell = (props) => {
@@ -20,11 +20,11 @@ const Cell = (props) => {
   }, []);
 
   let backgroundClass;
-  const { soundIndex: currentSoundIndex = 0 } = useCell(
+  const { soundIndex: currentSoundIndex = 0, intensity } = useCell(
     sectionIndex,
     cellIndex
   );
-  const sound = soundArray[currentSoundIndex];
+  const sound = soundArray[currentSoundIndex] || "";
   if (isPlaying) {
     backgroundClass = "bg-red-300 hover:bg-red-600";
   } else if (isStartingCell) {
@@ -38,12 +38,11 @@ const Cell = (props) => {
     <div
       className={`flex flex-row justify-center items-center select-none border border-blue-800 h-10 cursor-pointer ${backgroundClass}`}
       onClick={() => {
-        const nextSoundsIndex = (currentSoundIndex + 1) % soundArray.length;
         dispatch(
-          setSoundIndex({
+          setIntensity({
             cellIndex,
             sectionIndex,
-            soundIndex: nextSoundsIndex,
+            intensity: intensity ? 0 : 1,
           })
         );
       }}
@@ -53,7 +52,7 @@ const Cell = (props) => {
         e.preventDefault();
       }}
     >
-      {sound}
+      {intensity ? sound.toLocaleUpperCase() : sound}
       <PopupMenu
         open={showMenu}
         menuCoordinates={menuCoordinates}
