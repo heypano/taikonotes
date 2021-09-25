@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 
 export const name = "main";
 
-const initialState = {
+export const initialState = {
   sections: [
     {
       cells: [
@@ -213,13 +213,25 @@ export const useSettings = () =>
       divideEvery,
       sounds,
     };
-  });
+  }, shallowEqual);
 
 export const useSections = () =>
   useSelector((state) => {
     const { sections } = state[name];
     return sections;
-  });
+  }, shallowEqual);
+
+export const useSectionIds = () =>
+  useSelector((state) => {
+    const { sections } = state[name];
+    return sections.map((s) => s.id);
+  }, shallowEqual);
+
+export const useSection = (index) =>
+  useSelector((state) => {
+    const { sections } = state[name];
+    return sections[index];
+  }, shallowEqual);
 
 const getNewSection = (index = 0) => ({
   cells: [],

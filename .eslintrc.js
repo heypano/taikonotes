@@ -20,6 +20,7 @@ module.exports = {
     ],
     "no-console": [1, { allow: ["debug", "error"] }],
     "react/prop-types": 1,
+    "react/no-unknown-property": 1,
     "react/require-default-props": 1,
     "react/no-array-index-key": 1,
     "react/jsx-filename-extension": 0,

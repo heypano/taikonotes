@@ -1,56 +1,41 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import Cell from "./Cell";
-import { setSoundIndex, setTotalLines } from "../redux/mainSlice";
+import { setTotalLines, useSection, useSettings } from "../redux/mainSlice";
 import Button from "./Button";
 
 const Section = (props) => {
-  const {
-    section,
-    sectionIndex,
-    cellsPerLine,
-    divideEvery,
-    soundArray,
-  } = props;
-  const { name: sectionName, cells, totalLines, id } = section;
+  const { sectionId } = props;
+  const { cellsPerLine, divideEvery, sounds } = useSettings();
   const dispatch = useDispatch();
+  const section = useSection(sectionId);
+  const soundArray = useMemo(
+    () => [null, ...sounds.split(",").map((s) => s.trim())],
+    [sounds]
+  );
+  const { name: sectionName, cells, totalLines, id } = section;
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
-  console.debug(`Section rerendering ${sectionName} - ${id}`);
+  console.debug(`Section rerender ${sectionName} - ${id}`);
   for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
     const cell = cells[cellIndex] || {};
     const { soundIndex = 0 } = cell;
     sectionCells.push(
       <Cell
-        key={`cell_${sectionIndex}_${cellIndex}`}
+        key={`cell_${sectionId}_${cellIndex}`}
         isStartingCell={cellIndex % divideEvery === 0}
         cellsPerLine={cellsPerLine}
+        cellIndex={cellIndex}
+        soundIndex={soundIndex}
+        sectionIndex={sectionId}
+        soundArray={soundArray}
         sound={soundArray[soundIndex]}
-        onClick={() => {
-          const nextSoundsIndex = (soundIndex + 1) % soundArray.length;
-          dispatch(
-            setSoundIndex({
-              cellIndex,
-              sectionIndex,
-              soundIndex: nextSoundsIndex,
-            })
-          );
-        }}
-        onContextMenu={() =>
-          dispatch(
-            setSoundIndex({
-              cellIndex,
-              sectionIndex,
-              soundIndex: 0,
-            })
-          )
-        }
       />
     );
   }
   return (
-    <div key={`section_${sectionIndex}`} className="mb-8">
+    <div key={`section_${sectionId}`} className="mb-8">
       <h2 className="text-2xl mb-2">{sectionName}</h2>
       <div className={`grid grid-cols-${cellsPerLine} border border-blue-800`}>
         {sectionCells}
@@ -60,7 +45,7 @@ const Section = (props) => {
           onClick={() => {
             dispatch(
               setTotalLines({
-                sectionIndex,
+                sectionIndex: sectionId,
                 totalLines: totalLines - 1,
               })
             );
@@ -73,7 +58,7 @@ const Section = (props) => {
           onClick={() => {
             dispatch(
               setTotalLines({
-                sectionIndex,
+                sectionIndex: sectionId,
                 totalLines: totalLines + 1,
               })
             );
@@ -87,23 +72,10 @@ const Section = (props) => {
 };
 
 Section.propTypes = {
-  section: PropTypes.shape({
-    id: undefined,
-    totalLines: undefined,
-    cells: undefined,
-    name: undefined,
-  }),
-  sectionIndex: PropTypes.number,
-  cellsPerLine: PropTypes.number,
-  divideEvery: PropTypes.number,
-  soundArray: PropTypes.arrayOf(PropTypes.string),
+  sectionId: PropTypes.number,
 };
 
 Section.defaultProps = {
-  section: undefined,
-  sectionIndex: undefined,
-  cellsPerLine: undefined,
-  divideEvery: undefined,
-  soundArray: undefined,
+  sectionId: undefined,
 };
-export default Section;
+export default memo(Section);

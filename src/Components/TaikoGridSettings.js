@@ -1,18 +1,24 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { setSettings, useSettings } from "../redux/mainSlice";
 
 const numerators = [...Array(20).keys()].map((key) => key + 1);
 // export const denominators = [4, 8, 16];
 
-const TaikoGridSettings = ({ settings, setSettings }) => {
+const TaikoGridSettings = () => {
+  const settings = useSettings();
+  const dispatch = useDispatch();
   const { cellsPerLine, divideEvery, sounds } = settings;
   const onSubmit = () => {};
   const onFormChange = (e) => {
     const { name, value, dataType } = e.target;
     const usedValue = dataType === "number" ? Number(value) : value;
-    setSettings({
-      [name]: usedValue,
-    });
+    dispatch(
+      setSettings({
+        [name]: usedValue,
+      })
+    );
   };
 
   return (
@@ -62,18 +68,8 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
   );
 };
 
-TaikoGridSettings.propTypes = {
-  settings: PropTypes.shape({
-    cellsPerLine: PropTypes.number,
-    divideEvery: PropTypes.number,
-    sounds: PropTypes.string,
-  }),
-  setSettings: PropTypes.func,
-};
+TaikoGridSettings.propTypes = {};
 
-TaikoGridSettings.defaultProps = {
-  settings: undefined,
-  setSettings: undefined,
-};
+TaikoGridSettings.defaultProps = {};
 
-export default TaikoGridSettings;
+export default memo(TaikoGridSettings);
