@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setSettings, useSettings } from "../redux/mainSlice";
 
