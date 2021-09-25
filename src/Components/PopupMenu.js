@@ -33,7 +33,7 @@ const PopupMenu = ({
       const maxLeft = window.innerWidth - ref.current.clientWidth;
       const maxTop = window.innerHeight - ref.current.clientHeight;
       const left = Math.max(
-        Math.min(menuCoordinates[0] - maxTop, maxLeft),
+        Math.min(menuCoordinates[0] - minLeft, maxLeft),
         minLeft
       );
       const top = Math.max(
