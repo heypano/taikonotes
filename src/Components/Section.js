@@ -37,35 +37,7 @@ const Section = (props) => {
   }
   return (
     <div key={`section_${sectionId}`} className="mb-8">
-      <input
-        type="text"
-        value={sectionName}
-        className="text-2xl outline-none"
-        onChange={(e) => {
-          dispatch(
-            setSectionName({
-              sectionIndex: sectionId,
-              sectionName: e.target.value,
-            })
-          );
-        }}
-      />
-      <div className={`grid grid-cols-${cellsPerLine} border border-blue-800`}>
-        {sectionCells}
-      </div>
       <div>
-        <Button
-          onClick={() => {
-            dispatch(
-              setTotalLines({
-                sectionIndex: sectionId,
-                totalLines: totalLines - 1,
-              })
-            );
-          }}
-        >
-          -
-        </Button>
         <Button
           className="mr-2"
           onClick={() => {
@@ -79,6 +51,36 @@ const Section = (props) => {
         >
           +
         </Button>
+        <Button
+          className="mr-2"
+          onClick={() => {
+            dispatch(
+              setTotalLines({
+                sectionIndex: sectionId,
+                totalLines: totalLines - 1,
+              })
+            );
+          }}
+        >
+          -
+        </Button>
+
+        <input
+          type="text"
+          value={sectionName}
+          className="text-2xl  outline-none"
+          onChange={(e) => {
+            dispatch(
+              setSectionName({
+                sectionIndex: sectionId,
+                sectionName: e.target.value,
+              })
+            );
+          }}
+        />
+      </div>
+      <div className={`grid grid-cols-${cellsPerLine} border border-blue-800`}>
+        {sectionCells}
       </div>
     </div>
   );

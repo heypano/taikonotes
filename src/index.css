@@ -6,7 +6,7 @@
   @apply absolute;
   @apply rounded shadow-lg bg-gray-50;
   @apply transition delay-150 duration-300 ease-in-out;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 0.2s;
 }
 
 @keyframes fadeIn {
