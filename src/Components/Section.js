@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import Cell from "./Cell";
 import {
+  setSectionName,
   setTotalLines,
   useSectionNoCells,
   useSettings,
@@ -18,7 +19,7 @@ const Section = (props) => {
     () => [null, ...sounds.split(",").map((s) => s.trim())],
     [sounds]
   );
-  const { name: sectionName, totalLines, id } = section;
+  const { sectionName, totalLines, id } = section;
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
   console.debug(`Section rerender ${sectionName} - ${id}`);
@@ -36,7 +37,19 @@ const Section = (props) => {
   }
   return (
     <div key={`section_${sectionId}`} className="mb-8">
-      <h2 className="text-2xl mb-2">{sectionName}</h2>
+      <input
+        type="text"
+        value={sectionName}
+        className="text-2xl outline-none"
+        onChange={(e) => {
+          dispatch(
+            setSectionName({
+              sectionIndex: sectionId,
+              sectionName: e.target.value,
+            })
+          );
+        }}
+      />
       <div className={`grid grid-cols-${cellsPerLine} border border-blue-800`}>
         {sectionCells}
       </div>

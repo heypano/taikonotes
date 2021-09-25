@@ -189,13 +189,13 @@ export const initialState = {
         },
       ],
       id: 1,
-      name: "Line 1",
+      sectionName: "Line 1",
       totalLines: 4,
     },
     {
       cells: [],
       id: 2,
-      name: "Line 2",
+      sectionName: "Line 2",
       totalLines: 1,
     },
   ],
@@ -264,6 +264,10 @@ export const mainSlice = createSlice({
         sectionIndex
       ].cells.slice(0, final * cellsPerLine);
     },
+    setSectionName: (state, action) => {
+      const { sectionIndex, sectionName } = action.payload;
+      state.sections[sectionIndex].sectionName = sectionName;
+    },
     setSoundIndex: (state, action) => {
       const { sectionIndex, cellIndex, soundIndex } = action.payload;
       const section = state.sections[sectionIndex];
@@ -293,6 +297,7 @@ export const {
   setCellsPerLine,
   setDivideEvery,
   setTotalLines,
+  setSectionName,
   setSounds,
   setSettings,
   setSoundIndex,
