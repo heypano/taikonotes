@@ -171,29 +171,7 @@ export const initialState = {
       totalLines: 4,
     },
     {
-      cells: [
-        {
-          soundIndex: 1,
-        },
-        {
-          soundIndex: 2,
-        },
-        null,
-        null,
-        {
-          soundIndex: 1,
-        },
-        null,
-        {
-          soundIndex: 3,
-        },
-        {
-          soundIndex: 1,
-        },
-        {
-          soundIndex: 2,
-        },
-      ],
+      cells: [],
       id: 2,
       name: "Line 2",
       totalLines: 0,
@@ -255,7 +233,13 @@ export const mainSlice = createSlice({
     },
     setTotalLines: (state, action) => {
       const { sectionIndex, totalLines } = action.payload;
-      state.sections[sectionIndex].totalLines = Math.max(totalLines, 0);
+      const section = state.sections[sectionIndex];
+      const final = Math.max(totalLines, 0);
+      const { cellsPerLine } = state.settings;
+      state.sections[sectionIndex].totalLines = final;
+      state.sections[sectionIndex].cells = state.sections[
+        sectionIndex
+      ].cells.slice(0, final * cellsPerLine);
     },
     setSoundIndex: (state, action) => {
       const { sectionIndex, cellIndex, soundIndex } = action.payload;
