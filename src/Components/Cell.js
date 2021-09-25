@@ -37,7 +37,7 @@ const Cell = (props) => {
   return (
     <div
       className={`flex flex-row justify-center items-center select-none border border-blue-800 h-10 cursor-pointer ${backgroundClass}`}
-      onClick={() => {
+      onContextMenu={(e) => {
         dispatch(
           setIntensity({
             cellIndex,
@@ -45,8 +45,9 @@ const Cell = (props) => {
             intensity: intensity ? 0 : 1,
           })
         );
+        e.preventDefault();
       }}
-      onContextMenu={(e) => {
+      onClick={(e) => {
         setShowMenu(true);
         setMenuCoordinates([e.clientX, e.clientY]);
         e.preventDefault();
