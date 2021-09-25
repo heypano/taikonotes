@@ -33,40 +33,42 @@ const TaikoGrid = () => {
           <TaikoGridSettings />
         </div>
         <div className="w-full md:w-6/12 lg:w-4/12 flex flex-col justify-between">
-          <Button
-            onClick={() => {
-              dispatch(addSection());
-            }}
-            className="m-4"
-          >
-            Add Section
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(removeLastSection());
-            }}
-            className="m-4"
-          >
-            Remove Last Section
-          </Button>
-          <Button
-            onClick={() => {
-              saveMainToLocal();
-            }}
-            className="m-4"
-          >
-            Save
-          </Button>
-          <Button
-            onClick={() => {
-              const state = getMainFromLocal();
-              console.debug("entire state", state);
-              dispatch(setMainState(state));
-            }}
-            className="m-4"
-          >
-            Load
-          </Button>
+          <div className="grid grid-rows-2 grid-flow-col">
+            <Button
+              onClick={() => {
+                dispatch(addSection());
+              }}
+              className="m-4"
+            >
+              Add Section
+            </Button>
+            <Button
+              onClick={() => {
+                dispatch(removeLastSection());
+              }}
+              className="m-4"
+            >
+              Remove Last Section
+            </Button>
+            <Button
+              onClick={() => {
+                saveMainToLocal();
+              }}
+              className="m-4"
+            >
+              Save
+            </Button>
+            <Button
+              onClick={() => {
+                const state = getMainFromLocal();
+                console.debug("entire state", state);
+                dispatch(setMainState(state));
+              }}
+              className="m-4"
+            >
+              Load
+            </Button>
+          </div>
         </div>
       </div>
       <div>
