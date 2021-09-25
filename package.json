@@ -18,6 +18,7 @@
   },
   "scripts": {
     "start": "npm run build:style && react-scripts start",
+    "dev": "react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "build:style": "tailwind build -i src/index.css -c tailwind.config.js -o src/tailwind.css",

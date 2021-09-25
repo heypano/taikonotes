@@ -11,6 +11,7 @@ const Cell = (props) => {
   } else {
     backgroundClass = "hover:bg-blue-400";
   }
+  console.debug("Cell rerendering");
 
   return (
     <div
@@ -28,6 +29,7 @@ Cell.propTypes = {
   sound: PropTypes.node,
   onClick: PropTypes.func,
   onContextMenu: PropTypes.func,
+  isPlaying: PropTypes.bool,
 };
 
 Cell.defaultProps = {
@@ -35,6 +37,7 @@ Cell.defaultProps = {
   sound: undefined,
   onClick: undefined,
   onContextMenu: undefined,
+  isPlaying: undefined,
 };
 
 export default Cell;

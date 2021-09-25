@@ -5,7 +5,8 @@ const numerators = [...Array(20).keys()].map((key) => key + 1);
 // export const denominators = [4, 8, 16];
 
 const TaikoGridSettings = ({ settings, setSettings }) => {
-  const onSubmit = (e) => {};
+  const { cellsPerLine, divideEvery, sounds } = settings;
+  const onSubmit = () => {};
   const onFormChange = (e) => {
     const { name, value, dataType } = e.target;
     const usedValue = dataType === "number" ? Number(value) : value;
@@ -22,7 +23,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
           name="cellsPerLine"
           className="p-2 "
           onChange={onFormChange}
-          value={settings.cellsPerLine}
+          value={cellsPerLine}
           data-data-type="number"
         >
           {numerators.map((key) => (
@@ -38,7 +39,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
           name="divideEvery"
           className="p-2 "
           onChange={onFormChange}
-          value={settings.divideEvery}
+          value={divideEvery}
           data-data-type="number"
         >
           {numerators.map((key) => (
@@ -54,7 +55,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
           name="sounds"
           className="border-black border p-1"
           onChange={onFormChange}
-          value={settings.sounds}
+          value={sounds}
         />
       </div>
     </form>
@@ -62,7 +63,11 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
 };
 
 TaikoGridSettings.propTypes = {
-  settings: PropTypes.shape({}),
+  settings: PropTypes.shape({
+    cellsPerLine: PropTypes.number,
+    divideEvery: PropTypes.number,
+    sounds: PropTypes.string,
+  }),
   setSettings: PropTypes.func,
 };
 

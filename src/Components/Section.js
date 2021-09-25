@@ -13,10 +13,11 @@ const Section = (props) => {
     divideEvery,
     soundArray,
   } = props;
-  const { name: sectionName, cells, totalLines } = section;
+  const { name: sectionName, cells, totalLines, id } = section;
+  const dispatch = useDispatch();
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
-  const dispatch = useDispatch();
+  console.debug(`Section rerendering ${sectionName} - ${id}`);
   for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
     const cell = cells[cellIndex] || {};
     const { soundIndex = 0 } = cell;
@@ -86,7 +87,12 @@ const Section = (props) => {
 };
 
 Section.propTypes = {
-  section: PropTypes.shape({}),
+  section: PropTypes.shape({
+    id: undefined,
+    totalLines: undefined,
+    cells: undefined,
+    name: undefined,
+  }),
   sectionIndex: PropTypes.number,
   cellsPerLine: PropTypes.number,
   divideEvery: PropTypes.number,

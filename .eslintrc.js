@@ -14,7 +14,11 @@ module.exports = {
   plugins: ["react"],
   rules: {
     quotes: 0,
-    "no-unused-vars": 1,
+    "no-unused-vars": [
+      1,
+      { vars: "all", args: "none", ignoreRestSiblings: false }, // do not check function arguments so we can be aware of what is available
+    ],
+    "no-console": [1, { allow: ["debug", "error"] }],
     "react/prop-types": 1,
     "react/require-default-props": 1,
     "react/no-array-index-key": 1,

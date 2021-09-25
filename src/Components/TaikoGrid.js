@@ -13,12 +13,11 @@ import Button from "./Button";
 import { getMainFromLocal, saveMainToLocal } from "../redux/store";
 import Section from "./Section";
 
-const chihat = new Audio("/drum-sounds-master/closed-hihat.mp3");
-const snare = new Audio("/drum-sounds-master/acoustic-snare.mp3");
-const bass = new Audio("/drum-sounds-master/bass-drum-1.mp3");
-
-const notes = [chihat, snare, bass];
-console.log(notes);
+// const chihat = new Audio("/drum-sounds-master/closed-hihat.mp3");
+// const snare = new Audio("/drum-sounds-master/acoustic-snare.mp3");
+// const bass = new Audio("/drum-sounds-master/bass-drum-1.mp3");
+//
+// const notes = [chihat, snare, bass];
 
 const TaikoGrid = () => {
   const dispatch = useDispatch();
@@ -31,7 +30,7 @@ const TaikoGrid = () => {
     [sounds]
   );
 
-  console.log("entire taiko grid rerender");
+  console.debug("entire taiko grid rerender");
 
   return (
     <div>
@@ -77,7 +76,7 @@ const TaikoGrid = () => {
           <Button
             onClick={() => {
               const state = getMainFromLocal();
-              console.log(state);
+              console.debug("entire state", state);
               dispatch(setMainState(state));
             }}
             className="m-4"
@@ -87,19 +86,16 @@ const TaikoGrid = () => {
         </div>
       </div>
       <div>
-        {sections.map((section, sectionIndex) => {
-          console.log(section);
-          return (
-            <Section
-              key={sectionIndex}
-              cellsPerLine={cellsPerLine}
-              divideEvery={divideEvery}
-              section={section}
-              sectionIndex={sectionIndex}
-              soundArray={soundArray}
-            />
-          );
-        })}
+        {sections.map((section, sectionIndex) => (
+          <Section
+            key={section.id}
+            cellsPerLine={cellsPerLine}
+            divideEvery={divideEvery}
+            section={section}
+            sectionIndex={sectionIndex}
+            soundArray={soundArray}
+          />
+        ))}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 /**
  * A component which will show a styled button
@@ -12,5 +13,15 @@ const Button = ({ children, className, ...rest }) => (
     {children}
   </button>
 );
+
+Button.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+};
+
+Button.defaultProps = {
+  className: undefined,
+  children: undefined,
+};
 
 export default Button;
