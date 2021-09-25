@@ -174,7 +174,7 @@ export const initialState = {
       cells: [],
       id: 2,
       name: "Line 2",
-      totalLines: 0,
+      totalLines: 1,
     },
   ],
   settings: {
@@ -218,7 +218,7 @@ const getNewSection = (index = 0) => ({
   cells: [],
   id: index,
   name: `Line ${index}`,
-  totalLines: 0,
+  totalLines: 1,
 });
 
 export const mainSlice = createSlice({
@@ -233,7 +233,7 @@ export const mainSlice = createSlice({
     },
     setTotalLines: (state, action) => {
       const { sectionIndex, totalLines } = action.payload;
-      const final = Math.max(totalLines, 0);
+      const final = Math.max(totalLines, 1);
       const { cellsPerLine } = state.settings;
       state.sections[sectionIndex].totalLines = final;
       state.sections[sectionIndex].cells = state.sections[
