@@ -49,7 +49,9 @@ const PopupMenu = ({
     open && (
       <div
         ref={ref}
-        className={`popupmenu grid grid-rows-4 grid-cols-${tooltipColumns} w-max grid-flow-col max-h-48 `}
+        className={`popupmenu grid grid-rows-4 grid-cols-${tooltipColumns} w-max grid-flow-col max-h-48 ${
+          actualPosition ? "" : "invisible"
+        } `}
         style={actualPosition}
       >
         {soundArray.map((soundNote, soundIndex) => (
