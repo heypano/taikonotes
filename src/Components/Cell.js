@@ -14,6 +14,7 @@ const Cell = (props) => {
   } = props;
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const [menuCoordinates, setMenuCoordinates] = useState();
   const onOpenChange = useCallback((v) => {
     setShowMenu(v);
   }, []);
@@ -48,12 +49,14 @@ const Cell = (props) => {
       }}
       onContextMenu={(e) => {
         setShowMenu(true);
+        setMenuCoordinates([e.clientX, e.clientY]);
         e.preventDefault();
       }}
     >
       {sound}
       <PopupMenu
         open={showMenu}
+        menuCoordinates={menuCoordinates}
         onOpenChange={onOpenChange}
         cellIndex={cellIndex}
         sectionIndex={sectionIndex}

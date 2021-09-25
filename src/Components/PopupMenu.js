@@ -10,6 +10,7 @@ const PopupMenu = ({
   onOpenChange,
   soundArray,
   sectionIndex,
+  menuCoordinates,
 }) => {
   const tooltipColumns = Math.ceil(soundArray.length / 4);
   const dispatch = useDispatch();
@@ -25,31 +26,37 @@ const PopupMenu = ({
   useOnClickOutside(ref, onClickOutside);
   console.debug("PopupMenu rerender");
   return (
-    <div
-      ref={ref}
-      className={`popupmenu grid grid-rows-4 grid-cols-${tooltipColumns} w-max grid-flow-col max-h-48 ${
-        !open ? "invisible" : ""
-      }`}
-      onClick={onClickOutside}
-    >
-      {soundArray.map((soundNote, soundIndex) => (
-        <div
-          className="p-3 hover:bg-blue-200"
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(
-              setSoundIndex({
-                cellIndex,
-                sectionIndex,
-                soundIndex,
-              })
-            );
-          }}
-        >
-          {soundNote}
-        </div>
-      ))}
-    </div>
+    open && (
+      <div
+        ref={ref}
+        className={`popupmenu grid grid-rows-4 grid-cols-${tooltipColumns} w-max grid-flow-col max-h-48`}
+        style={
+          menuCoordinates && {
+            top: menuCoordinates[1] - 50,
+            left: menuCoordinates[0],
+          }
+        }
+      >
+        {soundArray.map((soundNote, soundIndex) => (
+          <div
+            key={soundIndex}
+            className="p-3 hover:bg-blue-200 "
+            onClick={(e) => {
+              dispatch(
+                setSoundIndex({
+                  cellIndex,
+                  sectionIndex,
+                  soundIndex,
+                })
+              );
+              onClickOutside(e);
+            }}
+          >
+            {soundNote}
+          </div>
+        ))}
+      </div>
+    )
   );
 };
 
@@ -58,9 +65,10 @@ PopupMenu.propTypes = {
   onOpenChange: PropTypes.func.isRequired,
   cellIndex: PropTypes.number.isRequired,
   soundArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  menuCoordinates: PropTypes.arrayOf(PropTypes.number),
   sectionIndex: PropTypes.number.isRequired,
 };
 
-PopupMenu.defaultProps = {};
+PopupMenu.defaultProps = { menuCoordinates: undefined };
 
 export default memo(PopupMenu);
