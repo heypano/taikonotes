@@ -36,7 +36,7 @@ const Cell = (props) => {
   console.debug(`Cell rerender ${cellIndex}`);
   return (
     <div
-      className={`flex flex-row justify-center items-center select-none border border-blue-800 h-10 cursor-pointer ${backgroundClass}`}
+      className={`fadeBg flex flex-row justify-center items-center select-none border border-blue-800 h-10 cursor-pointer ${backgroundClass}`}
       onContextMenu={(e) => {
         dispatch(
           setIntensity({

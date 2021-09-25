@@ -2,11 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.quickFade {
+  animation: fadeIn 0.2s;
+}
+
+.fadeBg {
+  transition-property: background-color;
+  transition-duration: 0.7s;
+}
+
 .popupmenu {
   @apply fixed;
   @apply rounded shadow-lg bg-gray-50;
   @apply transition delay-150 duration-300 ease-in-out;
-  animation: fadeIn 0.2s;
+  @apply quickFade;
 }
 
 @keyframes fadeIn {

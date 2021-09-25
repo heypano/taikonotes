@@ -32322,6 +32322,16 @@ video {
   content: none;
 }
 
+.quickFade {
+  -webkit-animation: fadeIn 0.2s;
+          animation: fadeIn 0.2s;
+}
+
+.slowFade {
+  transition-property: background-color;
+  transition-duration: 0.7s;
+}
+
 .popupmenu {
   position: fixed;
   border-radius: 0.25rem;
