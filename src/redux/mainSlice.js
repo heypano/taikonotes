@@ -225,7 +225,9 @@ export const mainSlice = createSlice({
   name,
   initialState,
   reducers: {
-    // Only sets the keys provided
+    clearState: (state, action) => {
+      state.sections = [getNewSection()];
+    },
     setSettings: (state, action) => {
       Object.keys(action.payload).forEach((key) => {
         state.settings[key] = action.payload[key];
@@ -268,6 +270,7 @@ export const {
   setMainState,
   addSection,
   removeLastSection,
+  clearState,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;

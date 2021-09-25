@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import TaikoGridSettings from "./TaikoGridSettings";
 import {
   addSection,
+  clearState,
   removeLastSection,
   setMainState,
   useSectionIds,
@@ -67,6 +68,14 @@ const TaikoGrid = () => {
               className="m-4"
             >
               Load
+            </Button>
+            <Button
+              onClick={() => {
+                dispatch(clearState());
+              }}
+              className="m-4"
+            >
+              Clear
             </Button>
           </div>
         </div>
