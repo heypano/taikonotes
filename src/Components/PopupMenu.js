@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useRef } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setSoundIndex } from "../redux/mainSlice";
@@ -23,19 +23,33 @@ const PopupMenu = ({
     },
     [onOpenChange]
   );
+  const [actualPosition, setActualPosition] = useState();
   useOnClickOutside(ref, onClickOutside);
   console.debug("PopupMenu rerender");
+
+  useEffect(() => {
+    if (ref.current && menuCoordinates) {
+      const left = Math.min(
+        menuCoordinates[0],
+        window.innerWidth - ref.current.clientWidth - 30
+      );
+      const top = Math.min(
+        menuCoordinates[1] - 50,
+        window.innerHeight - ref.current.clientHeight
+      );
+      setActualPosition({ left, top });
+    } else {
+      setActualPosition(null);
+    }
+  }, [open, menuCoordinates]);
   return (
     open && (
       <div
         ref={ref}
-        className={`popupmenu grid grid-rows-4 grid-cols-${tooltipColumns} w-max grid-flow-col max-h-48`}
-        style={
-          menuCoordinates && {
-            top: menuCoordinates[1] - 50,
-            left: menuCoordinates[0],
-          }
-        }
+        className={`popupmenu grid grid-rows-4 grid-cols-${tooltipColumns} w-max grid-flow-col max-h-48 ${
+          actualPosition ? "" : "invisible"
+        }`}
+        style={actualPosition}
       >
         {soundArray.map((soundNote, soundIndex) => (
           <div

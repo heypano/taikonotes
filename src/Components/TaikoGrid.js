@@ -24,7 +24,7 @@ const TaikoGrid = () => {
   console.debug("TaikoGrid rerender");
   return (
     <div>
-      <div className="settings mt-3 mb-3 p-3 flex flex-row">
+      <div className="settings mt-3 mb-3 p-3 flex flex-col md:flex-row">
         <img
           src={`${process.env.PUBLIC_URL}/favicon/Taiko.svg`}
           className="w-1/12 pr-2"

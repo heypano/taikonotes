@@ -22,6 +22,8 @@ const Section = (props) => {
   const { sectionName, totalLines, id } = section;
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
+  const mobileDisplayedCells =
+    cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
   console.debug(`Section rerender ${sectionName} - ${id}`);
   for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
     sectionCells.push(
@@ -79,7 +81,9 @@ const Section = (props) => {
           }}
         />
       </div>
-      <div className={`grid grid-cols-${cellsPerLine} border border-blue-800`}>
+      <div
+        className={`grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-blue-800`}
+      >
         {sectionCells}
       </div>
     </div>
