@@ -5,8 +5,10 @@ const numerators = [...Array(20).keys()].map((key) => key + 1);
 const TaikoGridSettings = ({ settings, setSettings }) => {
   const onSubmit = (e) => {};
   const onFormChange = (e) => {
+    const { name, value, dataType } = e.target;
+    const usedValue = dataType === "number" ? Number(value) : value;
     setSettings({
-      [e.target.name]: e.target.value,
+      [name]: usedValue,
     });
   };
 
@@ -19,6 +21,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
           className="p-2 "
           onChange={onFormChange}
           value={settings.cellsPerLine}
+          data-data-type="number"
         >
           {numerators.map((key) => (
             <option key={`cellsPerLine_${key}`} value={key}>
@@ -34,6 +37,7 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
           className="p-2 "
           onChange={onFormChange}
           value={settings.divideEvery}
+          data-data-type="number"
         >
           {numerators.map((key) => (
             <option key={`defaultDivideEvery_${key}`} value={key}>

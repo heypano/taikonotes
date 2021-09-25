@@ -1,17 +1,17 @@
 import React, { useMemo } from "react";
-import Cell from "./Cell";
 import TaikoGridSettings from "./TaikoGridSettings";
 import { useDispatch } from "react-redux";
 import {
   useSettings,
   setSettings,
   useSections,
-  setSoundIndex,
-  setTotalLines,
   setMainState,
+  addSection,
+  removeLastSection,
 } from "../redux/mainSlice";
 import Button from "./Button";
 import { getMainFromLocal, saveMainToLocal } from "../redux/store";
+import Section from "./Section";
 
 const chihat = new Audio("/drum-sounds-master/closed-hihat.mp3");
 const snare = new Audio("/drum-sounds-master/acoustic-snare.mp3");
@@ -52,6 +52,22 @@ const TaikoGrid = (props) => {
         <div className="w-full md:w-6/12 lg:w-4/12 flex flex-col justify-between">
           <Button
             onClick={() => {
+              dispatch(addSection());
+            }}
+            className="m-4"
+          >
+            Add Section
+          </Button>
+          <Button
+            onClick={() => {
+              dispatch(removeLastSection());
+            }}
+            className="m-4"
+          >
+            Remove Last Section
+          </Button>
+          <Button
+            onClick={() => {
               saveMainToLocal();
             }}
             className="m-4"
@@ -71,79 +87,15 @@ const TaikoGrid = (props) => {
         </div>
       </div>
       <div>
-        {sections.map((section, sectionIndex) => {
-          const { name: sectionName, cells, totalLines } = section;
-          const sectionCells = [];
-          const numCells = cellsPerLine * totalLines;
-          for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
-            const cell = cells[cellIndex] || {};
-            const { soundIndex = 0 } = cell;
-            sectionCells.push(
-              <Cell
-                key={`cell_${sectionIndex}_${cellIndex}`}
-                isStartingCell={cellIndex % divideEvery === 0}
-                cellsPerLine={cellsPerLine}
-                sound={soundArray[soundIndex]}
-                onClick={() => {
-                  const nextSoundsIndex = (soundIndex + 1) % soundArray.length;
-                  dispatch(
-                    setSoundIndex({
-                      cellIndex,
-                      sectionIndex,
-                      soundIndex: nextSoundsIndex,
-                    })
-                  );
-                }}
-                onContextMenu={() =>
-                  dispatch(
-                    setSoundIndex({
-                      cellIndex,
-                      sectionIndex,
-                      soundIndex: 0,
-                    })
-                  )
-                }
-              ></Cell>
-            );
-          }
-          return (
-            <div key={`section_${sectionIndex}`} className="mb-8">
-              <h2 className="text-2xl mb-2">{sectionName}</h2>
-              <div
-                className={`grid grid-cols-${cellsPerLine} border border-blue-800`}
-              >
-                {sectionCells}
-              </div>
-              <div>
-                <Button
-                  onClick={() => {
-                    dispatch(
-                      setTotalLines({
-                        sectionIndex,
-                        totalLines: totalLines - 1,
-                      })
-                    );
-                  }}
-                >
-                  -
-                </Button>
-                <Button
-                  className="mr-2"
-                  onClick={() => {
-                    dispatch(
-                      setTotalLines({
-                        sectionIndex,
-                        totalLines: totalLines + 1,
-                      })
-                    );
-                  }}
-                >
-                  +
-                </Button>
-              </div>
-            </div>
-          );
-        })}
+        {sections.map((section, sectionIndex) => (
+          <Section
+            cellsPerLine={cellsPerLine}
+            divideEvery={divideEvery}
+            section={section}
+            sectionIndex={sectionIndex}
+            soundArray={soundArray}
+          />
+        ))}
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ export const name = "main";
 const initialState = {
   sections: [
     {
-      name: "Line A",
+      name: "Line 1",
       totalLines: 4,
       cells: [
         {
@@ -169,7 +169,7 @@ const initialState = {
       ],
     },
     {
-      name: "Line B",
+      name: "Line 2",
       totalLines: 0,
       cells: [
         {
@@ -198,7 +198,7 @@ const initialState = {
   ],
   settings: {
     cellsPerLine: 16,
-    divideEvery: "2",
+    divideEvery: 2,
     sounds: "don, kon, ka, do, ko, ro, su, tsu,ku, kara, ra, doko",
   },
 };
@@ -220,6 +220,12 @@ export const useSections = () => {
   });
 };
 
+const getNewSection = (index = 0) => ({
+  cells: [],
+  totalLines: 0,
+  name: `Line ${index}`,
+});
+
 export const mainSlice = createSlice({
   name,
   initialState,
@@ -236,15 +242,19 @@ export const mainSlice = createSlice({
     },
     setSoundIndex: (state, action) => {
       const { sectionIndex, cellIndex, soundIndex } = action.payload;
-      const section = state.sections[sectionIndex] || {
-        cells: [],
-      };
+      const section = state.sections[sectionIndex] || getNewSection();
       const cell = section.cells[cellIndex] || {};
       cell.soundIndex = soundIndex;
       state.sections[sectionIndex].cells[cellIndex] = cell;
     },
     setMainState: (state, action) => {
       return action.payload;
+    },
+    addSection: (state, action) => {
+      state.sections.push(getNewSection(state.sections.length + 1));
+    },
+    removeLastSection: (state, action) => {
+      state.sections.pop();
     },
   },
 });
@@ -258,6 +268,8 @@ export const {
   setSettings,
   setSoundIndex,
   setMainState,
+  addSection,
+  removeLastSection,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;
