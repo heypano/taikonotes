@@ -1,14 +1,19 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
 /**
  * React class to contain a page
  */
-const PageContainer = ({children}) => {
-    return (
-        <div className="container mx-auto">
-            {children}
-        </div>
-    )
+const PageContainer = ({ children }) => (
+  <div className="container mx-auto">{children}</div>
+);
+
+PageContainer.propTypes = {
+  children: PropTypes.node,
+};
+
+PageContainer.defaultProps = {
+  children: "asd",
 };
 
 export default PageContainer;

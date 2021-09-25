@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 
@@ -6,8 +7,6 @@ export const name = "main";
 const initialState = {
   sections: [
     {
-      name: "Line 1",
-      totalLines: 4,
       cells: [
         {
           soundIndex: 1,
@@ -167,10 +166,11 @@ const initialState = {
           soundIndex: 1,
         },
       ],
+      id: 1,
+      name: "Line 1",
+      totalLines: 4,
     },
     {
-      name: "Line 2",
-      totalLines: 0,
       cells: [
         {
           soundIndex: 1,
@@ -194,6 +194,9 @@ const initialState = {
           soundIndex: 2,
         },
       ],
+      id: 2,
+      name: "Line 2",
+      totalLines: 0,
     },
   ],
   settings: {
@@ -202,8 +205,8 @@ const initialState = {
     sounds: "don, kon, ka, do, ko, ro, su, tsu,ku, kara, ra, doko",
   },
 };
-export const useSettings = () => {
-  return useSelector((state) => {
+export const useSettings = () =>
+  useSelector((state) => {
     const { cellsPerLine, divideEvery, sounds } = state[name].settings;
     return {
       cellsPerLine,
@@ -211,19 +214,18 @@ export const useSettings = () => {
       sounds,
     };
   });
-};
 
-export const useSections = () => {
-  return useSelector((state) => {
+export const useSections = () =>
+  useSelector((state) => {
     const { sections } = state[name];
     return sections;
   });
-};
 
 const getNewSection = (index = 0) => ({
   cells: [],
-  totalLines: 0,
+  id: index,
   name: `Line ${index}`,
+  totalLines: 0,
 });
 
 export const mainSlice = createSlice({
@@ -247,9 +249,7 @@ export const mainSlice = createSlice({
       cell.soundIndex = soundIndex;
       state.sections[sectionIndex].cells[cellIndex] = cell;
     },
-    setMainState: (state, action) => {
-      return action.payload;
-    },
+    setMainState: (state, action) => action.payload,
     addSection: (state, action) => {
       state.sections.push(getNewSection(state.sections.length + 1));
     },

@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 const numerators = [...Array(20).keys()].map((key) => key + 1);
 // export const denominators = [4, 8, 16];
 
@@ -58,4 +60,15 @@ const TaikoGridSettings = ({ settings, setSettings }) => {
     </form>
   );
 };
+
+TaikoGridSettings.propTypes = {
+  settings: PropTypes.shape({}),
+  setSettings: PropTypes.func,
+};
+
+TaikoGridSettings.defaultProps = {
+  settings: undefined,
+  setSettings: undefined,
+};
+
 export default TaikoGridSettings;

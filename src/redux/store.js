@@ -23,4 +23,5 @@ export const getMainFromLocal = () => {
   if (state) {
     return JSON.parse(state);
   }
+  return null;
 };

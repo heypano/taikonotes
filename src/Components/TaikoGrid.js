@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import TaikoGridSettings from "./TaikoGridSettings";
 import { useDispatch } from "react-redux";
+import TaikoGridSettings from "./TaikoGridSettings";
 import {
   useSettings,
   setSettings,
@@ -20,7 +20,7 @@ const bass = new Audio("/drum-sounds-master/bass-drum-1.mp3");
 const notes = [chihat, snare, bass];
 console.log(notes);
 
-const TaikoGrid = (props) => {
+const TaikoGrid = () => {
   const dispatch = useDispatch();
   const settings = useSettings();
   const sections = useSections();
@@ -87,15 +87,19 @@ const TaikoGrid = (props) => {
         </div>
       </div>
       <div>
-        {sections.map((section, sectionIndex) => (
-          <Section
-            cellsPerLine={cellsPerLine}
-            divideEvery={divideEvery}
-            section={section}
-            sectionIndex={sectionIndex}
-            soundArray={soundArray}
-          />
-        ))}
+        {sections.map((section, sectionIndex) => {
+          console.log(section);
+          return (
+            <Section
+              key={sectionIndex}
+              cellsPerLine={cellsPerLine}
+              divideEvery={divideEvery}
+              section={section}
+              sectionIndex={sectionIndex}
+              soundArray={soundArray}
+            />
+          );
+        })}
       </div>
     </div>
   );

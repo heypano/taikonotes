@@ -2,7 +2,7 @@ import React from "react";
 import * as PropTypes from "prop-types";
 
 const Cell = (props) => {
-  let { sound, onClick, onContextMenu, isPlaying, isStartingCell } = props;
+  const { sound, onClick, onContextMenu, isPlaying, isStartingCell } = props;
   let backgroundClass;
   if (isPlaying) {
     backgroundClass = "bg-red-300 hover:bg-red-600";
@@ -28,6 +28,13 @@ Cell.propTypes = {
   sound: PropTypes.node,
   onClick: PropTypes.func,
   onContextMenu: PropTypes.func,
+};
+
+Cell.defaultProps = {
+  isStartingCell: undefined,
+  sound: undefined,
+  onClick: undefined,
+  onContextMenu: undefined,
 };
 
 export default Cell;

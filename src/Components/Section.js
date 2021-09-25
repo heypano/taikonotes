@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import Cell from "./Cell";
 import { setSoundIndex, setTotalLines } from "../redux/mainSlice";
 import Button from "./Button";
-import { useDispatch } from "react-redux";
 
 const Section = (props) => {
   const {
@@ -17,7 +17,6 @@ const Section = (props) => {
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
   const dispatch = useDispatch();
-  console.log("yo");
   for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
     const cell = cells[cellIndex] || {};
     const { soundIndex = 0 } = cell;
@@ -46,7 +45,7 @@ const Section = (props) => {
             })
           )
         }
-      ></Cell>
+      />
     );
   }
   return (
@@ -91,7 +90,14 @@ Section.propTypes = {
   sectionIndex: PropTypes.number,
   cellsPerLine: PropTypes.number,
   divideEvery: PropTypes.number,
-  soundArray: PropTypes.arrayOf(PropTypes.shape({})),
+  soundArray: PropTypes.arrayOf(PropTypes.string),
 };
 
+Section.defaultProps = {
+  section: undefined,
+  sectionIndex: undefined,
+  cellsPerLine: undefined,
+  divideEvery: undefined,
+  soundArray: undefined,
+};
 export default Section;

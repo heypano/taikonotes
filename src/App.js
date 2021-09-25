@@ -1,8 +1,8 @@
 import React from "react";
+import { Provider } from "react-redux";
 import TaikoGrid from "./Components/TaikoGrid";
 import PageContainer from "./Components/PageContainer";
 import { store } from "./redux/store";
-import { Provider } from "react-redux";
 
 function App() {
   return (
