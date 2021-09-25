@@ -2,35 +2,35 @@ import React, { memo, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import Cell from "./Cell";
-import { setTotalLines, useSection, useSettings } from "../redux/mainSlice";
+import {
+  setTotalLines,
+  useSectionNoCells,
+  useSettings,
+} from "../redux/mainSlice";
 import Button from "./Button";
 
 const Section = (props) => {
   const { sectionId } = props;
   const { cellsPerLine, divideEvery, sounds } = useSettings();
   const dispatch = useDispatch();
-  const section = useSection(sectionId);
+  const section = useSectionNoCells(sectionId);
   const soundArray = useMemo(
     () => [null, ...sounds.split(",").map((s) => s.trim())],
     [sounds]
   );
-  const { name: sectionName, cells, totalLines, id } = section;
+  const { name: sectionName, totalLines, id } = section;
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
   console.debug(`Section rerender ${sectionName} - ${id}`);
   for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
-    const cell = cells[cellIndex] || {};
-    const { soundIndex = 0 } = cell;
     sectionCells.push(
       <Cell
         key={`cell_${sectionId}_${cellIndex}`}
         isStartingCell={cellIndex % divideEvery === 0}
         cellsPerLine={cellsPerLine}
         cellIndex={cellIndex}
-        soundIndex={soundIndex}
         sectionIndex={sectionId}
         soundArray={soundArray}
-        sound={soundArray[soundIndex]}
       />
     );
   }

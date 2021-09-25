@@ -23,6 +23,7 @@ module.exports = {
     "react/no-unknown-property": 1,
     "react/require-default-props": 1,
     "react/no-array-index-key": 1,
+    "no-debugger": 1,
     "react/jsx-filename-extension": 0,
     "react/jsx-props-no-spreading": 0,
     "jsx-a11y/label-has-associated-control": 0,

@@ -206,14 +206,7 @@ export const initialState = {
   },
 };
 export const useSettings = () =>
-  useSelector((state) => {
-    const { cellsPerLine, divideEvery, sounds } = state[name].settings;
-    return {
-      cellsPerLine,
-      divideEvery,
-      sounds,
-    };
-  }, shallowEqual);
+  useSelector((state) => state[name].settings, shallowEqual);
 
 export const useSections = () =>
   useSelector((state) => {
@@ -227,10 +220,20 @@ export const useSectionIds = () =>
     return sections.map((s) => s.id);
   }, shallowEqual);
 
-export const useSection = (index) =>
+export const useSectionNoCells = (index) =>
   useSelector((state) => {
     const { sections } = state[name];
-    return sections[index];
+    const section = {
+      ...sections[index],
+    };
+    delete section.cells;
+    return section;
+  }, shallowEqual);
+
+export const useCell = (sectionIndex, cellIndex) =>
+  useSelector((state) => {
+    const { sections } = state[name];
+    return sections[sectionIndex].cells[cellIndex] || {};
   }, shallowEqual);
 
 const getNewSection = (index = 0) => ({

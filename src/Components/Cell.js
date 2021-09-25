@@ -1,19 +1,19 @@
 import React, { memo } from "react";
 import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { setSoundIndex } from "../redux/mainSlice";
+import { setSoundIndex, useCell } from "../redux/mainSlice";
 
 const Cell = (props) => {
   const {
     soundArray = [],
     cellIndex,
     sectionIndex,
-    soundIndex,
     isPlaying,
     isStartingCell,
   } = props;
   const dispatch = useDispatch();
   let backgroundClass;
+  const { soundIndex = 0 } = useCell(sectionIndex, cellIndex);
   const sound = soundArray[soundIndex];
   if (isPlaying) {
     backgroundClass = "bg-red-300 hover:bg-red-600";
@@ -54,7 +54,6 @@ const Cell = (props) => {
 Cell.propTypes = {
   isStartingCell: PropTypes.bool.isRequired,
   soundArray: PropTypes.arrayOf(PropTypes.string).isRequired,
-  soundIndex: PropTypes.number.isRequired,
   cellIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool,
