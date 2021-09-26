@@ -8,11 +8,11 @@ const PopupMenu = ({
   cellIndex,
   open,
   onOpenChange,
-  soundArray,
+  soundObj,
   sectionIndex,
   menuCoordinates,
 }) => {
-  const tooltipColumns = Math.ceil(soundArray.length / 4);
+  const tooltipColumns = Math.ceil(soundObj.length / 4);
   const dispatch = useDispatch();
   const ref = useRef();
   const onClickOutside = useCallback(
@@ -54,7 +54,7 @@ const PopupMenu = ({
         } `}
         style={actualPosition}
       >
-        {soundArray.map((sound) => (
+        {Object.values(soundObj).map((sound) => (
           <div
             key={sound}
             className="p-3 hover:bg-blue-200 "
@@ -81,7 +81,7 @@ PopupMenu.propTypes = {
   open: PropTypes.bool.isRequired,
   onOpenChange: PropTypes.func.isRequired,
   cellIndex: PropTypes.number.isRequired,
-  soundArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  soundObj: PropTypes.shape({}).isRequired,
   menuCoordinates: PropTypes.arrayOf(PropTypes.number),
   sectionIndex: PropTypes.number.isRequired,
 };

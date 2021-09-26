@@ -15,8 +15,11 @@ const Section = (props) => {
   const { cellsPerLine, divideEvery, sounds } = useSettings();
   const dispatch = useDispatch();
   const section = useSectionNoCells(sectionId);
-  const soundArray = useMemo(
-    () => [null, ...sounds.split(",").map((s) => s.trim())],
+  const soundObj = useMemo(
+    () =>
+      Object.fromEntries(
+        [null, ...sounds.split(",").map((s) => s.trim())].map((e) => [e, e])
+      ),
     [sounds]
   );
   const { sectionName, totalLines, id } = section;
@@ -33,7 +36,7 @@ const Section = (props) => {
         cellsPerLine={cellsPerLine}
         cellIndex={cellIndex}
         sectionIndex={sectionId}
-        soundArray={soundArray}
+        soundObj={soundObj}
       />
     );
   }

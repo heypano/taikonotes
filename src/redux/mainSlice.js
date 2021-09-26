@@ -192,12 +192,6 @@ export const initialState = {
       sectionName: "Line 1",
       totalLines: 4,
     },
-    {
-      cells: [],
-      id: 2,
-      sectionName: "Line 2",
-      totalLines: 1,
-    },
   ],
   settings: {
     cellsPerLine: 16,
