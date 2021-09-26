@@ -72,6 +72,10 @@ const Section = (props) => {
             if (e.clientX && e.clientY) {
               setSectionSettingsLeft(e.clientX);
               setSectionSettingsTop(e.clientY);
+            } else if (e.target) {
+              const { x, y } = e.target.getBoundingClientRect();
+              setSectionSettingsLeft(x);
+              setSectionSettingsTop(y);
             }
           }}
         >

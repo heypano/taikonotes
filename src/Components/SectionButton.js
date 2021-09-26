@@ -1,10 +1,9 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
-import { onEnter } from "../keyboard/util";
 
 const SectionButton = ({ children, onClick }) => (
-  <Button className="mr-2" onClick={onClick} onKeyPress={onEnter(onClick)}>
+  <Button className="mr-2" onClick={onClick}>
     {children}
   </Button>
 );
