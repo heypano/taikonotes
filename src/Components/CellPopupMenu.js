@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setSound, useSoundObj } from "../redux/mainSlice";
@@ -12,7 +12,7 @@ const CellPopupMenu = ({
   sectionIndex,
   menuCoordinates,
 }) => {
-  const soundObj = useSoundObj();
+  const soundObj = useSoundObj(sectionIndex);
   const tooltipColumns = Math.ceil(Object.keys(soundObj).length / 4);
   const dispatch = useDispatch();
   const firstCellRef = useRef();

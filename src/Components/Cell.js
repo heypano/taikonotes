@@ -16,7 +16,7 @@ const Cell = (props) => {
   } = props;
   const ref = useRef();
   const dispatch = useDispatch();
-  const soundObj = useSoundObj();
+  const soundObj = useSoundObj(sectionIndex);
   const [showMenu, setShowMenu] = useState(false);
   const [menuCoordinates, setMenuCoordinates] = useState();
   const onOpenChange = useCallback((newIsOpen) => {
@@ -97,6 +97,7 @@ Cell.propTypes = {
   isFirstCellInLine: PropTypes.bool.isRequired,
   cellIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
+  cellsPerLine: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool,
 };
 

@@ -191,33 +191,235 @@ export const initialState = {
       id: 1,
       sectionName: "Line 1",
       totalLines: 4,
+      settings: {
+        cellsPerLine: 16,
+        divideEvery: 2,
+        sounds: "don, kon, ka, do, ko, ro, su, tsu,ku, kara, ra, doko",
+        soundObj: {
+          don: "don",
+          kon: "kon",
+          ka: "ka",
+          do: "do",
+          ko: "ko",
+          ro: "ro",
+          su: "su",
+          tsu: "tsu",
+          ku: "ku",
+          kara: "kara",
+          ra: "ra",
+          doko: "doko",
+        },
+      },
+    },
+    {
+      cells: [
+        {
+          sound: "don",
+        },
+        null,
+        {
+          sound: "ka",
+          intensity: 1,
+        },
+        {
+          sound: "don",
+        },
+        {
+          sound: "",
+        },
+        {
+          sound: "ka",
+          intensity: 1,
+        },
+        {
+          sound: "don",
+        },
+        {
+          sound: "",
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "do",
+        },
+        {
+          sound: "ko",
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "do",
+        },
+        {
+          sound: "ro",
+        },
+        {
+          sound: "tsu",
+        },
+        {
+          sound: "ku",
+        },
+        {
+          sound: "su",
+        },
+        {
+          sound: "ka",
+          intensity: 1,
+        },
+        {
+          sound: "ra",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "do",
+        },
+        {
+          sound: "kon",
+          intensity: 1,
+        },
+        {
+          sound: "",
+        },
+        {
+          sound: "ka",
+          intensity: 1,
+        },
+        {
+          sound: "su",
+        },
+        {
+          sound: "ko",
+        },
+        {
+          sound: "do",
+        },
+        {
+          sound: "ko",
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        null,
+        {
+          sound: "ko",
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        {
+          sound: "doko",
+        },
+        {
+          sound: "kara",
+          intensity: 1,
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        {
+          sound: "su",
+        },
+        {
+          sound: "kon",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "ko",
+        },
+        {
+          sound: "do",
+          intensity: 1,
+        },
+        {
+          sound: "do",
+          intensity: 1,
+        },
+        {
+          sound: "su",
+        },
+        {
+          sound: "ka",
+          intensity: 1,
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "su",
+        },
+        {
+          sound: "do",
+        },
+        {
+          sound: "ka",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "su",
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        null,
+        {
+          sound: "don",
+          intensity: 1,
+        },
+      ],
+      id: 2,
+      sectionName: "Line 2",
+      totalLines: 4,
+      settings: {
+        cellsPerLine: 4,
+        divideEvery: 2,
+        sounds: "don, kon, ka",
+        soundObj: {
+          don: "don",
+          kon: "kon",
+          ka: "ka",
+        },
+      },
     },
   ],
-  settings: {
-    cellsPerLine: 16,
-    divideEvery: 2,
-    sounds: "don, kon, ka, do, ko, ro, su, tsu,ku, kara, ra, doko",
-    soundObj: {
-      don: "don",
-      kon: "kon",
-      ka: "ka",
-      do: "do",
-      ko: "ko",
-      ro: "ro",
-      su: "su",
-      tsu: "tsu",
-      ku: "ku",
-      kara: "kara",
-      ra: "ra",
-      doko: "doko",
-    },
-  },
 };
-export const useSettings = () =>
-  useSelector((state) => state[name].settings, shallowEqual);
+export const useSettings = (sectionIndex) =>
+  useSelector(
+    (state) => state[name].sections[sectionIndex].settings,
+    shallowEqual
+  );
 
-export const useSoundObj = () =>
-  useSelector((state) => state[name].settings.soundObj, shallowEqual);
+export const useSoundObj = (sectionIndex) =>
+  useSelector(
+    (state) => state[name].sections[sectionIndex].settings.soundObj,
+    shallowEqual
+  );
 
 export const useSections = () =>
   useSelector((state) => {
@@ -262,11 +464,14 @@ export const mainSlice = createSlice({
       state.sections = [getNewSection()];
     },
     setSettings: (state, action) => {
-      Object.keys(action.payload).forEach((key) => {
-        state.settings[key] = action.payload[key];
+      const { sectionId, settings } = action.payload;
+      Object.keys(settings).forEach((key) => {
+        state.sections[sectionId].settings[key] = settings[key];
       });
-      state.settings.soundObj = Object.fromEntries(
-        state.settings.sounds.split(",").map((s) => [s.trim(), s.trim()])
+      state.sections[sectionId].settings.soundObj = Object.fromEntries(
+        state.sections[sectionId].settings.sounds
+          .split(",")
+          .map((s) => [s.trim(), s.trim()])
       );
       // Erase sounds that don't match
       // state.sections.forEach((section) => {
@@ -280,7 +485,7 @@ export const mainSlice = createSlice({
     setTotalLines: (state, action) => {
       const { sectionIndex, totalLines } = action.payload;
       const final = Math.max(totalLines, 1);
-      const { cellsPerLine } = state.settings;
+      const { cellsPerLine } = state.sections[sectionIndex].settings;
       state.sections[sectionIndex].totalLines = final;
       state.sections[sectionIndex].cells = state.sections[
         sectionIndex

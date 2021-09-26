@@ -1,15 +1,16 @@
 import React, { memo, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 import { setSettings, useSettings } from "../redux/mainSlice";
 import { SettingInput } from "./SettingInput";
 
 const numerators = [...Array(20).keys()].map((key) => key + 1);
 // export const denominators = [4, 8, 16];
 
-const TaikoGridSettings = () => {
-  const settings = useSettings();
+const TaikoGridSettings = ({ sectionId }) => {
+  const settings = useSettings(sectionId);
   const dispatch = useDispatch();
-  const { cellsPerLine, divideEvery, sounds } = settings;
+  const { cellsPerLine = 16, divideEvery = 4, sounds = "ka,don" } = settings;
   const onSubmit = () => {};
 
   const onFormChange = useCallback(
@@ -18,11 +19,14 @@ const TaikoGridSettings = () => {
       const usedValue = dataType === "number" ? Number(value) : value;
       dispatch(
         setSettings({
-          [name]: usedValue,
+          sectionId,
+          settings: {
+            [name]: usedValue,
+          },
         })
       );
     },
-    [dispatch]
+    [dispatch, sectionId]
   );
 
   return (
@@ -78,7 +82,9 @@ const TaikoGridSettings = () => {
   );
 };
 
-TaikoGridSettings.propTypes = {};
+TaikoGridSettings.propTypes = {
+  sectionId: PropTypes.number.isRequired,
+};
 
 TaikoGridSettings.defaultProps = {};
 

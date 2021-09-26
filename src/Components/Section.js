@@ -14,7 +14,7 @@ import SectionSettings from "./SectionSettings";
 
 const Section = (props) => {
   const { sectionId } = props;
-  const { cellsPerLine, divideEvery } = useSettings();
+  const { cellsPerLine, divideEvery } = useSettings(sectionId);
   const [sectionSettingsOpen, setSectionSettingsOpen] = useState(false);
   const dispatch = useDispatch();
   const section = useSectionNoCells(sectionId);
@@ -77,6 +77,7 @@ const Section = (props) => {
         >
           <GearIcon />
           <SectionSettings
+            sectionId={sectionId}
             open={sectionSettingsOpen}
             onOpenChange={(isOpen) => {
               setSectionSettingsOpen(isOpen);

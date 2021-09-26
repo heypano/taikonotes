@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import useOnClickOutside from "../hooks/useOnClickOutside";
+import { onEnter } from "../keyboard/util";
 
 const PopupMenu = ({
   open,
@@ -39,13 +40,21 @@ const PopupMenu = ({
   }, [left, open, top]);
 
   const visibleClass = actualPosition ? "" : "invisible";
-  console.debug("PopupMenu rerender", left, top);
+  const onClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+  console.debug("PopupMenu rerender");
   return (
     open && (
       <div
         ref={ref}
         className={`popupmenu ${visibleClass} ${className}`}
         style={{ ...style, ...(actualPosition || {}) }}
+        onClick={onClick}
+        role="button"
+        onKeyPress={onEnter(onClick)}
+        tabIndex={0}
       >
         {children}
       </div>
@@ -63,6 +72,12 @@ PopupMenu.propTypes = {
   style: PropTypes.shape({}),
 };
 
-PopupMenu.defaultProps = { className: "", style: null };
+PopupMenu.defaultProps = {
+  className: "",
+  style: null,
+  children: undefined,
+  left: undefined,
+  top: undefined,
+};
 
 export default PopupMenu;

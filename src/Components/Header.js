@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import { useDispatch } from "react-redux";
-import TaikoGridSettings from "./TaikoGridSettings";
 import Button from "./Button";
 import {
   addSection,
@@ -20,7 +19,6 @@ const Header = () => {
           className="w-full p-2"
           alt="taiko logo"
         />
-        <TaikoGridSettings />
       </div>
       <div className="w-full md:w-4/12 lg:w-6/12 flex flex-col justify-between">
         <div className="mt-2 md:mt-0 grid grid-rows-2 grid-flow-col gap-1">
