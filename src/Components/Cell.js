@@ -1,18 +1,13 @@
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { setIntensity, setSound, useCell } from "../redux/mainSlice";
+import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
 import PopupMenu from "./PopupMenu";
 
 const Cell = (props) => {
-  const {
-    soundObj = [],
-    cellIndex,
-    sectionIndex,
-    isPlaying,
-    isStartingCell,
-  } = props;
+  const { cellIndex, sectionIndex, isPlaying, isStartingCell } = props;
   const dispatch = useDispatch();
+  const soundObj = useSoundObj();
   const [showMenu, setShowMenu] = useState(false);
   const [menuCoordinates, setMenuCoordinates] = useState();
   const onOpenChange = useCallback((v) => {
@@ -32,19 +27,6 @@ const Cell = (props) => {
   } else {
     backgroundClass = "hover:bg-blue-400";
   }
-
-  // If we want to remove non existent sounds
-  // useEffect(() => {
-  //   if (!soundObj[currentSound]) {
-  //     dispatch(
-  //       setSound({
-  //         cellIndex,
-  //         sectionIndex,
-  //         sound: "",
-  //       })
-  //     );
-  //   }
-  // }, [currentSound, soundObj, cellIndex, sectionIndex, dispatch]);
 
   console.debug(`Cell rerender ${cellIndex}`);
   return (
@@ -73,7 +55,6 @@ const Cell = (props) => {
         onOpenChange={onOpenChange}
         cellIndex={cellIndex}
         sectionIndex={sectionIndex}
-        soundObj={soundObj}
       />
     </div>
   );
@@ -81,7 +62,6 @@ const Cell = (props) => {
 
 Cell.propTypes = {
   isStartingCell: PropTypes.bool.isRequired,
-  soundObj: PropTypes.shape({}).isRequired,
   cellIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool,

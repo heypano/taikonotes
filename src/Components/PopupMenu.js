@@ -1,18 +1,18 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { setSound } from "../redux/mainSlice";
+import { setSound, useSoundObj } from "../redux/mainSlice";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 
 const PopupMenu = ({
   cellIndex,
   open,
   onOpenChange,
-  soundObj,
   sectionIndex,
   menuCoordinates,
 }) => {
-  const tooltipColumns = Math.ceil(soundObj.length / 4);
+  const soundObj = useSoundObj();
+  const tooltipColumns = Math.ceil(Object.keys(soundObj).length / 4);
   const dispatch = useDispatch();
   const ref = useRef();
   const onClickOutside = useCallback(
@@ -45,6 +45,7 @@ const PopupMenu = ({
       setActualPosition(null);
     }
   }, [open, menuCoordinates]);
+  console.log(soundObj);
   return (
     open && (
       <div

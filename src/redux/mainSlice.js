@@ -197,10 +197,27 @@ export const initialState = {
     cellsPerLine: 16,
     divideEvery: 2,
     sounds: "don, kon, ka, do, ko, ro, su, tsu,ku, kara, ra, doko",
+    soundObj: {
+      don: "don",
+      kon: "kon",
+      ka: "ka",
+      do: "do",
+      ko: "ko",
+      ro: "ro",
+      su: "su",
+      tsu: "tsu",
+      ku: "ku",
+      kara: "kara",
+      ra: "ra",
+      doko: "doko",
+    },
   },
 };
 export const useSettings = () =>
   useSelector((state) => state[name].settings, shallowEqual);
+
+export const useSoundObj = () =>
+  useSelector((state) => state[name].settings.soundObj, shallowEqual);
 
 export const useSections = () =>
   useSelector((state) => {
@@ -247,6 +264,17 @@ export const mainSlice = createSlice({
     setSettings: (state, action) => {
       Object.keys(action.payload).forEach((key) => {
         state.settings[key] = action.payload[key];
+      });
+      state.settings.soundObj = Object.fromEntries(
+        state.settings.sounds.split(",").map((s) => [s.trim(), s.trim()])
+      );
+      // Erase sounds that don't match
+      state.sections.forEach((section) => {
+        section.cells.forEach((cell) => {
+          if (cell) {
+            cell.sound = state.settings.soundObj[cell.sound] ? cell.sound : "";
+          }
+        });
       });
     },
     setTotalLines: (state, action) => {
