@@ -1,18 +1,22 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useRef, useState } from "react";
 import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
 import PopupMenu from "./PopupMenu";
-import { onEnter } from "../keyboard/util";
+import { onEnter, onSpace } from "../keyboard/util";
 
 const Cell = (props) => {
   const { cellIndex, sectionIndex, isPlaying, isStartingCell } = props;
+  const ref = useRef();
   const dispatch = useDispatch();
   const soundObj = useSoundObj();
   const [showMenu, setShowMenu] = useState(false);
   const [menuCoordinates, setMenuCoordinates] = useState();
-  const onOpenChange = useCallback((v) => {
-    setShowMenu(v);
+  const onOpenChange = useCallback((newIsOpen) => {
+    setShowMenu(newIsOpen);
+    if (ref.current && !newIsOpen) {
+      ref.current.focus();
+    }
   }, []);
 
   let backgroundClass;
@@ -41,23 +45,29 @@ const Cell = (props) => {
     e.preventDefault();
   };
 
+  const onContextMenu = (e) => {
+    dispatch(
+      setIntensity({
+        cellIndex,
+        sectionIndex,
+        intensity: intensity ? 0 : 1,
+      })
+    );
+    e.preventDefault();
+  };
+
   return (
     <div
+      ref={ref}
       className={`fadeBg flex flex-row justify-center items-center select-none border border-blue-800 h-10 cursor-pointer ${backgroundClass}`}
       role="button"
       tabIndex={0}
-      onContextMenu={(e) => {
-        dispatch(
-          setIntensity({
-            cellIndex,
-            sectionIndex,
-            intensity: intensity ? 0 : 1,
-          })
-        );
-        e.preventDefault();
-      }}
+      onContextMenu={onContextMenu}
       onClick={onClick}
-      onKeyPress={onEnter(onClick)}
+      onKeyPress={(e) => {
+        onEnter(onClick)(e);
+        onSpace(onContextMenu)(e);
+      }}
     >
       {intensity ? sound.toLocaleUpperCase() : sound}
       <PopupMenu

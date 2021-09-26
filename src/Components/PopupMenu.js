@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setSound, useSoundObj } from "../redux/mainSlice";
 import useOnClickOutside from "../hooks/useOnClickOutside";
-import { onEnter } from "../keyboard/util";
+import { onEnter, onSpace } from "../keyboard/util";
 
 const PopupMenu = ({
   cellIndex,
@@ -16,6 +16,7 @@ const PopupMenu = ({
   const tooltipColumns = Math.ceil(Object.keys(soundObj).length / 4);
   const dispatch = useDispatch();
   const ref = useRef();
+  const firstCellRef = useRef();
   const onClickOutside = useCallback(
     (e) => {
       if (open) {
@@ -38,6 +39,11 @@ const PopupMenu = ({
       const left = Math.max(Math.min(menuCoordinates[0], maxLeft), minLeft);
       const top = Math.max(Math.min(menuCoordinates[1], maxTop), minTop);
       setActualPosition({ left, top });
+      if (firstCellRef.current) {
+        setTimeout(() => {
+          firstCellRef.current.focus();
+        }, 0);
+      }
     } else {
       setActualPosition(null);
     }
@@ -52,7 +58,7 @@ const PopupMenu = ({
         } `}
         style={actualPosition}
       >
-        {Object.values(soundObj).map((sound) => {
+        {Object.values(soundObj).map((sound, index) => {
           const onClick = (e) => {
             dispatch(
               setSound({
@@ -66,12 +72,16 @@ const PopupMenu = ({
 
           return (
             <div
+              ref={index === 0 ? firstCellRef : null}
               key={sound}
               className="p-3 hover:bg-blue-200 "
               role="button"
               tabIndex={0}
               onClick={onClick}
-              onKeyPress={onEnter(onClick)}
+              onKeyPress={(e) => {
+                onEnter(onClick)(e);
+                onSpace(onClickOutside)(e);
+              }}
             >
               {sound}
             </div>
