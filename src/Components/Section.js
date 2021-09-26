@@ -88,7 +88,7 @@ const Section = (props) => {
         <input
           type="text"
           value={sectionName}
-          className="text-2xl  outline-none"
+          className="text-2xl w-full outline-none"
           onChange={(e) => {
             dispatch(
               setSectionName({
