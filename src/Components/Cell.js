@@ -3,6 +3,7 @@ import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
 import PopupMenu from "./PopupMenu";
+import { onEnter } from "../keyboard/util";
 
 const Cell = (props) => {
   const { cellIndex, sectionIndex, isPlaying, isStartingCell } = props;
@@ -29,9 +30,22 @@ const Cell = (props) => {
   }
 
   console.debug(`Cell rerender ${cellIndex}`);
+  const onClick = (e) => {
+    setShowMenu(!showMenu);
+    if (e.clientX && e.clientY) {
+      setMenuCoordinates([e.clientX, e.clientY]);
+    } else if (e.target) {
+      const { x, y } = e.target.getBoundingClientRect();
+      setMenuCoordinates([x, y]);
+    }
+    e.preventDefault();
+  };
+
   return (
     <div
       className={`fadeBg flex flex-row justify-center items-center select-none border border-blue-800 h-10 cursor-pointer ${backgroundClass}`}
+      role="button"
+      tabIndex={0}
       onContextMenu={(e) => {
         dispatch(
           setIntensity({
@@ -42,11 +56,8 @@ const Cell = (props) => {
         );
         e.preventDefault();
       }}
-      onClick={(e) => {
-        setShowMenu(true);
-        setMenuCoordinates([e.clientX, e.clientY]);
-        e.preventDefault();
-      }}
+      onClick={onClick}
+      onKeyPress={onEnter(onClick)}
     >
       {intensity ? sound.toLocaleUpperCase() : sound}
       <PopupMenu

@@ -12,7 +12,7 @@ import Button from "./Button";
 
 const Section = (props) => {
   const { sectionId } = props;
-  const { cellsPerLine, divideEvery, sounds } = useSettings();
+  const { cellsPerLine, divideEvery } = useSettings();
   const dispatch = useDispatch();
   const section = useSectionNoCells(sectionId);
   const { sectionName, totalLines, id } = section;

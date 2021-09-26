@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setSound, useSoundObj } from "../redux/mainSlice";
 import useOnClickOutside from "../hooks/useOnClickOutside";
+import { onEnter } from "../keyboard/util";
 
 const PopupMenu = ({
   cellIndex,
@@ -17,10 +18,12 @@ const PopupMenu = ({
   const ref = useRef();
   const onClickOutside = useCallback(
     (e) => {
-      onOpenChange(false);
-      e.stopPropagation();
+      if (open) {
+        onOpenChange(false);
+        e.stopPropagation();
+      }
     },
-    [onOpenChange]
+    [open, onOpenChange]
   );
   const [actualPosition, setActualPosition] = useState();
   useOnClickOutside(ref, onClickOutside);
@@ -32,20 +35,14 @@ const PopupMenu = ({
       const minTop = 10;
       const maxLeft = window.innerWidth - ref.current.clientWidth;
       const maxTop = window.innerHeight - ref.current.clientHeight;
-      const left = Math.max(
-        Math.min(menuCoordinates[0] - minLeft, maxLeft),
-        minLeft
-      );
-      const top = Math.max(
-        Math.min(menuCoordinates[1] - minTop, maxTop),
-        minTop
-      );
+      const left = Math.max(Math.min(menuCoordinates[0], maxLeft), minLeft);
+      const top = Math.max(Math.min(menuCoordinates[1], maxTop), minTop);
       setActualPosition({ left, top });
     } else {
       setActualPosition(null);
     }
   }, [open, menuCoordinates]);
-  console.log(soundObj);
+
   return (
     open && (
       <div
@@ -55,24 +52,31 @@ const PopupMenu = ({
         } `}
         style={actualPosition}
       >
-        {Object.values(soundObj).map((sound) => (
-          <div
-            key={sound}
-            className="p-3 hover:bg-blue-200 "
-            onClick={(e) => {
-              dispatch(
-                setSound({
-                  cellIndex,
-                  sectionIndex,
-                  sound,
-                })
-              );
-              onClickOutside(e);
-            }}
-          >
-            {sound}
-          </div>
-        ))}
+        {Object.values(soundObj).map((sound) => {
+          const onClick = (e) => {
+            dispatch(
+              setSound({
+                cellIndex,
+                sectionIndex,
+                sound,
+              })
+            );
+            onClickOutside(e);
+          };
+
+          return (
+            <div
+              key={sound}
+              className="p-3 hover:bg-blue-200 "
+              role="button"
+              tabIndex={0}
+              onClick={onClick}
+              onKeyPress={onEnter(onClick)}
+            >
+              {sound}
+            </div>
+          );
+        })}
       </div>
     )
   );
