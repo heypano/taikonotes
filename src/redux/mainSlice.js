@@ -269,13 +269,13 @@ export const mainSlice = createSlice({
         state.settings.sounds.split(",").map((s) => [s.trim(), s.trim()])
       );
       // Erase sounds that don't match
-      state.sections.forEach((section) => {
-        section.cells.forEach((cell) => {
-          if (cell) {
-            cell.sound = state.settings.soundObj[cell.sound] ? cell.sound : "";
-          }
-        });
-      });
+      // state.sections.forEach((section) => {
+      //   section.cells.forEach((cell) => {
+      //     if (cell) {
+      //       cell.sound = state.settings.soundObj[cell.sound] ? cell.sound : "";
+      //     }
+      //   });
+      // });
     },
     setTotalLines: (state, action) => {
       const { sectionIndex, totalLines } = action.payload;
