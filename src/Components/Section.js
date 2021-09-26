@@ -31,6 +31,7 @@ const Section = (props) => {
       <Cell
         key={`cell_${sectionId}_${cellIndex}`}
         isStartingCell={cellIndex % divideEvery === 0}
+        isFirstCellInLine={cellIndex % cellsPerLine === 0}
         cellsPerLine={cellsPerLine}
         cellIndex={cellIndex}
         sectionIndex={sectionId}
@@ -99,7 +100,7 @@ const Section = (props) => {
         />
       </div>
       <div
-        className={`grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-blue-800`}
+        className={`bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-blue-800`}
       >
         {sectionCells}
       </div>

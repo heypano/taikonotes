@@ -6,7 +6,14 @@ import { onEnter, onSpace } from "../keyboard/util";
 import CellPopupMenu from "./CellPopupMenu";
 
 const Cell = (props) => {
-  const { cellIndex, sectionIndex, isPlaying, isStartingCell } = props;
+  const {
+    cellIndex,
+    sectionIndex,
+    isPlaying,
+    isStartingCell,
+    isFirstCellInLine,
+    cellsPerLine,
+  } = props;
   const ref = useRef();
   const dispatch = useDispatch();
   const soundObj = useSoundObj();
@@ -19,18 +26,22 @@ const Cell = (props) => {
     }
   }, []);
 
-  let backgroundClass;
   const { sound: currentSound = 0, intensity } = useCell(
     sectionIndex,
     cellIndex
   );
   const sound = (currentSound && soundObj[currentSound]) || "";
+  let backgroundClass = "bg-white hover:bg-blue-400";
   if (isPlaying) {
     backgroundClass = "bg-red-300 hover:bg-red-600";
   } else if (isStartingCell) {
     backgroundClass = "bg-gray-300 hover:bg-blue-400";
-  } else {
-    backgroundClass = "hover:bg-blue-400";
+  }
+  let borderClass = "border border-blue-800";
+
+  // when we show fewer cells per line, help identify the start of every line
+  if (isFirstCellInLine && cellsPerLine % 2 === 1) {
+    borderClass = "border-2 border-red-400 md:border md:border-blue-800";
   }
 
   console.debug(`Cell rerender ${cellIndex}`);
@@ -59,7 +70,7 @@ const Cell = (props) => {
   return (
     <div
       ref={ref}
-      className={`fadeBg flex flex-row justify-center items-center select-none border border-blue-800 h-10 cursor-pointer ${backgroundClass}`}
+      className={`fadeBg flex flex-row justify-center items-center select-none h-10 cursor-pointer ${borderClass} ${backgroundClass}`}
       role="button"
       tabIndex={0}
       onContextMenu={onContextMenu}
@@ -83,6 +94,7 @@ const Cell = (props) => {
 
 Cell.propTypes = {
   isStartingCell: PropTypes.bool.isRequired,
+  isFirstCellInLine: PropTypes.bool.isRequired,
   cellIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool,
