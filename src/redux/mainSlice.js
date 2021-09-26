@@ -9,182 +9,182 @@ export const initialState = {
     {
       cells: [
         {
-          soundIndex: 1,
+          sound: "don",
         },
         null,
         {
-          soundIndex: 3,
+          sound: "ka",
           intensity: 1,
         },
         {
-          soundIndex: 1,
+          sound: "don",
         },
         {
-          soundIndex: 0,
+          sound: "",
         },
         {
-          soundIndex: 3,
+          sound: "ka",
           intensity: 1,
         },
         {
-          soundIndex: 1,
+          sound: "don",
         },
         {
-          soundIndex: 0,
+          sound: "",
         },
         {
-          soundIndex: 1,
-          intensity: 1,
-        },
-        null,
-        {
-          soundIndex: 1,
+          sound: "don",
           intensity: 1,
         },
         null,
         {
-          soundIndex: 4,
-        },
-        {
-          soundIndex: 5,
-        },
-        {
-          soundIndex: 1,
+          sound: "don",
           intensity: 1,
         },
         null,
         {
-          soundIndex: 4,
+          sound: "do",
         },
         {
-          soundIndex: 6,
+          sound: "ko",
         },
         {
-          soundIndex: 8,
-        },
-        {
-          soundIndex: 9,
-        },
-        {
-          soundIndex: 7,
-        },
-        {
-          soundIndex: 3,
-          intensity: 1,
-        },
-        {
-          soundIndex: 11,
+          sound: "don",
           intensity: 1,
         },
         null,
         {
-          soundIndex: 4,
+          sound: "do",
         },
         {
-          soundIndex: 2,
+          sound: "ro",
+        },
+        {
+          sound: "tsu",
+        },
+        {
+          sound: "ku",
+        },
+        {
+          sound: "su",
+        },
+        {
+          sound: "ka",
           intensity: 1,
         },
         {
-          soundIndex: 0,
-        },
-        {
-          soundIndex: 3,
-          intensity: 1,
-        },
-        {
-          soundIndex: 7,
-        },
-        {
-          soundIndex: 5,
-        },
-        {
-          soundIndex: 4,
-        },
-        {
-          soundIndex: 5,
-        },
-        {
-          soundIndex: 1,
-          intensity: 1,
-        },
-        null,
-        null,
-        {
-          soundIndex: 5,
-        },
-        {
-          soundIndex: 1,
-          intensity: 1,
-        },
-        {
-          soundIndex: 12,
-        },
-        {
-          soundIndex: 10,
-          intensity: 1,
-        },
-        {
-          soundIndex: 1,
-          intensity: 1,
-        },
-        {
-          soundIndex: 7,
-        },
-        {
-          soundIndex: 2,
+          sound: "ra",
           intensity: 1,
         },
         null,
         {
-          soundIndex: 1,
-          intensity: 1,
-        },
-        null,
-        {
-          soundIndex: 5,
+          sound: "do",
         },
         {
-          soundIndex: 4,
+          sound: "kon",
           intensity: 1,
         },
         {
-          soundIndex: 4,
+          sound: "",
+        },
+        {
+          sound: "ka",
           intensity: 1,
         },
         {
-          soundIndex: 7,
+          sound: "su",
         },
         {
-          soundIndex: 3,
-          intensity: 1,
+          sound: "ko",
         },
         {
-          soundIndex: 1,
-          intensity: 1,
-        },
-        null,
-        {
-          soundIndex: 7,
+          sound: "do",
         },
         {
-          soundIndex: 4,
+          sound: "ko",
         },
         {
-          soundIndex: 3,
-          intensity: 1,
-        },
-        null,
-        {
-          soundIndex: 7,
-        },
-        {
-          soundIndex: 1,
+          sound: "don",
           intensity: 1,
         },
         null,
         null,
         {
-          soundIndex: 1,
+          sound: "ko",
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        {
+          sound: "doko",
+        },
+        {
+          sound: "kara",
+          intensity: 1,
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        {
+          sound: "su",
+        },
+        {
+          sound: "kon",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "ko",
+        },
+        {
+          sound: "do",
+          intensity: 1,
+        },
+        {
+          sound: "do",
+          intensity: 1,
+        },
+        {
+          sound: "su",
+        },
+        {
+          sound: "ka",
+          intensity: 1,
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "su",
+        },
+        {
+          sound: "do",
+        },
+        {
+          sound: "ka",
+          intensity: 1,
+        },
+        null,
+        {
+          sound: "su",
+        },
+        {
+          sound: "don",
+          intensity: 1,
+        },
+        null,
+        null,
+        {
+          sound: "don",
           intensity: 1,
         },
       ],
@@ -268,11 +268,11 @@ export const mainSlice = createSlice({
       const { sectionIndex, sectionName } = action.payload;
       state.sections[sectionIndex].sectionName = sectionName;
     },
-    setSoundIndex: (state, action) => {
-      const { sectionIndex, cellIndex, soundIndex } = action.payload;
+    setSound: (state, action) => {
+      const { sectionIndex, cellIndex, sound } = action.payload;
       const section = state.sections[sectionIndex];
       const cell = section.cells[cellIndex] || {};
-      cell.soundIndex = soundIndex;
+      cell.sound = sound;
       state.sections[sectionIndex].cells[cellIndex] = cell;
     },
     setIntensity: (state, action) => {
@@ -300,7 +300,7 @@ export const {
   setSectionName,
   setSounds,
   setSettings,
-  setSoundIndex,
+  setSound,
   setIntensity,
   setMainState,
   addSection,

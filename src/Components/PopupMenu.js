@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { setSoundIndex } from "../redux/mainSlice";
+import { setSound } from "../redux/mainSlice";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 
 const PopupMenu = ({
@@ -54,22 +54,22 @@ const PopupMenu = ({
         } `}
         style={actualPosition}
       >
-        {soundArray.map((soundNote, soundIndex) => (
+        {soundArray.map((sound) => (
           <div
-            key={soundIndex}
+            key={sound}
             className="p-3 hover:bg-blue-200 "
             onClick={(e) => {
               dispatch(
-                setSoundIndex({
+                setSound({
                   cellIndex,
                   sectionIndex,
-                  soundIndex,
+                  sound,
                 })
               );
               onClickOutside(e);
             }}
           >
-            {soundNote}
+            {sound}
           </div>
         ))}
       </div>

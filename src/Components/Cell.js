@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useState } from "react";
 import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { setIntensity, setSoundIndex, useCell } from "../redux/mainSlice";
+import { setIntensity, setSound, useCell } from "../redux/mainSlice";
 import PopupMenu from "./PopupMenu";
 
 const Cell = (props) => {
@@ -20,11 +20,11 @@ const Cell = (props) => {
   }, []);
 
   let backgroundClass;
-  const { soundIndex: currentSoundIndex = 0, intensity } = useCell(
+  const { sound: currentSound = 0, intensity } = useCell(
     sectionIndex,
     cellIndex
   );
-  const sound = soundArray[currentSoundIndex] || "";
+  const sound = currentSound || "";
   if (isPlaying) {
     backgroundClass = "bg-red-300 hover:bg-red-600";
   } else if (isStartingCell) {
