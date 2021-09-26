@@ -21,7 +21,10 @@ const TaikoGridSettings = () => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col ">
+    <form
+      onSubmit={onSubmit}
+      className="flex flex-col border border-blue-300 p-2"
+    >
       <div className="flex flex-row justify-between">
         <label>Cells Per Line</label>
         <select
