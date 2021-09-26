@@ -39,7 +39,7 @@ const PopupMenu = ({
   }, [left, open, top]);
 
   const visibleClass = actualPosition ? "" : "invisible";
-  console.debug("PopupMenu rerender");
+  console.debug("PopupMenu rerender", left, top);
   return (
     open && (
       <div

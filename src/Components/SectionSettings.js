@@ -8,9 +8,9 @@ const SectionSettings = ({ open, onOpenChange, left, top }) => (
     onOpenChange={onOpenChange}
     left={left}
     top={top}
-    className="w-full h-full border-gray-100"
+    className="grid grid-rows-1 grid-cols-1 w-max max-h-48 border-gray-100 p-4"
   >
-    a
+    Settings here
   </PopupMenu>
 );
 

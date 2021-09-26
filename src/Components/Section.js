@@ -21,6 +21,8 @@ const Section = (props) => {
   const { sectionName, totalLines, id } = section;
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
+  const [sectionSettingsLeft, setSectionSettingsLeft] = useState();
+  const [sectionSettingsTop, setSectionSettingsTop] = useState();
   const mobileDisplayedCells =
     cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
   console.debug(`Section rerender ${sectionName} - ${id}`);
@@ -64,8 +66,12 @@ const Section = (props) => {
           -
         </SectionButton>
         <SectionButton
-          onClick={() => {
+          onClick={(e) => {
             setSectionSettingsOpen(true);
+            if (e.clientX && e.clientY) {
+              setSectionSettingsLeft(e.clientX);
+              setSectionSettingsTop(e.clientY);
+            }
           }}
         >
           <GearIcon />
@@ -74,6 +80,8 @@ const Section = (props) => {
             onOpenChange={(isOpen) => {
               setSectionSettingsOpen(isOpen);
             }}
+            left={sectionSettingsLeft}
+            top={sectionSettingsTop}
           />
         </SectionButton>
         <input
