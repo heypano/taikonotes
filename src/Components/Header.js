@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useDispatch } from "react-redux";
 import TaikoGridSettings from "./TaikoGridSettings";
 import Button from "./Button";
@@ -71,4 +71,4 @@ Header.propTypes = {};
 
 Header.defaultProps = {};
 
-export default Header;
+export default memo(Header);

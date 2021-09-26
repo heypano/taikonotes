@@ -1,22 +1,18 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
-import { setSound, useSoundObj } from "../redux/mainSlice";
 import useOnClickOutside from "../hooks/useOnClickOutside";
-import { onEnter, onSpace } from "../keyboard/util";
 
 const PopupMenu = ({
-  cellIndex,
   open,
   onOpenChange,
-  sectionIndex,
-  menuCoordinates,
+  className,
+  style,
+  children,
+  left,
+  top,
 }) => {
-  const soundObj = useSoundObj();
-  const tooltipColumns = Math.ceil(Object.keys(soundObj).length / 4);
-  const dispatch = useDispatch();
   const ref = useRef();
-  const firstCellRef = useRef();
+  const [actualPosition, setActualPosition] = useState();
   const onClickOutside = useCallback(
     (e) => {
       if (open) {
@@ -26,67 +22,32 @@ const PopupMenu = ({
     },
     [open, onOpenChange]
   );
-  const [actualPosition, setActualPosition] = useState();
   useOnClickOutside(ref, onClickOutside);
-  console.debug("PopupMenu rerender");
 
   useEffect(() => {
-    if (ref.current && menuCoordinates) {
+    if (ref.current && left !== undefined && top !== undefined) {
       const minLeft = 10;
       const minTop = 10;
       const maxLeft = window.innerWidth - ref.current.clientWidth;
       const maxTop = window.innerHeight - ref.current.clientHeight;
-      const left = Math.max(Math.min(menuCoordinates[0], maxLeft), minLeft);
-      const top = Math.max(Math.min(menuCoordinates[1], maxTop), minTop);
-      setActualPosition({ left, top });
-      if (firstCellRef.current) {
-        setTimeout(() => {
-          firstCellRef.current.focus();
-        }, 0);
-      }
+      const usedLeft = Math.max(Math.min(left, maxLeft), minLeft);
+      const usedTop = Math.max(Math.min(top, maxTop), minTop);
+      setActualPosition({ left: usedLeft, top: usedTop });
     } else {
       setActualPosition(null);
     }
-  }, [open, menuCoordinates]);
+  }, [left, open, top]);
 
+  const visibleClass = actualPosition ? "" : "invisible";
+  console.debug("PopupMenu rerender");
   return (
     open && (
       <div
         ref={ref}
-        className={`popupmenu grid grid-rows-4 grid-cols-${tooltipColumns} w-max grid-flow-col max-h-48 ${
-          actualPosition ? "" : "invisible"
-        } `}
-        style={actualPosition}
+        className={`popupmenu ${visibleClass} ${className}`}
+        style={{ ...style, ...(actualPosition || {}) }}
       >
-        {Object.values(soundObj).map((sound, index) => {
-          const onClick = (e) => {
-            dispatch(
-              setSound({
-                cellIndex,
-                sectionIndex,
-                sound,
-              })
-            );
-            onClickOutside(e);
-          };
-
-          return (
-            <div
-              ref={index === 0 ? firstCellRef : null}
-              key={sound}
-              className="p-3 hover:bg-blue-200 "
-              role="button"
-              tabIndex={0}
-              onClick={onClick}
-              onKeyPress={(e) => {
-                onEnter(onClick)(e);
-                onSpace(onClickOutside)(e);
-              }}
-            >
-              {sound}
-            </div>
-          );
-        })}
+        {children}
       </div>
     )
   );
@@ -95,12 +56,13 @@ const PopupMenu = ({
 PopupMenu.propTypes = {
   open: PropTypes.bool.isRequired,
   onOpenChange: PropTypes.func.isRequired,
-  cellIndex: PropTypes.number.isRequired,
-  soundObj: PropTypes.shape({}).isRequired,
-  menuCoordinates: PropTypes.arrayOf(PropTypes.number),
-  sectionIndex: PropTypes.number.isRequired,
+  children: PropTypes.node,
+  left: PropTypes.number,
+  top: PropTypes.number,
+  className: PropTypes.string,
+  style: PropTypes.shape({}),
 };
 
-PopupMenu.defaultProps = { menuCoordinates: undefined };
+PopupMenu.defaultProps = { className: "", style: null };
 
-export default memo(PopupMenu);
+export default PopupMenu;

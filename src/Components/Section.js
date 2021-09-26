@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import Cell from "./Cell";
@@ -8,11 +8,14 @@ import {
   useSectionNoCells,
   useSettings,
 } from "../redux/mainSlice";
-import Button from "./Button";
+import SectionButton from "./SectionButton";
+import GearIcon from "../Icons/GearIcon";
+import SectionSettings from "./SectionSettings";
 
 const Section = (props) => {
   const { sectionId } = props;
   const { cellsPerLine, divideEvery } = useSettings();
+  const [sectionSettingsOpen, setSectionSettingsOpen] = useState(false);
   const dispatch = useDispatch();
   const section = useSectionNoCells(sectionId);
   const { sectionName, totalLines, id } = section;
@@ -34,9 +37,8 @@ const Section = (props) => {
   }
   return (
     <div key={`section_${sectionId}`} className="mb-8 p-1">
-      <div>
-        <Button
-          className="mr-2"
+      <div className="flex flex-row align-baseline">
+        <SectionButton
           onClick={() => {
             dispatch(
               setTotalLines({
@@ -47,9 +49,9 @@ const Section = (props) => {
           }}
         >
           +
-        </Button>
-        <Button
-          className="mr-2"
+        </SectionButton>
+
+        <SectionButton
           onClick={() => {
             dispatch(
               setTotalLines({
@@ -60,8 +62,20 @@ const Section = (props) => {
           }}
         >
           -
-        </Button>
-
+        </SectionButton>
+        <SectionButton
+          onClick={() => {
+            setSectionSettingsOpen(true);
+          }}
+        >
+          <GearIcon />
+          <SectionSettings
+            open={sectionSettingsOpen}
+            onOpenChange={(isOpen) => {
+              setSectionSettingsOpen(isOpen);
+            }}
+          />
+        </SectionButton>
         <input
           type="text"
           value={sectionName}

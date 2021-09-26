@@ -2,8 +2,8 @@ import React, { memo, useCallback, useRef, useState } from "react";
 import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
-import PopupMenu from "./PopupMenu";
 import { onEnter, onSpace } from "../keyboard/util";
+import CellPopupMenu from "./CellPopupMenu";
 
 const Cell = (props) => {
   const { cellIndex, sectionIndex, isPlaying, isStartingCell } = props;
@@ -70,7 +70,7 @@ const Cell = (props) => {
       }}
     >
       {intensity ? sound.toLocaleUpperCase() : sound}
-      <PopupMenu
+      <CellPopupMenu
         open={showMenu}
         menuCoordinates={menuCoordinates}
         onOpenChange={onOpenChange}
