@@ -24,22 +24,21 @@ const TaikoGrid = () => {
   console.debug("TaikoGrid rerender");
   return (
     <div>
-      <div className="settings mt-3 mb-3 p-3 flex flex-col md:flex-row">
+      <div className="settings p-1 mt-3 mb-3 flex flex-col md:flex-row">
         <img
           src={`${process.env.PUBLIC_URL}/favicon/Taiko.svg`}
-          className="w-1/12 pr-2"
+          className="w-20 pr-2"
           alt="taiko logo"
         />
-        <div className="w-full md:w-6/12 lg:w-4/12 border border-blue-300 p-2 mr-auto w-full">
+        <div className="w-full md:w-6/12 lg:w-4/12 border border-blue-300 p-2 flex justify-between mr-3">
           <TaikoGridSettings />
         </div>
         <div className="w-full md:w-6/12 lg:w-4/12 flex flex-col justify-between">
-          <div className="grid grid-rows-2 grid-flow-col">
+          <div className="mt-2 md:mt-0 grid grid-rows-2 grid-flow-col gap-1">
             <Button
               onClick={() => {
                 dispatch(addSection());
               }}
-              className="m-4"
             >
               Add Section
             </Button>
@@ -47,7 +46,6 @@ const TaikoGrid = () => {
               onClick={() => {
                 dispatch(removeLastSection());
               }}
-              className="m-4"
             >
               Remove Last Section
             </Button>
@@ -55,7 +53,6 @@ const TaikoGrid = () => {
               onClick={() => {
                 saveMainToLocal();
               }}
-              className="m-4"
             >
               Save
             </Button>
@@ -65,7 +62,6 @@ const TaikoGrid = () => {
                 console.debug("entire state", state);
                 dispatch(setMainState(state));
               }}
-              className="m-4"
             >
               Load
             </Button>
@@ -73,7 +69,6 @@ const TaikoGrid = () => {
               onClick={() => {
                 dispatch(clearState());
               }}
-              className="m-4"
             >
               Clear
             </Button>

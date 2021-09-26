@@ -33,7 +33,7 @@ const Section = (props) => {
     );
   }
   return (
-    <div key={`section_${sectionId}`} className="mb-8">
+    <div key={`section_${sectionId}`} className="mb-8 p-1">
       <div>
         <Button
           className="mr-2"
