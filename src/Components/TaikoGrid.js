@@ -25,10 +25,10 @@ const TaikoGrid = () => {
   return (
     <div>
       <div className="settings p-1 mt-3 mb-3 flex flex-col md:flex-row">
-        <div className="w-full md:w-8/12 lg:w-6/12 flex justify-between mr-3">
+        <div className="w-full md:w-8/12 lg:w-6/12 grid logoGrid mr-3">
           <img
             src={`${process.env.PUBLIC_URL}/favicon/Taiko.svg`}
-            className="w-40 p-2"
+            className="w-full p-2"
             alt="taiko logo"
           />
           <TaikoGridSettings />

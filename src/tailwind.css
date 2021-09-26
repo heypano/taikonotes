@@ -32332,6 +32332,10 @@ video {
   transition-duration: 0.7s;
 }
 
+.logoGrid {
+  grid-template-columns: 1fr 3fr;
+}
+
 .popupmenu {
   position: fixed;
   border-radius: 0.25rem;
