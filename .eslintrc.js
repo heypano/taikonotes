@@ -28,6 +28,7 @@ module.exports = {
     "jsx-a11y/no-static-element-interactions": 1,
     "jsx-a11y/click-events-have-key-events": 1,
     "jsx-a11y/interactive-supports-focus": 1,
+    "jsx-a11y/no-noninteractive-element-interactions": 1,
     "react/jsx-filename-extension": 0,
     "react/jsx-props-no-spreading": 0,
     "no-plusplus": 0,

@@ -29,7 +29,7 @@ const TaikoGridSettings = ({ sectionId }) => {
   );
 
   return (
-    <form className="flex flex-col border border-blue-300 p-2">
+    <form className="flex flex-col ">
       <SettingInput>
         Cells Per Line
         <select
@@ -69,7 +69,7 @@ const TaikoGridSettings = ({ sectionId }) => {
         <input
           id="sounds"
           name="sounds"
-          className="border-black border p-1"
+          className="border-black border p-1 ml-5"
           onChange={onFormChange}
           value={sounds}
         />

@@ -1,4 +1,5 @@
 module.exports = {
+  purge: ["./src/**/*.js"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
@@ -39,7 +40,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      margin: ["first"],
+    },
   },
   plugins: [],
 };

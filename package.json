@@ -17,13 +17,13 @@
     "tailwindcss": "^2.2.15"
   },
   "scripts": {
-    "start:style": "tailwindcss -i src/index.css -c tailwind.config.js -o src/tailwind.css --watch",
+    "start:style": "tailwindcss -i src/index.css -o src/tailwind.css --watch",
     "start:react": "react-scripts start",
     "start": "npm-run-all --parallel start:style start:react",
     "dev": "react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build:style": "tailwind build -i src/index.css -c tailwind.config.js -o src/tailwind.css",
+    "build:style": "tailwindcss -i src/index.css -o src/tailwind.css",
     "build": "npm run build:style && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

@@ -68,7 +68,7 @@ const Section = (props) => {
         </SectionButton>
         <SectionButton
           onClick={(e) => {
-            setSectionSettingsOpen(!sectionSettingsOpen);
+            setSectionSettingsOpen(true);
 
             if (e.clientX && e.clientY) {
               setSectionSettingsLeft(e.clientX);

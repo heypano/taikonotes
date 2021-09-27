@@ -39,13 +39,20 @@ const PopupMenu = ({
   }, [left, open, top]);
 
   const visibleClass = actualPosition ? "" : "invisible";
-  console.debug("PopupMenu rerender");
+  const preventAndStop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     open && (
       <div
         ref={ref}
         className={`popupmenu ${visibleClass} ${className}`}
         style={{ ...style, ...(actualPosition || {}) }}
+        onClick={preventAndStop}
+        onKeyPress={preventAndStop}
+        role="none"
       >
         {children}
       </div>

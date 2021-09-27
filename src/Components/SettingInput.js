@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const SettingInput = ({ children, id }) => (
-  <label htmlFor={id} className="flex flex-row justify-between items-end mt-3">
+  <label
+    htmlFor={id}
+    className="flex flex-row justify-between items-end mt-3 first:mt-0"
+  >
     {children}
   </label>
 );

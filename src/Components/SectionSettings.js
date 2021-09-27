@@ -9,7 +9,7 @@ const SectionSettings = ({ sectionId, open, onOpenChange, left, top }) => (
     onOpenChange={onOpenChange}
     left={left}
     top={top}
-    className="grid grid-rows-1 grid-cols-1 w-max max-h-48 border-gray-100 p-4"
+    className="grid grid-rows-1 grid-cols-1 w-max max-h-48 p-4"
   >
     <TaikoGridSettings sectionId={sectionId} />
   </PopupMenu>
