@@ -196,6 +196,7 @@ export const initialState = {
         divideEvery: 2,
         sounds: "don, kon, ka, do, ko, ro, su, tsu,ku, kara, ra, doko",
         soundObj: {
+          "": "",
           don: "don",
           kon: "kon",
           ka: "ka",
@@ -401,6 +402,7 @@ export const initialState = {
         divideEvery: 2,
         sounds: "don, kon, ka",
         soundObj: {
+          "": "",
           don: "don",
           kon: "kon",
           ka: "ka",
@@ -469,7 +471,7 @@ export const mainSlice = createSlice({
         state.sections[sectionId].settings[key] = settings[key];
       });
       state.sections[sectionId].settings.soundObj = Object.fromEntries(
-        state.sections[sectionId].settings.sounds
+        `,${state.sections[sectionId].settings.sounds}`
           .split(",")
           .map((s) => [s.trim(), s.trim()])
       );
