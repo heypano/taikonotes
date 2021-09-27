@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import useOnClickOutside from "../hooks/useOnClickOutside";
-import { onEnter, onSpace } from "../keyboard/util";
 
 const PopupMenu = ({
   open,
@@ -40,10 +39,6 @@ const PopupMenu = ({
   }, [left, open, top]);
 
   const visibleClass = actualPosition ? "" : "invisible";
-  const onClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
   console.debug("PopupMenu rerender");
   return (
     open && (
@@ -51,15 +46,6 @@ const PopupMenu = ({
         ref={ref}
         className={`popupmenu ${visibleClass} ${className}`}
         style={{ ...style, ...(actualPosition || {}) }}
-        onClick={onClick}
-        role="button"
-        onKeyPress={(e) => {
-          onEnter(onClick)(e);
-          onSpace(() => {
-            onOpenChange(false);
-          });
-        }}
-        tabIndex={0}
       >
         {children}
       </div>

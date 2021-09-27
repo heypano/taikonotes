@@ -11,7 +11,6 @@ const TaikoGridSettings = ({ sectionId }) => {
   const settings = useSettings(sectionId);
   const dispatch = useDispatch();
   const { cellsPerLine = 16, divideEvery = 4, sounds = "ka,don" } = settings;
-  const onSubmit = () => {};
 
   const onFormChange = useCallback(
     (e) => {
@@ -30,10 +29,7 @@ const TaikoGridSettings = ({ sectionId }) => {
   );
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="flex flex-col border border-blue-300 p-2"
-    >
+    <form className="flex flex-col border border-blue-300 p-2">
       <SettingInput>
         Cells Per Line
         <select

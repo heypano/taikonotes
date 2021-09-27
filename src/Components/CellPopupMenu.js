@@ -19,11 +19,11 @@ const CellPopupMenu = ({
 
   useEffect(() => {
     if (open) {
-      if (firstCellRef.current) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (firstCellRef.current) {
           firstCellRef.current.focus();
-        }, 0);
-      }
+        }
+      }, 0);
     }
   }, [open]);
 
@@ -59,10 +59,10 @@ const CellPopupMenu = ({
               tabIndex={0}
               onClick={onClick}
               onKeyPress={(e) => {
-                onEnter(onClick)(e);
-                onSpace(() => {
+                onEnter(() => {
                   onOpenChange(false);
                 })(e);
+                onSpace(onClick)(e);
               }}
             >
               {sound}

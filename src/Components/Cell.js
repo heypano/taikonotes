@@ -76,8 +76,8 @@ const Cell = (props) => {
       onContextMenu={onContextMenu}
       onClick={onClick}
       onKeyPress={(e) => {
-        onEnter(onClick)(e);
-        onSpace(onContextMenu)(e);
+        onEnter(onContextMenu)(e);
+        onSpace(onClick)(e);
       }}
     >
       {intensity ? sound.toLocaleUpperCase() : sound}

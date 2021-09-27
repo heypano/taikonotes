@@ -68,7 +68,8 @@ const Section = (props) => {
         </SectionButton>
         <SectionButton
           onClick={(e) => {
-            setSectionSettingsOpen(true);
+            setSectionSettingsOpen(!sectionSettingsOpen);
+
             if (e.clientX && e.clientY) {
               setSectionSettingsLeft(e.clientX);
               setSectionSettingsTop(e.clientY);
@@ -77,6 +78,8 @@ const Section = (props) => {
               setSectionSettingsLeft(x);
               setSectionSettingsTop(y);
             }
+            e.preventDefault();
+            e.stopPropagation();
           }}
         >
           <GearIcon />
