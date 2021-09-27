@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import useOnClickOutside from "../hooks/useOnClickOutside";
+import { onEnter } from "../keyboard/util";
 
 const PopupMenu = ({
   open,
@@ -51,7 +52,7 @@ const PopupMenu = ({
         className={`popupmenu ${visibleClass} ${className}`}
         style={{ ...style, ...(actualPosition || {}) }}
         onClick={preventAndStop}
-        onKeyPress={preventAndStop}
+        onKeyPress={onEnter(preventAndStop)}
         role="none"
       >
         {children}

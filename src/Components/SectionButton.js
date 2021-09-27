@@ -3,14 +3,7 @@ import PropTypes from "prop-types";
 import Button from "./Button";
 
 const SectionButton = ({ children, onClick }) => (
-  <Button
-    className="mr-2"
-    onClick={onClick}
-    onKeyPress={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }}
-  >
+  <Button className="mr-2" onClick={onClick}>
     {children}
   </Button>
 );
