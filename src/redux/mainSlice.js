@@ -456,6 +456,17 @@ const getNewSection = (index = 0) => ({
   id: index,
   sectionName: `Line ${index}`,
   totalLines: 1,
+  settings: {
+    cellsPerLine: 4,
+    divideEvery: 2,
+    sounds: "don, kon, ka",
+    soundObj: {
+      "": "",
+      don: "don",
+      kon: "kon",
+      ka: "ka",
+    },
+  },
 });
 
 export const mainSlice = createSlice({
