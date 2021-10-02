@@ -11,6 +11,8 @@ import {
 import SectionButton from "./SectionButton";
 import GearIcon from "../Icons/GearIcon";
 import SectionSettings from "./SectionSettings";
+import Minus from "../Icons/Minus";
+import Plus from "../Icons/Plus";
 
 const Section = (props) => {
   const { sectionId } = props;
@@ -51,7 +53,7 @@ const Section = (props) => {
             );
           }}
         >
-          +
+          <Plus />
         </SectionButton>
 
         <SectionButton
@@ -64,7 +66,7 @@ const Section = (props) => {
             );
           }}
         >
-          -
+          <Minus />
         </SectionButton>
         <SectionButton
           onClick={(e) => {

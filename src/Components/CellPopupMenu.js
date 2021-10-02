@@ -39,7 +39,6 @@ const CellPopupMenu = () => {
   return (
     open && (
       <PopupMenu
-        className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max max-h-48`}
         open={open}
         left={menuCoordinates[0]}
         top={menuCoordinates[1]}
@@ -47,34 +46,39 @@ const CellPopupMenu = () => {
           dispatch(setCellPopupOpen(isOpen));
         }}
       >
-        {Object.values(soundObj).map((sound, index) => {
-          const onClick = (e) => {
-            dispatch(
-              setSound({
-                cellIndex,
-                sectionIndex,
-                sound,
-              })
-            );
-          };
+        <div
+          className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max max-h-48`}
+        >
+          {Object.values(soundObj).map((sound, index) => {
+            const onClick = (e) => {
+              dispatch(
+                setSound({
+                  cellIndex,
+                  sectionIndex,
+                  sound,
+                })
+              );
+            };
 
-          return (
-            <div
-              ref={index === 0 ? firstCellRef : null}
-              key={sound}
-              className="p-3 hover:bg-blue-200 "
-              role="button"
-              tabIndex={0}
-              onClick={onClick}
-              onKeyPress={(e) => {
-                onEnter(() => {})(e);
-                onSpace(onClick)(e);
-              }}
-            >
-              {sound}
-            </div>
-          );
-        })}
+            return (
+              <div
+                ref={index === 0 ? firstCellRef : null}
+                key={sound}
+                className="p-3 hover:bg-blue-200 "
+                role="button"
+                tabIndex={0}
+                onClick={onClick}
+                onKeyPress={(e) => {
+                  onEnter(() => {})(e);
+                  onSpace(onClick)(e);
+                }}
+              >
+                {sound}
+              </div>
+            );
+          })}
+        </div>
+        <div className="w-full" />
       </PopupMenu>
     )
   );
