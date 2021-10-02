@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import mainReducer, { name as mainName } from "./mainSlice";
+import cellReducer, { name as cellName } from "./cellSlice";
 
 const configureStoreOptions = {
   reducer: {
     [mainName]: mainReducer,
+    [cellName]: cellReducer,
   },
 };
 

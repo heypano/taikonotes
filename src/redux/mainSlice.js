@@ -418,10 +418,12 @@ export const useSettings = (sectionIndex) =>
   );
 
 export const useSoundObj = (sectionIndex) =>
-  useSelector(
-    (state) => state[name].sections[sectionIndex].settings.soundObj,
-    shallowEqual
-  );
+  useSelector((state) => {
+    if (sectionIndex !== undefined) {
+      return state[name].sections[sectionIndex].settings.soundObj;
+    }
+    return null;
+  }, shallowEqual);
 
 export const useSections = () =>
   useSelector((state) => {

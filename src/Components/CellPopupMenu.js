@@ -4,18 +4,25 @@ import { useDispatch } from "react-redux";
 import { setSound, useSoundObj } from "../redux/mainSlice";
 import { onEnter, onSpace } from "../keyboard/util";
 import PopupMenu from "./PopupMenu";
+import {
+  setCellPopupOpen,
+  useCellIndex,
+  useCellMenuCoordinates,
+  useCellPopupOpen,
+  useCellSectionIndex,
+} from "../redux/cellSlice";
 
-const CellPopupMenu = ({
-  cellIndex,
-  open,
-  onOpenChange,
-  sectionIndex,
-  menuCoordinates,
-}) => {
+const CellPopupMenu = () => {
+  const sectionIndex = useCellSectionIndex();
   const soundObj = useSoundObj(sectionIndex);
-  const tooltipColumns = Math.ceil(Object.keys(soundObj).length / 4);
+  const tooltipColumns = soundObj
+    ? Math.ceil(Object.keys(soundObj).length / 4)
+    : 0;
   const dispatch = useDispatch();
   const firstCellRef = useRef();
+  const cellIndex = useCellIndex();
+  const menuCoordinates = useCellMenuCoordinates();
+  const open = useCellPopupOpen();
 
   useEffect(() => {
     if (open) {
@@ -34,9 +41,11 @@ const CellPopupMenu = ({
       <PopupMenu
         className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max max-h-48`}
         open={open}
-        onOpenChange={onOpenChange}
         left={menuCoordinates[0]}
         top={menuCoordinates[1]}
+        onOpenChange={(isOpen) => {
+          dispatch(setCellPopupOpen(isOpen));
+        }}
       >
         {Object.values(soundObj).map((sound, index) => {
           const onClick = (e) => {
@@ -47,7 +56,6 @@ const CellPopupMenu = ({
                 sound,
               })
             );
-            onOpenChange(false);
           };
 
           return (
@@ -59,9 +67,7 @@ const CellPopupMenu = ({
               tabIndex={0}
               onClick={onClick}
               onKeyPress={(e) => {
-                onEnter(() => {
-                  onOpenChange(false);
-                })(e);
+                onEnter(() => {})(e);
                 onSpace(onClick)(e);
               }}
             >
@@ -74,14 +80,8 @@ const CellPopupMenu = ({
   );
 };
 
-CellPopupMenu.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onOpenChange: PropTypes.func.isRequired,
-  cellIndex: PropTypes.number.isRequired,
-  menuCoordinates: PropTypes.arrayOf(PropTypes.number),
-  sectionIndex: PropTypes.number.isRequired,
-};
+CellPopupMenu.propTypes = {};
 
-CellPopupMenu.defaultProps = { menuCoordinates: undefined };
+CellPopupMenu.defaultProps = {};
 
 export default memo(CellPopupMenu);

@@ -1,9 +1,9 @@
-import React, { memo, useCallback, useRef, useState } from "react";
+import React, { memo, useRef } from "react";
 import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
 import { onEnter, onSpace } from "../keyboard/util";
-import CellPopupMenu from "./CellPopupMenu";
+import { setCellPopupState } from "../redux/cellSlice";
 
 const Cell = (props) => {
   const {
@@ -17,14 +17,6 @@ const Cell = (props) => {
   const ref = useRef();
   const dispatch = useDispatch();
   const soundObj = useSoundObj(sectionIndex);
-  const [showMenu, setShowMenu] = useState(false);
-  const [menuCoordinates, setMenuCoordinates] = useState();
-  const onOpenChange = useCallback((newIsOpen) => {
-    setShowMenu(newIsOpen);
-    if (ref.current && !newIsOpen) {
-      ref.current.focus();
-    }
-  }, []);
 
   const { sound: currentSound = 0, intensity } = useCell(
     sectionIndex,
@@ -45,14 +37,23 @@ const Cell = (props) => {
   }
 
   console.debug(`Cell rerender ${cellIndex}`);
+
   const onClick = (e) => {
-    setShowMenu(!showMenu);
+    let menuCoordinates;
     if (e.clientX && e.clientY) {
-      setMenuCoordinates([e.clientX, e.clientY]);
+      menuCoordinates = [e.clientX, e.clientY];
     } else if (e.target) {
       const { x, y } = e.target.getBoundingClientRect();
-      setMenuCoordinates([x, y]);
+      menuCoordinates = [x, y];
     }
+    dispatch(
+      setCellPopupState({
+        cellIndex,
+        sectionIndex,
+        open: true,
+        menuCoordinates,
+      })
+    );
     e.preventDefault();
   };
 
@@ -81,13 +82,6 @@ const Cell = (props) => {
       }}
     >
       {intensity ? sound.toLocaleUpperCase() : sound}
-      <CellPopupMenu
-        open={showMenu}
-        menuCoordinates={menuCoordinates}
-        onOpenChange={onOpenChange}
-        cellIndex={cellIndex}
-        sectionIndex={sectionIndex}
-      />
     </div>
   );
 };
