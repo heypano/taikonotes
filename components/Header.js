@@ -29,7 +29,7 @@ const Header = () => {
   const { songslug } = query;
   const [isSaving, setIsSaving] = useState(false);
   return (
-    <div className="settings p-1 mt-3 mb-3 flex flex-col md:flex-row">
+    <div className="settings p-1 mb-3 flex flex-col md:flex-row">
       <div className="w-full md:w-8/12 lg:w-6/12 grid logoGrid mr-3">
         <img src="/favicon/Taiko.svg" className="w-full p-2" alt="taiko logo" />
         {isEditing ? (
