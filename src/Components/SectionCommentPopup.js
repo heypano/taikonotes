@@ -28,40 +28,39 @@ const SectionCommentPopup = () => {
     }
   }, [sectionCommentOpen]);
 
-  return (
-    sectionCommentOpen && (
-      <PopupMenu
-        open={sectionCommentOpen}
-        left={sectionCommentCoordinates[0]}
-        top={sectionCommentCoordinates[1]}
-        onOpenChange={(isOpen) => {
-          dispatch(setSectionCommentOpen(isOpen));
-        }}
-        className={isEditing ? "w-1/2 h-1/2" : "max-w-lg"}
-      >
-        {isEditing ? (
-          <textarea
-            className="w-full h-full outline-none p-2 resize-none"
-            placeholder="Your notes here"
-            ref={textareaRef}
-            value={comment}
-            onChange={(e) => {
-              dispatch(
-                setSectionComment({
-                  sectionIndex: sectionCommentSectionId,
-                  comment: e.target.value,
-                })
-              );
-            }}
-          />
-        ) : (
-          <div className="w-full h-full whitespace-pre-wrap p-2 overflow-auto">
-            {comment}
-          </div>
-        )}
-      </PopupMenu>
-    )
-  );
+  const hasContent = isEditing || comment;
+  return sectionCommentOpen && hasContent ? (
+    <PopupMenu
+      open={sectionCommentOpen}
+      left={sectionCommentCoordinates[0]}
+      top={sectionCommentCoordinates[1]}
+      onOpenChange={(isOpen) => {
+        dispatch(setSectionCommentOpen(isOpen));
+      }}
+      className={isEditing ? "w-1/2 h-1/2" : "max-w-lg"}
+    >
+      {isEditing ? (
+        <textarea
+          className="w-full h-full outline-none p-2 resize-none"
+          placeholder="Your notes here"
+          ref={textareaRef}
+          value={comment}
+          onChange={(e) => {
+            dispatch(
+              setSectionComment({
+                sectionIndex: sectionCommentSectionId,
+                comment: e.target.value,
+              })
+            );
+          }}
+        />
+      ) : (
+        <div className="w-full h-full whitespace-pre-wrap p-2 overflow-auto">
+          {comment}
+        </div>
+      )}
+    </PopupMenu>
+  ) : null;
 };
 
 SectionCommentPopup.propTypes = {};

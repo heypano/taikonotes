@@ -1,5 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Todo
+- Overall song notes
+- Change textarea to rich
+- Password stuff
+
 ## Available Scripts
 
 In the project directory, you can run:
