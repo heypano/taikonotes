@@ -16,6 +16,7 @@ const TaikoGridSettings = ({ sectionId }) => {
     (e) => {
       const { name, value, dataType } = e.target;
       const usedValue = dataType === "number" ? Number(value) : value;
+      console.log(sectionId, usedValue, name);
       dispatch(
         setSettings({
           sectionId,
@@ -34,7 +35,7 @@ const TaikoGridSettings = ({ sectionId }) => {
         Cells Per Line
         <select
           id={`cellsPerLine_${sectionId}`}
-          name={`cellsPerLine_${sectionId}`}
+          name="cellsPerLine"
           className="p-2 "
           onChange={onFormChange}
           value={cellsPerLine}
@@ -51,7 +52,7 @@ const TaikoGridSettings = ({ sectionId }) => {
         Divide every
         <select
           id={`divideEvery_${sectionId}`}
-          name={`divideEvery_${sectionId}`}
+          name="divideEvery"
           className="p-2 "
           onChange={onFormChange}
           value={divideEvery}
@@ -68,7 +69,7 @@ const TaikoGridSettings = ({ sectionId }) => {
         Available Sounds
         <input
           id={`sounds_${sectionId}`}
-          name={`sounds_${sectionId}`}
+          name="sounds"
           className="border-black border p-1 ml-5"
           onChange={onFormChange}
           value={sounds}

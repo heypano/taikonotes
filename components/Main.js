@@ -10,6 +10,7 @@ import SectionCommentPopup from "./SectionCommentPopup";
 import { setMainState } from "../redux/mainSlice";
 import { setIsLoading, useIsLoading } from "../redux/editSlice";
 import Spin from "./Icons/Spin";
+import SectionSettings from "./SectionSettings";
 
 const Main = ({ song }) => {
   const { query } = useRouter();
@@ -44,6 +45,7 @@ const Main = ({ song }) => {
             <TaikoGrid song={song} />
             <CellPopupMenu />
             <SectionCommentPopup />
+            <SectionSettings />
           </>
         )}
       </PageContainer>

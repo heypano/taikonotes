@@ -10,24 +10,25 @@ import {
 } from "../redux/mainSlice";
 import SectionButton from "./SectionButton";
 import GearIcon from "./Icons/GearIcon";
-import SectionSettings from "./SectionSettings";
 import Minus from "./Icons/Minus";
 import Plus from "./Icons/Plus";
 import Comment from "./Icons/Comment";
-import { setSectionCommentData, useIsEditing } from "../redux/editSlice";
+import {
+  setSectionCommentData,
+  setSectionSettingData,
+  useIsEditing,
+} from "../redux/editSlice";
 import { getCoordinatesFromEvent } from "../keyboard/util";
 
 const Section = (props) => {
   const { sectionId } = props;
   const { cellsPerLine, divideEvery } = useSettings(sectionId);
-  const [sectionSettingsOpen, setSectionSettingsOpen] = useState(false);
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
   const section = useSectionNoCells(sectionId);
   const { sectionName, totalLines } = section;
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
-  const [sectionCoordinates, setSectionCoordinates] = useState(null);
   const mobileDisplayedCells =
     cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
   // console.debug(`Section rerender ${sectionName} - ${id}`);
@@ -75,22 +76,18 @@ const Section = (props) => {
             </SectionButton>
             <SectionButton
               onClick={(e) => {
-                setSectionSettingsOpen(true);
-                setSectionCoordinates(getCoordinatesFromEvent(e));
+                dispatch(
+                  setSectionSettingData({
+                    sectionSettingOpen: true,
+                    sectionSettingSectionId: sectionId,
+                    sectionSettingCoordinates: getCoordinatesFromEvent(e),
+                  })
+                );
                 e.preventDefault();
                 e.stopPropagation();
               }}
             >
               <GearIcon />
-              <SectionSettings
-                sectionId={sectionId}
-                open={sectionSettingsOpen}
-                onOpenChange={(isOpen) => {
-                  setSectionSettingsOpen(isOpen);
-                }}
-                left={sectionCoordinates?.[0]}
-                top={sectionCoordinates?.[1]}
-              />
             </SectionButton>
           </>
         )}

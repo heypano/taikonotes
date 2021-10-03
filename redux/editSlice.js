@@ -11,6 +11,9 @@ export const initialState = {
   sectionCommentOpen: false,
   sectionCommentCoordinates: null,
   sectionCommentSectionId: null,
+  sectionSettingOpen: false,
+  sectionSettingSectionId: null,
+  sectionSettingCoordinates: null,
 };
 
 export const useIsEditing = () => useSelector((state) => state[name].isEditing);
@@ -30,6 +33,20 @@ export const useSectionCommentData = () =>
     };
   }, shallowEqual);
 
+export const useSectionSettingData = () =>
+  useSelector((state) => {
+    const {
+      sectionSettingOpen,
+      sectionSettingSectionId,
+      sectionSettingCoordinates,
+    } = state[name];
+    return {
+      sectionSettingOpen,
+      sectionSettingSectionId,
+      sectionSettingCoordinates,
+    };
+  }, shallowEqual);
+
 export const editSlice = createSlice({
   name,
   initialState,
@@ -43,6 +60,9 @@ export const editSlice = createSlice({
     setSectionCommentOpen: (state, action) => {
       state.sectionCommentOpen = action.payload;
     },
+    setSectionSettingOpen: (state, action) => {
+      state.sectionSettingOpen = action.payload;
+    },
     setSectionCommentData: (state, action) => {
       const {
         sectionCommentOpen,
@@ -54,6 +74,19 @@ export const editSlice = createSlice({
         sectionCommentOpen,
         sectionCommentSectionId,
         sectionCommentCoordinates,
+      };
+    },
+    setSectionSettingData: (state, action) => {
+      const {
+        sectionSettingOpen,
+        sectionSettingSectionId,
+        sectionSettingCoordinates,
+      } = action.payload;
+      return {
+        ...state,
+        sectionSettingOpen,
+        sectionSettingSectionId,
+        sectionSettingCoordinates,
       };
     },
   },
@@ -70,6 +103,8 @@ export const {
   setIsLoading,
   setSectionCommentOpen,
   setSectionCommentData,
+  setSectionSettingOpen,
+  setSectionSettingData,
 } = editSlice.actions;
 
 export default editSlice.reducer;
