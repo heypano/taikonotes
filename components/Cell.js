@@ -66,6 +66,8 @@ const Cell = (props) => {
     }
   };
 
+  const finalSound = intensity ? sound.toLocaleUpperCase() : sound;
+
   return (
     <div
       ref={ref}
@@ -80,7 +82,9 @@ const Cell = (props) => {
       }}
     >
       <div className="absolute w-full h-full flex flex-row items-center justify-center">
-        {intensity ? sound.toLocaleUpperCase() : sound}
+        <div className="overflow-hidden truncate" title={finalSound}>
+          {finalSound}
+        </div>
       </div>
       {comment && (
         <div className="absolute w-full h-full grid grid-rows-2 grid-cols-3">
