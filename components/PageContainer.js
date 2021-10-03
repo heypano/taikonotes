@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
  * React class to contain a page
  */
 const PageContainer = ({ children }) => (
-  <div className="container mx-auto">{children}</div>
+  <div className="container mx-auto h-full">{children}</div>
 );
 
 PageContainer.propTypes = {

@@ -36,6 +36,14 @@
   }
 }
 
+html,
+body,
+#__next,
+.app {
+  @apply h-full;
+  margin: 0;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",

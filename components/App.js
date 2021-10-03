@@ -1,21 +1,12 @@
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";
-import TaikoGrid from "./TaikoGrid";
-import PageContainer from "./PageContainer";
-import CellPopupMenu from "./CellPopupMenu";
-import SectionCommentPopup from "./SectionCommentPopup";
 import { store } from "../redux/store";
+import Main from "./Main";
 
 function App({ song }) {
   return (
     <Provider store={store}>
-      <div className="app">
-        <PageContainer>
-          <TaikoGrid song={song} />
-        </PageContainer>
-        <CellPopupMenu />
-        <SectionCommentPopup />
-      </div>
+      <Main song={song} />
     </Provider>
   );
 }

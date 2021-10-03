@@ -1,7 +1,5 @@
-import { memo, useEffect } from "react";
-import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
-import { setMainState, useSectionIds } from "../redux/mainSlice";
+import { memo } from "react";
+import { useSectionIds } from "../redux/mainSlice";
 import Section from "./Section";
 import Header from "./Header";
 
@@ -11,15 +9,8 @@ import Header from "./Header";
 //
 // const notes = [chihat, snare, bass];
 
-const TaikoGrid = ({ song }) => {
+const TaikoGrid = () => {
   const sectionsIds = useSectionIds();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (song) {
-      dispatch(setMainState(song));
-    }
-  }, [dispatch, song]);
 
   // console.debug("TaikoGrid rerender");
   return (
@@ -32,12 +23,6 @@ const TaikoGrid = ({ song }) => {
       </div>
     </div>
   );
-};
-TaikoGrid.propTypes = {
-  song: PropTypes.shape({}),
-};
-TaikoGrid.defaultProps = {
-  song: undefined,
 };
 
 export default memo(TaikoGrid);
