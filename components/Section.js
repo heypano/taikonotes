@@ -58,6 +58,7 @@ const Section = (props) => {
                   })
                 );
               }}
+              aria-label="Plus"
             >
               <Plus />
             </SectionButton>
@@ -71,6 +72,7 @@ const Section = (props) => {
                   })
                 );
               }}
+              aria-label="Minus"
             >
               <Minus />
             </SectionButton>
@@ -86,6 +88,7 @@ const Section = (props) => {
                 e.preventDefault();
                 e.stopPropagation();
               }}
+              aria-label="Settings"
             >
               <GearIcon />
             </SectionButton>
@@ -101,6 +104,7 @@ const Section = (props) => {
               })
             );
           }}
+          aria-label="Section Comment"
         >
           <Comment />
         </SectionButton>

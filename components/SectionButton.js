@@ -2,10 +2,11 @@ import { memo } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-const SectionButton = ({ children, onClick }) => (
+const SectionButton = ({ children, onClick, ...rest }) => (
   <Button
     className="bg-blue-100 hover:bg-blue-50 mr-2 spinIcon w-10 p-2"
     onClick={onClick}
+    {...rest}
   >
     {children}
   </Button>
