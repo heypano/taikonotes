@@ -1,7 +1,12 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { setSound, useSoundObj } from "../redux/mainSlice";
+import {
+  setCellComment,
+  setSound,
+  useCell,
+  useSoundObj,
+} from "../redux/mainSlice";
 import { onEnter, onSpace } from "../keyboard/util";
 import PopupMenu from "./PopupMenu";
 import {
@@ -11,6 +16,11 @@ import {
   useCellPopupOpen,
   useCellSectionIndex,
 } from "../redux/cellSlice";
+import Comment from "../Icons/Comment";
+
+const PopupCell = memo(({ className, ...props }) => (
+  <div className={`p-3 hover:bg-blue-200 ${className}`} {...props} />
+));
 
 const CellPopupMenu = () => {
   const sectionIndex = useCellSectionIndex();
@@ -23,6 +33,15 @@ const CellPopupMenu = () => {
   const cellIndex = useCellIndex();
   const menuCoordinates = useCellMenuCoordinates();
   const open = useCellPopupOpen();
+  const [isCommenting, setIsCommenting] = useState(false);
+  const textareaRef = useRef();
+  const { comment } = useCell(sectionIndex, cellIndex);
+
+  useEffect(() => {
+    if (isCommenting && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [isCommenting]);
 
   useEffect(() => {
     if (open) {
@@ -31,6 +50,7 @@ const CellPopupMenu = () => {
           firstCellRef.current.focus();
         }
       }, 0);
+      setIsCommenting(false);
     }
   }, [open]);
 
@@ -46,39 +66,70 @@ const CellPopupMenu = () => {
           dispatch(setCellPopupOpen(isOpen));
         }}
       >
-        <div
-          className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max max-h-48`}
-        >
-          {Object.values(soundObj).map((sound, index) => {
-            const onClick = (e) => {
-              dispatch(
-                setSound({
-                  cellIndex,
-                  sectionIndex,
-                  sound,
-                })
-              );
-            };
+        <div className="flex">
+          {!isCommenting && (
+            <div
+              className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max max-h-48`}
+            >
+              {Object.values(soundObj).map((sound, index) => {
+                const onClick = (e) => {
+                  dispatch(
+                    setSound({
+                      cellIndex,
+                      sectionIndex,
+                      sound,
+                    })
+                  );
+                };
 
-            return (
-              <div
-                ref={index === 0 ? firstCellRef : null}
-                key={sound}
-                className="p-3 hover:bg-blue-200 "
-                role="button"
-                tabIndex={0}
-                onClick={onClick}
-                onKeyPress={(e) => {
-                  onEnter(() => {})(e);
-                  onSpace(onClick)(e);
+                return (
+                  <PopupCell
+                    ref={index === 0 ? firstCellRef : null}
+                    key={sound}
+                    role="button"
+                    tabIndex={0}
+                    onClick={onClick}
+                    onKeyPress={(e) => {
+                      onEnter(() => {})(e);
+                      onSpace(onClick)(e);
+                    }}
+                  >
+                    {sound}
+                  </PopupCell>
+                );
+              })}
+            </div>
+          )}
+          {isCommenting && (
+            <div className="grid grid-rows-1 grid-cols-1 grid-flow-col w-max max-h-48">
+              <textarea
+                ref={textareaRef}
+                className="w-full h-full resize-none p-2"
+                placeholder="Your notes here"
+                onChange={(e) => {
+                  dispatch(
+                    setCellComment({
+                      cellIndex,
+                      sectionIndex,
+                      comment: e.target.value,
+                    })
+                  );
                 }}
-              >
-                {sound}
-              </div>
-            );
-          })}
+                value={comment}
+              />
+            </div>
+          )}
+          <div className="border-0 border-l-2 border-gray-200 grid grid-rows-4 grid-cols-1 grid-flow-col w-max max-h-48">
+            <PopupCell
+              className={isCommenting ? "bg-blue-400" : ""}
+              onClick={() => {
+                setIsCommenting(!isCommenting);
+              }}
+            >
+              <Comment />
+            </PopupCell>
+          </div>
         </div>
-        <div className="w-full" />
       </PopupMenu>
     )
   );

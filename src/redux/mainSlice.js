@@ -450,7 +450,7 @@ export const useSectionNoCells = (index) =>
 export const useCell = (sectionIndex, cellIndex) =>
   useSelector((state) => {
     const { sections } = state[name];
-    return sections[sectionIndex].cells[cellIndex] || {};
+    return sections[sectionIndex]?.cells[cellIndex] || {};
   }, shallowEqual);
 
 const getNewSection = (index = 0) => ({
@@ -517,6 +517,13 @@ export const mainSlice = createSlice({
       cell.sound = sound;
       state.sections[sectionIndex].cells[cellIndex] = cell;
     },
+    setCellComment: (state, action) => {
+      const { sectionIndex, cellIndex, comment } = action.payload;
+      const section = state.sections[sectionIndex];
+      const cell = section.cells[cellIndex] || {};
+      cell.comment = comment;
+      state.sections[sectionIndex].cells[cellIndex] = cell;
+    },
     setIntensity: (state, action) => {
       const { sectionIndex, cellIndex, intensity } = action.payload;
       const section = state.sections[sectionIndex];
@@ -543,6 +550,7 @@ export const {
   setSounds,
   setSettings,
   setSound,
+  setCellComment,
   setIntensity,
   setMainState,
   addSection,

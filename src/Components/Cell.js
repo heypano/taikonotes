@@ -18,7 +18,7 @@ const Cell = (props) => {
   const dispatch = useDispatch();
   const soundObj = useSoundObj(sectionIndex);
 
-  const { sound: currentSound = 0, intensity } = useCell(
+  const { sound: currentSound = 0, intensity, comment } = useCell(
     sectionIndex,
     cellIndex
   );
