@@ -24,7 +24,7 @@ const Section = (props) => {
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
   const section = useSectionNoCells(sectionId);
-  const { sectionName, totalLines, id } = section;
+  const { sectionName, totalLines } = section;
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
   const [sectionCoordinates, setSectionCoordinates] = useState(null);

@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import PageContainer from "./PageContainer";
 import TaikoGrid from "./TaikoGrid";
 import CellPopupMenu from "./CellPopupMenu";
@@ -28,6 +29,9 @@ const Main = ({ song }) => {
 
   return (
     <div className="app">
+      <Head>
+        <title>Taiko Notes -- {song ? song.title : ""}</title>
+      </Head>
       <PageContainer>
         {isLoading ? (
           <div className="w-full h-full flex items-center justify-center">
@@ -47,7 +51,7 @@ const Main = ({ song }) => {
   );
 };
 Main.propTypes = {
-  song: PropTypes.shape({}),
+  song: PropTypes.shape({ title: PropTypes.string }),
 };
 Main.defaultProps = {
   song: undefined,

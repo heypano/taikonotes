@@ -39,7 +39,6 @@ class MyDocument extends Document {
           />
           <meta name="msapplication-TileColor" content="#ff0000" />
           <meta name="theme-color" content="#ffffff" />
-          <title>Taiko Notes by heypano</title>
           <link rel="shortcut icon" href="/favicon/favicon.ico" />
         </Head>
         <body>

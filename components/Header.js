@@ -1,24 +1,21 @@
 import { memo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import TaikoLogo from "../public/favicon/Taiko.svg";
 import {
   addSection,
   clearState,
   removeLastSection,
-  setMainState,
   setSongTitle,
   useSongTitle,
 } from "../redux/mainSlice";
-import {
-  getMainFromLocal,
-  getMainState,
-  saveMainToLocal,
-} from "../redux/store";
+import { getMainState } from "../redux/store";
 import HeaderButton from "./HeaderButton";
 import Pencil from "./Icons/Pencil";
 import Icon from "./Icons/Icon";
 import { setIsEditing, useIsEditing } from "../redux/editSlice";
-import { get, post } from "../lib/api";
+import { post } from "../lib/api";
 import Spin from "./Icons/Spin";
 
 const Header = () => {
@@ -31,7 +28,7 @@ const Header = () => {
   return (
     <div className="settings p-1 mb-3 flex flex-col md:flex-row">
       <div className="w-full md:w-8/12 lg:w-6/12 grid logoGrid mr-3">
-        <img src="/favicon/Taiko.svg" className="w-full p-2" alt="taiko logo" />
+        <Image src={TaikoLogo} className="w-full p-2" alt="taiko logo" />
         {isEditing ? (
           <textarea
             className="text-2xl w-full outline-none p-2 resize-none"
@@ -69,12 +66,8 @@ const Header = () => {
                     ...getMainState(),
                     slug: songslug,
                   };
-                  const saveResult = await post(
-                    `/api/saveSong/${songslug}`,
-                    state
-                  );
+                  await post(`/api/saveSong/${songslug}`, state);
                   setIsSaving(false);
-                  console.log(saveResult);
                 }}
               >
                 Save
