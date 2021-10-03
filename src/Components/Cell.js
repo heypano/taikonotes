@@ -2,7 +2,7 @@ import React, { memo, useRef } from "react";
 import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
-import { onEnter, onSpace } from "../keyboard/util";
+import { getCoordinatesFromEvent, onEnter, onSpace } from "../keyboard/util";
 import { setCellPopupState } from "../redux/cellSlice";
 import Comment from "../Icons/Comment";
 
@@ -40,13 +40,7 @@ const Cell = (props) => {
   console.debug(`Cell rerender ${cellIndex}`);
 
   const onClick = (e) => {
-    let menuCoordinates;
-    if (e.clientX && e.clientY) {
-      menuCoordinates = [e.clientX, e.clientY];
-    } else if (e.target) {
-      const { x, y } = e.target.getBoundingClientRect();
-      menuCoordinates = [x, y];
-    }
+    const menuCoordinates = getCoordinatesFromEvent(e);
     dispatch(
       setCellPopupState({
         cellIndex,

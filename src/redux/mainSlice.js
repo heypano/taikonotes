@@ -8,6 +8,7 @@ export const initialState = {
   title: "THE song",
   sections: [
     {
+      comment: "this is a section comment",
       cells: [
         {
           sound: "don",
@@ -456,6 +457,15 @@ export const useSectionNoCells = (index) =>
     return section;
   }, shallowEqual);
 
+export const useSectionComment = (index) =>
+  useSelector((state) => {
+    const { sections } = state[name];
+    if (index !== undefined) {
+      return sections?.[index]?.comment;
+    }
+    return null;
+  }, shallowEqual);
+
 export const useCell = (sectionIndex, cellIndex) =>
   useSelector((state) => {
     const { sections } = state[name];
@@ -522,6 +532,10 @@ export const mainSlice = createSlice({
       const { sectionIndex, sectionName } = action.payload;
       state.sections[sectionIndex].sectionName = sectionName;
     },
+    setSectionComment: (state, action) => {
+      const { sectionIndex, comment } = action.payload;
+      state.sections[sectionIndex].comment = comment;
+    },
     setSound: (state, action) => {
       const { sectionIndex, cellIndex, sound } = action.payload;
       const section = state.sections[sectionIndex];
@@ -560,6 +574,7 @@ export const {
   setSongTitle,
   setTotalLines,
   setSectionName,
+  setSectionComment,
   setSounds,
   setSettings,
   setSound,

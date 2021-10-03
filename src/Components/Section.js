@@ -13,6 +13,9 @@ import GearIcon from "../Icons/GearIcon";
 import SectionSettings from "./SectionSettings";
 import Minus from "../Icons/Minus";
 import Plus from "../Icons/Plus";
+import Comment from "../Icons/Comment";
+import { setSectionCommentData } from "../redux/editSlice";
+import { getCoordinatesFromEvent } from "../keyboard/util";
 
 const Section = (props) => {
   const { sectionId } = props;
@@ -23,8 +26,7 @@ const Section = (props) => {
   const { sectionName, totalLines, id } = section;
   const sectionCells = [];
   const numCells = cellsPerLine * totalLines;
-  const [sectionSettingsLeft, setSectionSettingsLeft] = useState();
-  const [sectionSettingsTop, setSectionSettingsTop] = useState();
+  const [sectionCoordinates, setSectionCoordinates] = useState(null);
   const mobileDisplayedCells =
     cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
   console.debug(`Section rerender ${sectionName} - ${id}`);
@@ -71,15 +73,7 @@ const Section = (props) => {
         <SectionButton
           onClick={(e) => {
             setSectionSettingsOpen(true);
-
-            if (e.clientX && e.clientY) {
-              setSectionSettingsLeft(e.clientX);
-              setSectionSettingsTop(e.clientY);
-            } else if (e.target) {
-              const { x, y } = e.target.getBoundingClientRect();
-              setSectionSettingsLeft(x);
-              setSectionSettingsTop(y);
-            }
+            setSectionCoordinates(getCoordinatesFromEvent(e));
             e.preventDefault();
             e.stopPropagation();
           }}
@@ -91,9 +85,22 @@ const Section = (props) => {
             onOpenChange={(isOpen) => {
               setSectionSettingsOpen(isOpen);
             }}
-            left={sectionSettingsLeft}
-            top={sectionSettingsTop}
+            left={sectionCoordinates?.[0]}
+            top={sectionCoordinates?.[1]}
           />
+        </SectionButton>
+        <SectionButton
+          onClick={(e) => {
+            dispatch(
+              setSectionCommentData({
+                sectionCommentOpen: true,
+                sectionCommentSectionId: sectionId,
+                sectionCommentCoordinates: getCoordinatesFromEvent(e),
+              })
+            );
+          }}
+        >
+          <Comment />
         </SectionButton>
         <input
           type="text"
