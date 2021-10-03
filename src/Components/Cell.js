@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
 import { onEnter, onSpace } from "../keyboard/util";
 import { setCellPopupState } from "../redux/cellSlice";
+import Comment from "../Icons/Comment";
 
 const Cell = (props) => {
   const {
@@ -71,7 +72,7 @@ const Cell = (props) => {
   return (
     <div
       ref={ref}
-      className={`fadeBg flex flex-row justify-center items-center select-none h-10 cursor-pointer ${borderClass} ${backgroundClass}`}
+      className={`fadeBg relative select-none h-10 cursor-pointer ${borderClass} ${backgroundClass}`}
       role="button"
       tabIndex={0}
       onContextMenu={onContextMenu}
@@ -81,7 +82,16 @@ const Cell = (props) => {
         onSpace(onClick)(e);
       }}
     >
-      {intensity ? sound.toLocaleUpperCase() : sound}
+      <div className="absolute w-full h-full flex flex-row items-center justify-center">
+        {intensity ? sound.toLocaleUpperCase() : sound}
+      </div>
+      {comment && (
+        <div className="absolute w-full h-full grid grid-rows-3 grid-cols-3">
+          <div className="col-start-3 col-end-3 flex justify-end">
+            <Comment className="w-full" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -9,7 +9,9 @@ import {
 } from "../redux/mainSlice";
 import { getMainFromLocal, saveMainToLocal } from "../redux/store";
 
-const HeaderButton = memo(({ ...props }) => <Button {...props} />);
+const HeaderButton = memo(({ ...props }) => (
+  <Button className="p-3" {...props} />
+));
 
 const Header = () => {
   const dispatch = useDispatch();

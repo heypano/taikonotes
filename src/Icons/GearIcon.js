@@ -4,7 +4,7 @@ export default function GearIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6"
+      className="max-h-full max-w-full"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

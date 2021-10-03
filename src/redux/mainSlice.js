@@ -10,6 +10,7 @@ export const initialState = {
       cells: [
         {
           sound: "don",
+          comment: "play this super loud",
         },
         null,
         {
@@ -18,6 +19,7 @@ export const initialState = {
         },
         {
           sound: "don",
+          comment: "raise your arms",
         },
         {
           sound: "",

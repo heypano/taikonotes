@@ -121,7 +121,9 @@ const CellPopupMenu = () => {
           )}
           <div className="border-0 border-l-2 border-gray-200 grid grid-rows-4 grid-cols-1 grid-flow-col w-max max-h-48">
             <PopupCell
-              className={isCommenting ? "bg-blue-400" : ""}
+              className={`${
+                isCommenting ? "bg-blue-300" : ""
+              } flex items-center justify-center w-12`}
               onClick={() => {
                 setIsCommenting(!isCommenting);
               }}

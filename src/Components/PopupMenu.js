@@ -29,8 +29,8 @@ const PopupMenu = ({
     if (ref.current && left !== undefined && top !== undefined) {
       const minLeft = 10;
       const minTop = 10;
-      const maxLeft = window.innerWidth - ref.current.clientWidth;
-      const maxTop = window.innerHeight - ref.current.clientHeight;
+      const maxLeft = window.innerWidth - ref.current.clientWidth - 10;
+      const maxTop = window.innerHeight - ref.current.clientHeight - 10;
       const usedLeft = Math.max(Math.min(left, maxLeft), minLeft);
       const usedTop = Math.max(Math.min(top, maxTop), minTop);
       setActualPosition({ left: usedLeft, top: usedTop });
@@ -49,7 +49,7 @@ const PopupMenu = ({
     open && (
       <div
         ref={ref}
-        className={`popupmenu ${visibleClass} ${className}`}
+        className={`popupmenu z-10 ${visibleClass} ${className}`}
         style={{ ...style, ...(actualPosition || {}) }}
         onClick={preventAndStop}
         onKeyPress={onEnter(preventAndStop)}

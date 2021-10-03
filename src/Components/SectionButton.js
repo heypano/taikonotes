@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Button from "./Button";
 
 const SectionButton = ({ children, onClick }) => (
-  <Button className="mr-2 spinIcon" onClick={onClick}>
+  <Button className="mr-2 spinIcon w-10 p-2" onClick={onClick}>
     {children}
   </Button>
 );
