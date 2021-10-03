@@ -109,20 +109,26 @@ const Section = (props) => {
           <Comment />
         </SectionButton>
         {isEditing ? (
-          <textarea
-            type="text"
-            value={sectionName}
-            className="text-2xl w-full outline-none p-2 resize-none"
-            rows={1}
-            onChange={(e) => {
-              dispatch(
-                setSectionName({
-                  sectionIndex: sectionId,
-                  sectionName: e.target.value,
-                })
-              );
-            }}
-          />
+          <label
+            htmlFor={`section_${sectionId}_name`}
+            aria-label="Section name"
+          >
+            <textarea
+              id={`section_${sectionId}_name`}
+              type="text"
+              value={sectionName}
+              className="text-2xl w-full outline-none p-2 resize-none"
+              rows={1}
+              onChange={(e) => {
+                dispatch(
+                  setSectionName({
+                    sectionIndex: sectionId,
+                    sectionName: e.target.value,
+                  })
+                );
+              }}
+            />
+          </label>
         ) : (
           <div className="text-2xl w-full p-2">{sectionName}</div>
         )}
