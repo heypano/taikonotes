@@ -100,7 +100,7 @@ const CellPopupMenu = () => {
             <div className="grid grid-rows-1 grid-cols-1 grid-flow-col w-max max-h-48">
               <textarea
                 ref={textareaRef}
-                className="w-full h-full resize-none p-2"
+                className="w-full h-full resize-none p-2 outline-none"
                 placeholder="Your notes here"
                 onChange={(e) => {
                   dispatch(
