@@ -33,8 +33,8 @@ const TaikoGridSettings = ({ sectionId }) => {
       <SettingInput>
         Cells Per Line
         <select
-          id="cellsPerLine"
-          name="cellsPerLine"
+          id={`cellsPerLine_${sectionId}`}
+          name={`cellsPerLine_${sectionId}`}
           className="p-2 "
           onChange={onFormChange}
           value={cellsPerLine}
@@ -50,8 +50,8 @@ const TaikoGridSettings = ({ sectionId }) => {
       <SettingInput>
         Divide every
         <select
-          id="divideEvery"
-          name="divideEvery"
+          id={`divideEvery_${sectionId}`}
+          name={`divideEvery_${sectionId}`}
           className="p-2 "
           onChange={onFormChange}
           value={divideEvery}
@@ -67,8 +67,8 @@ const TaikoGridSettings = ({ sectionId }) => {
       <SettingInput id={sounds}>
         Available Sounds
         <input
-          id="sounds"
-          name="sounds"
+          id={`sounds_${sectionId}`}
+          name={`sounds_${sectionId}`}
           className="border-black border p-1 ml-5"
           onChange={onFormChange}
           value={sounds}
