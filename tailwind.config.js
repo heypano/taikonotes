@@ -1,5 +1,15 @@
 module.exports = {
-  purge: ["./src/**/*.js"],
+  purge: {
+    content: [
+      "./pages/**/*.{js,ts,jsx,tsx}",
+      "./components/**/*.{js,ts,jsx,tsx}",
+    ],
+    options: {
+      safelist: {
+        standard: [/grid-cols/],
+      },
+    },
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},

@@ -3,7 +3,13 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["plugin:react/recommended", "airbnb", "airbnb/hooks", "prettier"],
+  extends: [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "prettier",
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -29,8 +35,13 @@ module.exports = {
     "jsx-a11y/click-events-have-key-events": 1,
     "jsx-a11y/interactive-supports-focus": 1,
     "jsx-a11y/no-noninteractive-element-interactions": 1,
+    "@next/next/no-img-element": 0,
     "react/jsx-filename-extension": 0,
     "react/jsx-props-no-spreading": 0,
     "no-plusplus": 0,
+    // suppress errors for missing 'import React' in files
+    "react/react-in-jsx-scope": 0,
+    // allow jsx syntax in js files (for next.js project)
+    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }], // should add ".ts" if typescript project
   },
 };
