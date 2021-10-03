@@ -14,7 +14,7 @@ import SectionSettings from "./SectionSettings";
 import Minus from "../Icons/Minus";
 import Plus from "../Icons/Plus";
 import Comment from "../Icons/Comment";
-import { setSectionCommentData } from "../redux/editSlice";
+import { setSectionCommentData, useIsEditing } from "../redux/editSlice";
 import { getCoordinatesFromEvent } from "../keyboard/util";
 
 const Section = (props) => {
@@ -22,6 +22,7 @@ const Section = (props) => {
   const { cellsPerLine, divideEvery } = useSettings(sectionId);
   const [sectionSettingsOpen, setSectionSettingsOpen] = useState(false);
   const dispatch = useDispatch();
+  const isEditing = useIsEditing();
   const section = useSectionNoCells(sectionId);
   const { sectionName, totalLines, id } = section;
   const sectionCells = [];
@@ -45,50 +46,54 @@ const Section = (props) => {
   return (
     <div key={`section_${sectionId}`} className="mb-8 p-1">
       <div className="flex flex-row align-baseline">
-        <SectionButton
-          onClick={() => {
-            dispatch(
-              setTotalLines({
-                sectionIndex: sectionId,
-                totalLines: totalLines + 1,
-              })
-            );
-          }}
-        >
-          <Plus />
-        </SectionButton>
+        {isEditing && (
+          <>
+            <SectionButton
+              onClick={() => {
+                dispatch(
+                  setTotalLines({
+                    sectionIndex: sectionId,
+                    totalLines: totalLines + 1,
+                  })
+                );
+              }}
+            >
+              <Plus />
+            </SectionButton>
 
-        <SectionButton
-          onClick={() => {
-            dispatch(
-              setTotalLines({
-                sectionIndex: sectionId,
-                totalLines: totalLines - 1,
-              })
-            );
-          }}
-        >
-          <Minus />
-        </SectionButton>
-        <SectionButton
-          onClick={(e) => {
-            setSectionSettingsOpen(true);
-            setSectionCoordinates(getCoordinatesFromEvent(e));
-            e.preventDefault();
-            e.stopPropagation();
-          }}
-        >
-          <GearIcon />
-          <SectionSettings
-            sectionId={sectionId}
-            open={sectionSettingsOpen}
-            onOpenChange={(isOpen) => {
-              setSectionSettingsOpen(isOpen);
-            }}
-            left={sectionCoordinates?.[0]}
-            top={sectionCoordinates?.[1]}
-          />
-        </SectionButton>
+            <SectionButton
+              onClick={() => {
+                dispatch(
+                  setTotalLines({
+                    sectionIndex: sectionId,
+                    totalLines: totalLines - 1,
+                  })
+                );
+              }}
+            >
+              <Minus />
+            </SectionButton>
+            <SectionButton
+              onClick={(e) => {
+                setSectionSettingsOpen(true);
+                setSectionCoordinates(getCoordinatesFromEvent(e));
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              <GearIcon />
+              <SectionSettings
+                sectionId={sectionId}
+                open={sectionSettingsOpen}
+                onOpenChange={(isOpen) => {
+                  setSectionSettingsOpen(isOpen);
+                }}
+                left={sectionCoordinates?.[0]}
+                top={sectionCoordinates?.[1]}
+              />
+            </SectionButton>
+          </>
+        )}
         <SectionButton
           onClick={(e) => {
             dispatch(
@@ -102,19 +107,24 @@ const Section = (props) => {
         >
           <Comment />
         </SectionButton>
-        <input
-          type="text"
-          value={sectionName}
-          className="text-2xl w-full outline-none"
-          onChange={(e) => {
-            dispatch(
-              setSectionName({
-                sectionIndex: sectionId,
-                sectionName: e.target.value,
-              })
-            );
-          }}
-        />
+        {isEditing ? (
+          <textarea
+            type="text"
+            value={sectionName}
+            className="text-2xl w-full outline-none p-2 resize-none"
+            rows={1}
+            onChange={(e) => {
+              dispatch(
+                setSectionName({
+                  sectionIndex: sectionId,
+                  sectionName: e.target.value,
+                })
+              );
+            }}
+          />
+        ) : (
+          <div className="text-2xl w-full p-2">{sectionName}</div>
+        )}
       </div>
       <div
         className={`bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-blue-800`}

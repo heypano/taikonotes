@@ -17,6 +17,7 @@ import {
 } from "../redux/cellSlice";
 import Comment from "../Icons/Comment";
 import PopupCell from "./PopupCell";
+import { useIsEditing } from "../redux/editSlice";
 
 const CellPopupMenu = () => {
   const sectionIndex = useCellSectionIndex();
@@ -29,6 +30,7 @@ const CellPopupMenu = () => {
   const cellIndex = useCellIndex();
   const menuCoordinates = useCellMenuCoordinates();
   const open = useCellPopupOpen();
+  const isEditing = useIsEditing();
   const [isCommenting, setIsCommenting] = useState(false);
   const textareaRef = useRef();
   const { comment } = useCell(sectionIndex, cellIndex);
@@ -52,69 +54,70 @@ const CellPopupMenu = () => {
 
   console.debug("CellPopupMenu rerender");
 
-  return (
-    open && (
-      <PopupMenu
-        open={open}
-        left={menuCoordinates[0]}
-        top={menuCoordinates[1]}
-        onOpenChange={(isOpen) => {
-          dispatch(setCellPopupOpen(isOpen));
-        }}
-      >
-        <div className="flex">
-          {!isCommenting && (
-            <div
-              className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max max-h-48`}
-            >
-              {Object.values(soundObj).map((sound, index) => {
-                const onClick = (e) => {
-                  dispatch(
-                    setSound({
-                      cellIndex,
-                      sectionIndex,
-                      sound,
-                    })
-                  );
-                };
+  const hasContent = isEditing || comment;
 
-                return (
-                  <PopupCell
-                    ref={index === 0 ? firstCellRef : null}
-                    key={sound}
-                    role="button"
-                    tabIndex={0}
-                    onClick={onClick}
-                    onKeyPress={(e) => {
-                      onEnter(() => {})(e);
-                      onSpace(onClick)(e);
-                    }}
-                  >
-                    {sound}
-                  </PopupCell>
+  return open && hasContent ? (
+    <PopupMenu
+      open={open}
+      left={menuCoordinates[0]}
+      top={menuCoordinates[1]}
+      onOpenChange={(isOpen) => {
+        dispatch(setCellPopupOpen(isOpen));
+      }}
+    >
+      <div className="flex">
+        {!isCommenting && isEditing && (
+          <div
+            className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max max-h-48`}
+          >
+            {Object.values(soundObj).map((sound, index) => {
+              const onClick = (e) => {
+                dispatch(
+                  setSound({
+                    cellIndex,
+                    sectionIndex,
+                    sound,
+                  })
                 );
-              })}
-            </div>
-          )}
-          {isCommenting && (
-            <div className="grid grid-rows-1 grid-cols-1 grid-flow-col w-max max-h-48">
-              <textarea
-                ref={textareaRef}
-                className="w-full h-full resize-none p-2 outline-none"
-                placeholder="Your notes here"
-                onChange={(e) => {
-                  dispatch(
-                    setCellComment({
-                      cellIndex,
-                      sectionIndex,
-                      comment: e.target.value,
-                    })
-                  );
-                }}
-                value={comment}
-              />
-            </div>
-          )}
+              };
+
+              return (
+                <PopupCell
+                  ref={index === 0 ? firstCellRef : null}
+                  key={sound}
+                  role="button"
+                  tabIndex={0}
+                  onClick={onClick}
+                  onKeyPress={(e) => {
+                    onSpace(onClick)(e);
+                  }}
+                >
+                  {sound}
+                </PopupCell>
+              );
+            })}
+          </div>
+        )}
+        {isCommenting && isEditing && (
+          <div className="grid grid-rows-1 grid-cols-1 grid-flow-col w-max max-h-48">
+            <textarea
+              ref={textareaRef}
+              className="w-full h-full resize-none p-2 outline-none"
+              placeholder="Your notes here"
+              onChange={(e) => {
+                dispatch(
+                  setCellComment({
+                    cellIndex,
+                    sectionIndex,
+                    comment: e.target.value,
+                  })
+                );
+              }}
+              value={comment}
+            />
+          </div>
+        )}
+        {isEditing && (
           <div className="border-0 border-l-2 border-gray-200 grid grid-rows-4 grid-cols-1 grid-flow-col w-max max-h-48">
             <PopupCell
               className={`${
@@ -127,10 +130,13 @@ const CellPopupMenu = () => {
               <Comment />
             </PopupCell>
           </div>
-        </div>
-      </PopupMenu>
-    )
-  );
+        )}
+        {!isEditing && comment && (
+          <div className="p-3 max-w-sm whitespace-pre-wrap">{comment}</div>
+        )}
+      </div>
+    </PopupMenu>
+  ) : null;
 };
 
 CellPopupMenu.propTypes = {};

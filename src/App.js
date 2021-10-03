@@ -12,9 +12,9 @@ function App() {
       <div className="app">
         <PageContainer>
           <TaikoGrid />
-          <CellPopupMenu />
-          <SectionCommentPopup />
         </PageContainer>
+        <CellPopupMenu />
+        <SectionCommentPopup />
       </div>
     </Provider>
   );

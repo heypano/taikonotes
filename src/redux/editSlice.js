@@ -5,10 +5,12 @@ import { shallowEqual, useSelector } from "react-redux";
 export const name = "edit";
 
 export const initialState = {
+  isEditing: false,
   sectionCommentOpen: false,
   sectionCommentCoordinates: null,
   sectionCommentSectionId: null,
 };
+export const useIsEditing = () => useSelector((state) => state[name].isEditing);
 
 export const useSectionCommentData = () =>
   useSelector((state) => {
@@ -28,6 +30,9 @@ export const editSlice = createSlice({
   name,
   initialState,
   reducers: {
+    setIsEditing: (state, action) => {
+      state.isEditing = action.payload;
+    },
     setSectionCommentOpen: (state, action) => {
       state.sectionCommentOpen = action.payload;
     },
@@ -49,6 +54,7 @@ export const editSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
+  setIsEditing,
   setSectionCommentOpen,
   setSectionCommentData,
 } = editSlice.actions;

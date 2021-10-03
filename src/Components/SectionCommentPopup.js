@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import PopupMenu from "./PopupMenu";
 import {
   setSectionCommentOpen,
+  useIsEditing,
   useSectionCommentData,
 } from "../redux/editSlice";
 import { setSectionComment, useSectionComment } from "../redux/mainSlice";
@@ -16,7 +17,7 @@ const SectionCommentPopup = () => {
   const comment = useSectionComment(sectionCommentSectionId);
   const textareaRef = useRef();
   const dispatch = useDispatch();
-
+  const isEditing = useIsEditing();
   console.debug("CommentEditMenu rerender");
 
   useEffect(() => {
@@ -36,21 +37,28 @@ const SectionCommentPopup = () => {
         onOpenChange={(isOpen) => {
           dispatch(setSectionCommentOpen(isOpen));
         }}
-        className="w-1/2"
+        className={isEditing ? "w-1/2 h-1/2" : "max-w-lg"}
       >
-        <textarea
-          className="w-full outline-none p-2 resize-none"
-          ref={textareaRef}
-          value={comment}
-          onChange={(e) => {
-            dispatch(
-              setSectionComment({
-                sectionIndex: sectionCommentSectionId,
-                comment: e.target.value,
-              })
-            );
-          }}
-        />
+        {isEditing ? (
+          <textarea
+            className="w-full h-full outline-none p-2 resize-none"
+            placeholder="Your notes here"
+            ref={textareaRef}
+            value={comment}
+            onChange={(e) => {
+              dispatch(
+                setSectionComment({
+                  sectionIndex: sectionCommentSectionId,
+                  comment: e.target.value,
+                })
+              );
+            }}
+          />
+        ) : (
+          <div className="w-full h-full whitespace-pre-wrap p-2 overflow-auto">
+            {comment}
+          </div>
+        )}
       </PopupMenu>
     )
   );

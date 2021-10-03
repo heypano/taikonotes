@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const Button = ({ children, className, ...rest }) => (
   <button
     type="button"
-    className={`bg-blue-100 text-gray-800 cursor-pointer hover:bg-blue-50 ${className}`}
+    className={`text-gray-800 cursor-pointer ${className}`}
     {...rest}
   >
     {children}

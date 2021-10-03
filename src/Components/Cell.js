@@ -5,6 +5,7 @@ import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
 import { getCoordinatesFromEvent, onEnter, onSpace } from "../keyboard/util";
 import { setCellPopupState } from "../redux/cellSlice";
 import Comment from "../Icons/Comment";
+import { useIsEditing } from "../redux/editSlice";
 
 const Cell = (props) => {
   const {
@@ -18,7 +19,7 @@ const Cell = (props) => {
   const ref = useRef();
   const dispatch = useDispatch();
   const soundObj = useSoundObj(sectionIndex);
-
+  const isEditing = useIsEditing();
   const { sound: currentSound = 0, intensity, comment } = useCell(
     sectionIndex,
     cellIndex
@@ -53,14 +54,16 @@ const Cell = (props) => {
   };
 
   const onContextMenu = (e) => {
-    dispatch(
-      setIntensity({
-        cellIndex,
-        sectionIndex,
-        intensity: intensity ? 0 : 1,
-      })
-    );
-    e.preventDefault();
+    if (isEditing) {
+      dispatch(
+        setIntensity({
+          cellIndex,
+          sectionIndex,
+          intensity: intensity ? 0 : 1,
+        })
+      );
+      e.preventDefault();
+    }
   };
 
   return (

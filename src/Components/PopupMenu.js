@@ -40,10 +40,6 @@ const PopupMenu = ({
   }, [left, open, top]);
 
   const visibleClass = actualPosition ? "" : "invisible";
-  const preventAndStop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
 
   return (
     open && (
@@ -51,8 +47,6 @@ const PopupMenu = ({
         ref={ref}
         className={`popupmenu z-10 ${visibleClass} ${className}`}
         style={{ ...style, ...(actualPosition || {}) }}
-        onClick={preventAndStop}
-        onKeyPress={onEnter(preventAndStop)}
         role="none"
       >
         {children}
