@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import {
   setCellComment,
@@ -17,10 +16,7 @@ import {
   useCellSectionIndex,
 } from "../redux/cellSlice";
 import Comment from "../Icons/Comment";
-
-const PopupCell = memo(({ className, ...props }) => (
-  <div className={`p-3 hover:bg-blue-200 ${className}`} {...props} />
-));
+import PopupCell from "./PopupCell";
 
 const CellPopupMenu = () => {
   const sectionIndex = useCellSectionIndex();

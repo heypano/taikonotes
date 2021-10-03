@@ -5,6 +5,7 @@ import { shallowEqual, useSelector } from "react-redux";
 export const name = "main";
 
 export const initialState = {
+  title: "THE song",
   sections: [
     {
       cells: [
@@ -433,6 +434,12 @@ export const useSections = () =>
     return sections;
   }, shallowEqual);
 
+export const useSongTitle = () =>
+  useSelector((state) => {
+    const { title } = state[name];
+    return title;
+  }, shallowEqual);
+
 export const useSectionIds = () =>
   useSelector((state) => {
     const { sections } = state[name];
@@ -479,6 +486,9 @@ export const mainSlice = createSlice({
   reducers: {
     clearState: (state, action) => {
       state.sections = [getNewSection()];
+    },
+    setSongTitle: (state, action) => {
+      state.title = action.payload;
     },
     setSettings: (state, action) => {
       const { sectionId, settings } = action.payload;
@@ -547,6 +557,7 @@ export const mainSlice = createSlice({
 export const {
   setCellsPerLine,
   setDivideEvery,
+  setSongTitle,
   setTotalLines,
   setSectionName,
   setSounds,
