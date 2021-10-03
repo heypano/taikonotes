@@ -30,13 +30,17 @@ const Header = () => {
       <div className="w-full md:w-8/12 lg:w-6/12 grid logoGrid mr-3">
         <Image src={TaikoLogo} className="w-full p-2" alt="taiko logo" />
         {isEditing ? (
-          <textarea
-            className="text-2xl w-full outline-none p-2 resize-none"
-            value={title}
-            onChange={(e) => {
-              dispatch(setSongTitle(e.target.value));
-            }}
-          />
+          <label htmlFor="songname">
+            <textarea
+              id="songname"
+              aria-label="song name"
+              className="text-2xl w-full outline-none p-2 resize-none"
+              value={title}
+              onChange={(e) => {
+                dispatch(setSongTitle(e.target.value));
+              }}
+            />
+          </label>
         ) : (
           <div className="text-2xl w-full p-2">{title}</div>
         )}
