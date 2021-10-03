@@ -16,17 +16,3 @@ export default async function handler(req, res) {
     res.status(400).json({ error: `Song ${slug} not found` });
   }
 }
-db.runCommand({
-  collMod: "songs",
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["slug"],
-      properties: {
-        slug: {
-          bsonType: "string",
-        },
-      },
-    },
-  },
-});
