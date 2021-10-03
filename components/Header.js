@@ -1,5 +1,6 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import {
   addSection,
   clearState,
@@ -8,17 +9,25 @@ import {
   setSongTitle,
   useSongTitle,
 } from "../redux/mainSlice";
-import { getMainFromLocal, saveMainToLocal } from "../redux/store";
+import {
+  getMainFromLocal,
+  getMainState,
+  saveMainToLocal,
+} from "../redux/store";
 import HeaderButton from "./HeaderButton";
-import Pencil from "../Icons/Pencil";
-import Icon from "../Icons/Icon";
+import Pencil from "./Icons/Pencil";
+import Icon from "./Icons/Icon";
 import { setIsEditing, useIsEditing } from "../redux/editSlice";
 import { get, post } from "../lib/api";
+import Spin from "./Icons/Spin";
 
 const Header = () => {
   const dispatch = useDispatch();
   const title = useSongTitle();
   const isEditing = useIsEditing();
+  const { query } = useRouter();
+  const { songslug } = query;
+  const [isSaving, setIsSaving] = useState(false);
   return (
     <div className="settings p-1 mt-3 mb-3 flex flex-col md:flex-row">
       <div className="w-full md:w-8/12 lg:w-6/12 grid logoGrid mr-3">
@@ -36,7 +45,7 @@ const Header = () => {
         )}
       </div>
       <div className="w-full md:w-4/12 lg:w-6/12 flex flex-col justify-between">
-        <div className="mt-2 md:mt-0 grid grid-rows-2 grid-flow-col gap-1">
+        <div className="mt-2 md:mt-0 grid grid-rows-2 grid-cols-3 grid-flow-col gap-1">
           {isEditing && (
             <>
               <HeaderButton
@@ -55,21 +64,25 @@ const Header = () => {
               </HeaderButton>
               <HeaderButton
                 onClick={async () => {
-                  saveMainToLocal();
-                  const bla = await post("/api/saveSong", getMainFromLocal());
-                  console.log(bla);
+                  setIsSaving(true);
+                  const state = {
+                    ...getMainState(),
+                    slug: songslug,
+                  };
+                  const saveResult = await post(
+                    `/api/saveSong/${songslug}`,
+                    state
+                  );
+                  setIsSaving(false);
+                  console.log(saveResult);
                 }}
               >
                 Save
-              </HeaderButton>
-              <HeaderButton
-                onClick={() => {
-                  const state = getMainFromLocal();
-                  // console.debug("entire state", state);
-                  dispatch(setMainState(state));
-                }}
-              >
-                Load
+                {isSaving && (
+                  <div className="w-6">
+                    <Spin />
+                  </div>
+                )}
               </HeaderButton>
               <HeaderButton
                 onClick={() => {

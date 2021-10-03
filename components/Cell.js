@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
 import { getCoordinatesFromEvent, onEnter, onSpace } from "../keyboard/util";
 import { setCellPopupState } from "../redux/cellSlice";
-import Comment from "../Icons/Comment";
+import Comment from "./Icons/Comment";
 import { useIsEditing } from "../redux/editSlice";
 
 const Cell = (props) => {

@@ -9,11 +9,11 @@ import {
   useSettings,
 } from "../redux/mainSlice";
 import SectionButton from "./SectionButton";
-import GearIcon from "../Icons/GearIcon";
+import GearIcon from "./Icons/GearIcon";
 import SectionSettings from "./SectionSettings";
-import Minus from "../Icons/Minus";
-import Plus from "../Icons/Plus";
-import Comment from "../Icons/Comment";
+import Minus from "./Icons/Minus";
+import Plus from "./Icons/Plus";
+import Comment from "./Icons/Comment";
 import { setSectionCommentData, useIsEditing } from "../redux/editSlice";
 import { getCoordinatesFromEvent } from "../keyboard/util";
 

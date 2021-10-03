@@ -15,7 +15,7 @@ import {
   useCellPopupOpen,
   useCellSectionIndex,
 } from "../redux/cellSlice";
-import Comment from "../Icons/Comment";
+import Comment from "./Icons/Comment";
 import PopupCell from "./PopupCell";
 import { useIsEditing } from "../redux/editSlice";
 
