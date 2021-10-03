@@ -18,7 +18,7 @@ const SectionCommentPopup = () => {
   const textareaRef = useRef();
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
-  console.debug("CommentEditMenu rerender");
+  // console.debug("CommentEditMenu rerender");
 
   useEffect(() => {
     if (sectionCommentOpen && textareaRef.current) {

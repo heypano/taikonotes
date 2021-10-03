@@ -5,7 +5,7 @@ import { shallowEqual, useSelector } from "react-redux";
 export const name = "edit";
 
 export const initialState = {
-  isEditing: false,
+  isEditing: true,
   sectionCommentOpen: false,
   sectionCommentCoordinates: null,
   sectionCommentSectionId: null,

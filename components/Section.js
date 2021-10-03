@@ -30,7 +30,7 @@ const Section = (props) => {
   const [sectionCoordinates, setSectionCoordinates] = useState(null);
   const mobileDisplayedCells =
     cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
-  console.debug(`Section rerender ${sectionName} - ${id}`);
+  // console.debug(`Section rerender ${sectionName} - ${id}`);
   for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
     sectionCells.push(
       <Cell

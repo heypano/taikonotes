@@ -52,7 +52,7 @@ const CellPopupMenu = () => {
     }
   }, [open]);
 
-  console.debug("CellPopupMenu rerender");
+  // console.debug("CellPopupMenu rerender");
 
   const hasContent = isEditing || comment;
 

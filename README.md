@@ -4,6 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - Overall song notes
 - Change textarea to rich
 - Password stuff
+- CSRF
 
 
 ## Getting Started

@@ -38,7 +38,7 @@ const Cell = (props) => {
     borderClass = "border-2 border-red-400 md:border md:border-blue-800";
   }
 
-  console.debug(`Cell rerender ${cellIndex}`);
+  // console.debug(`Cell rerender ${cellIndex}`);
 
   const onClick = (e) => {
     const menuCoordinates = getCoordinatesFromEvent(e);

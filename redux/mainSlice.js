@@ -6,6 +6,7 @@ export const name = "main";
 
 export const initialState = {
   title: "THE song",
+  slug: "panosong",
   sections: [
     {
       comment: "this is a section comment",

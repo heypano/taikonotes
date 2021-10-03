@@ -13,6 +13,7 @@ import HeaderButton from "./HeaderButton";
 import Pencil from "../Icons/Pencil";
 import Icon from "../Icons/Icon";
 import { setIsEditing, useIsEditing } from "../redux/editSlice";
+import { get, post } from "../lib/api";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -53,8 +54,10 @@ const Header = () => {
                 Remove Last Section
               </HeaderButton>
               <HeaderButton
-                onClick={() => {
+                onClick={async () => {
                   saveMainToLocal();
+                  const bla = await post("/api/saveSong", getMainFromLocal());
+                  console.log(bla);
                 }}
               >
                 Save
@@ -62,7 +65,7 @@ const Header = () => {
               <HeaderButton
                 onClick={() => {
                   const state = getMainFromLocal();
-                  console.debug("entire state", state);
+                  // console.debug("entire state", state);
                   dispatch(setMainState(state));
                 }}
               >

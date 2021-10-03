@@ -11,7 +11,7 @@ import Header from "./Header";
 
 const TaikoGrid = () => {
   const sectionsIds = useSectionIds();
-  console.debug("TaikoGrid rerender");
+  // console.debug("TaikoGrid rerender");
   return (
     <div>
       <Header />
