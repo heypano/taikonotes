@@ -86,7 +86,7 @@ const Cell = (props) => {
         {intensity ? sound.toLocaleUpperCase() : sound}
       </div>
       {comment && (
-        <div className="absolute w-full h-full grid grid-rows-3 grid-cols-3">
+        <div className="absolute w-full h-full grid grid-rows-2 grid-cols-3">
           <div className="col-start-3 col-end-3 flex justify-end">
             <Comment className="w-full" />
           </div>
