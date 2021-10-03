@@ -73,6 +73,7 @@ const Cell = (props) => {
       ref={ref}
       className={`fadeBg relative select-none h-10 cursor-pointer ${borderClass} ${backgroundClass}`}
       role="button"
+      aria-label={`Cell ${cellIndex} from section ${sectionIndex}`}
       tabIndex={0}
       onContextMenu={onContextMenu}
       onClick={onClick}
