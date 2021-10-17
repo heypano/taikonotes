@@ -79,6 +79,7 @@ const CellPopupMenu = () => {
                     sound,
                   })
                 );
+                dispatch(setCellPopupOpen(false));
               };
 
               return (
