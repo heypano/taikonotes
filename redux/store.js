@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import mainReducer, { name as mainName } from "./mainSlice";
 import cellReducer, { name as cellName } from "./cellSlice";
 import editReducer, { name as editName } from "./editSlice";
+import errorReducer, { name as errorName } from "./errorSlice";
 
 const configureStoreOptions = {
   reducer: {
     [mainName]: mainReducer,
     [cellName]: cellReducer,
     [editName]: editReducer,
+    [errorName]: errorReducer,
   },
 };
 

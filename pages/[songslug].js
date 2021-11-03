@@ -4,19 +4,29 @@ import App from "../components/App";
 import clientPromise from "../lib/mongodb";
 import { getSongBySlug, transformFromMongo } from "../lib/mongoUtil";
 
-const Song = ({ song }) => <App song={song} />;
-Song.propTypes = {
+const SongPage = ({ song, error }) => <App song={song} error={error} />;
+
+SongPage.propTypes = {
   song: PropTypes.shape({}),
+  error: PropTypes.string,
 };
-Song.defaultProps = {
+SongPage.defaultProps = {
   song: undefined,
+  error: undefined,
 };
 
 export const getServerSideProps = async ({ params, res }) => {
   const { songslug } = params;
-  const client = await clientPromise;
-  const song = await getSongBySlug(client, songslug);
-  return { props: { song: transformFromMongo(song) } };
+  let client;
+  let song;
+  let error = null;
+  try {
+    client = await clientPromise;
+    song = await getSongBySlug(client, songslug);
+  } catch (e) {
+    error = e.toString();
+  }
+  return { props: { song: transformFromMongo(song), error } };
 };
 
-export default memo(Song);
+export default memo(SongPage);

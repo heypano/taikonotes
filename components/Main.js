@@ -9,37 +9,40 @@ import CellPopupMenu from "./CellPopupMenu";
 import SectionCommentPopup from "./SectionCommentPopup";
 import { setMainState } from "../redux/mainSlice";
 import { setIsLoading, useIsLoading } from "../redux/editSlice";
-import Spin from "./Icons/Spin";
 import SectionSettings from "./SectionSettings";
+import Loader from "./Loader";
+import { setError } from "../redux/errorSlice";
 
-const Main = ({ song }) => {
+const Main = ({ song, error }) => {
   const { query } = useRouter();
   const { songslug } = query;
   const dispatch = useDispatch();
   const isLoading = useIsLoading();
+
   useEffect(() => {
-    if (songslug) {
+    if (songslug && !song && !error) {
       dispatch(setIsLoading(true));
-      if (song) {
-        dispatch(setMainState(song));
-      }
     } else {
       dispatch(setIsLoading(false));
     }
-  }, [dispatch, song, songslug]);
+
+    if (error) {
+      dispatch(setError(error));
+    }
+
+    if (song) {
+      dispatch(setMainState(song));
+    }
+  }, [dispatch, song, songslug, error]);
 
   return (
     <div className="app">
       <Head>
-        <title>Taiko Notes -- {song ? song.title : ""}</title>
+        <title>Taiko Notes -- {song ? song.title : "New Song"}</title>
       </Head>
       <PageContainer>
         {isLoading ? (
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="w-48">
-              <Spin />
-            </div>
-          </div>
+          <Loader />
         ) : (
           <>
             <TaikoGrid song={song} />
@@ -54,9 +57,11 @@ const Main = ({ song }) => {
 };
 Main.propTypes = {
   song: PropTypes.shape({ title: PropTypes.string }),
+  error: PropTypes.string,
 };
 Main.defaultProps = {
   song: undefined,
+  error: undefined,
 };
 
 export default Main;

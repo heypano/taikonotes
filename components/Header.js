@@ -17,11 +17,13 @@ import Icon from "./Icons/Icon";
 import { setIsEditing, useIsEditing } from "../redux/editSlice";
 import { post } from "../lib/api";
 import Spin from "./Icons/Spin";
+import { useError } from "../redux/errorSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const title = useSongTitle();
   const isEditing = useIsEditing();
+  const error = useError();
   const { query } = useRouter();
   const { songslug } = query;
   const [isSaving, setIsSaving] = useState(false);

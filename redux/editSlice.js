@@ -90,11 +90,11 @@ export const editSlice = createSlice({
       };
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(setMainState, (state, action) => {
-      state.isLoading = false;
-    });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(setMainState, (state, action) => {
+  //     state.isLoading = false;
+  //   });
+  // },
 });
 
 // Action creators are generated for each case reducer function
