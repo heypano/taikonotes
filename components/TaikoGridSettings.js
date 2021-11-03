@@ -30,7 +30,12 @@ const TaikoGridSettings = ({ sectionId }) => {
   );
 
   return (
-    <form className="flex flex-col ">
+    <form
+      className="flex flex-col "
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       <SettingInput>
         Cells Per Line
         <select
