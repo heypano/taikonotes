@@ -243,6 +243,15 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.7.tgz#82f83dcc2eb9b1e1d559b3aca96783e285eb8592"
   integrity sha512-3Zi2LGbCLDz4IIL7ir6wD0u/ggHotLkK5SlVzFzTcYaNgPR4MAt/9JYZqXWKcofPWEoptfpnCJU8Bq9sxw8QUg==
 
+"@tailwindcss/custom-forms@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/custom-forms/-/custom-forms-0.2.1.tgz#40e5ed1fff6d29d8ed1c508a0b2aaf8da96962e0"
+  integrity sha512-XdP5XY6kxo3x5o50mWUyoYWxOPV16baagLoZ5uM41gh6IhXzhz/vJYzqrTb/lN58maGIKlpkxgVsQUNSsbAS3Q==
+  dependencies:
+    lodash "^4.17.11"
+    mini-svg-data-uri "^1.0.3"
+    traverse "^0.6.6"
+
 "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
@@ -2478,7 +2487,7 @@ lodash.truncate@^4.4.2:
   resolved "https://registry.yarnpkg.com/lodash.truncate/-/lodash.truncate-4.4.2.tgz#5a350da0b1113b837ecfffd5812cbe58d6eae193"
   integrity sha1-WjUNoLERO4N+z//VgSy+WNbq4ZM=
 
-lodash@^4.17.14, lodash@^4.17.21:
+lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -2543,6 +2552,11 @@ miller-rabin@^4.0.0:
   dependencies:
     bn.js "^4.0.0"
     brorand "^1.0.1"
+
+mini-svg-data-uri@^1.0.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.3.tgz#43177b2e93766ba338931a3e2a84a3dfd3a222b8"
+  integrity sha512-gSfqpMRC8IxghvMcxzzmMnWpXAChSA+vy4cia33RgerMS8Fex95akUyQZPbxJJmeBGiGmK7n/1OpUX8ksRjIdA==
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -4016,6 +4030,11 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
+
+traverse@^0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
+  integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
 
 trim-repeated@^1.0.0:
   version "1.0.0"

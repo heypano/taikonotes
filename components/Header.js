@@ -29,6 +29,7 @@ const Header = () => {
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const [dialogLeft, setDialogLeft] = useState(0);
   const [dialogTop, setDialogTop] = useState(0);
+  const [saveError, setSaveError] = useState();
   const buttonRef = useRef();
   useEffect(() => {
     const { x, y } = buttonRef.current.getBoundingClientRect();
@@ -38,7 +39,6 @@ const Header = () => {
 
   const saveMethod = useCallback(
     async ({ password, songslug: inputSongSlug }) => {
-      setSaveDialogOpen(false);
       setIsSaving(true);
       const slug = inputSongSlug || songslug;
       const saveData = {
@@ -46,13 +46,17 @@ const Header = () => {
         slug,
         password,
       };
-      await post(`/api/saveSong/${slug}`, saveData);
+      const { error } = await post(`/api/saveSong/${slug}`, saveData);
+      setSaveError(error);
       setIsSaving(false);
-      if (inputSongSlug) {
-        await push(`/${inputSongSlug}`);
+      if (!error) {
+        setSaveDialogOpen(false);
+        if (inputSongSlug) {
+          await push(`/${inputSongSlug}`);
+        }
       }
     },
-    [songslug]
+    [push, songslug]
   );
 
   return (
@@ -70,6 +74,7 @@ const Header = () => {
             saveMethod={saveMethod}
             isSaving={isSaving}
             songslug={songslug}
+            error={saveError}
           />
         )}
         <Image src={TaikoLogo} className="w-full p-2" alt="taiko logo" />

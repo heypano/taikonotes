@@ -1,7 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Todo
-- Do not save over existing song!
+- Do not save over existing song in creation case!
 - Back button? route change state stuff
 - Overall song notes
 - overall song structure + reorder
@@ -14,6 +14,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - section map and repetition
 - section array
 - drag and drop reorder
+- Saved successfully message
 - CSRF
 - propTypes -> typescript?
 

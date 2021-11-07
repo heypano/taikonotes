@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
+    "@tailwindcss/custom-forms": "^0.2.1",
     "bcrypt": "^5.0.1",
     "mongodb": "^4.1.2",
     "next": "11.1.2",

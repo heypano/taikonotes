@@ -1,3 +1,5 @@
+const tailwindCustomForms = require("@tailwindcss/custom-forms");
+
 module.exports = {
   purge: {
     content: [
@@ -54,5 +56,5 @@ module.exports = {
       margin: ["first"],
     },
   },
-  plugins: [],
+  plugins: [tailwindCustomForms],
 };
