@@ -1,6 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Todo
+- Do not save over existing song!
+- Back button? route change state stuff
 - Overall song notes
 - Change textarea to rich
 - error handling

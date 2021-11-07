@@ -23,7 +23,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const title = useSongTitle();
   const isEditing = useIsEditing();
-  const { query } = useRouter();
+  const { query, push } = useRouter();
   const { songslug } = query;
   const [isSaving, setIsSaving] = useState(false);
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
@@ -37,16 +37,20 @@ const Header = () => {
   }, [saveDialogOpen]);
 
   const saveMethod = useCallback(
-    async ({ password }) => {
+    async ({ password, songslug: inputSongSlug }) => {
       setSaveDialogOpen(false);
       setIsSaving(true);
+      const slug = inputSongSlug || songslug;
       const saveData = {
         ...getMainState(),
-        slug: songslug,
+        slug,
         password,
       };
-      await post(`/api/saveSong/${songslug}`, saveData);
+      await post(`/api/saveSong/${slug}`, saveData);
       setIsSaving(false);
+      if (inputSongSlug) {
+        await push(`/${inputSongSlug}`);
+      }
     },
     [songslug]
   );
@@ -64,6 +68,8 @@ const Header = () => {
             }}
             className="max-w-sm p-4"
             saveMethod={saveMethod}
+            isSaving={isSaving}
+            songslug={songslug}
           />
         )}
         <Image src={TaikoLogo} className="w-full p-2" alt="taiko logo" />
