@@ -112,12 +112,13 @@ const Section = (props) => {
           <label
             htmlFor={`section_${sectionId}_name`}
             aria-label="Section name"
+            className="w-full"
           >
             <textarea
               id={`section_${sectionId}_name`}
               type="text"
               value={sectionName}
-              className="text-2xl w-full outline-none p-2 resize-none"
+              className="flex filter drop-shadow text-2xl w-full outline-none p-2 resize-none"
               rows={1}
               onChange={(e) => {
                 dispatch(
