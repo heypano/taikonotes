@@ -4,6 +4,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - Do not save over existing song!
 - Back button? route change state stuff
 - Overall song notes
+- overall song structure + reorder
+- summary structure view with reorder
+- duplicate section ? "are you sure you want to make this a separate"
+-- plus button should ask if it should be a completely different / slightly different / same 
 - Change textarea to rich
 - error handling
 - section map and repetition
