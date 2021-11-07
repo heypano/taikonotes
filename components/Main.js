@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -46,6 +46,7 @@ const Main = ({ song, error }) => {
         ) : (
           <>
             <TaikoGrid song={song} />
+            <div id="modalPortal" />
             <CellPopupMenu />
             <SectionCommentPopup />
             <SectionSettings />

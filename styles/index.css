@@ -21,7 +21,7 @@
 }
 
 .popupmenu {
-  @apply fixed;
+  @apply fixed z-10;
   @apply rounded shadow-lg bg-gray-50;
   @apply transition delay-150 duration-300 ease-in-out;
   @apply quickFade;
