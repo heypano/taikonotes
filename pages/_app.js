@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
 MyApp.propTypes = {
-  Component: PropTypes.func,
+  Component: PropTypes.elementType,
   pageProps: PropTypes.shape({}),
 };
 MyApp.defaultProps = {

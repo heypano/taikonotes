@@ -1,9 +1,10 @@
-import { memo } from "react";
+import { memo, forwardRef } from "react";
 import PropTypes from "prop-types";
 
-const PopupCell = ({ className, ...props }) => (
-  <div className={`p-3 hover:bg-blue-200 ${className}`} {...props} />
-);
+const PopupCell = forwardRef(({ className, ...props }, ref) => (
+  <div className={`p-3 hover:bg-blue-200 ${className}`} ref={ref} {...props} />
+));
+
 PopupCell.propTypes = {
   className: PropTypes.string,
 };
