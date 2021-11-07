@@ -1,6 +1,7 @@
-import { memo, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import TaikoLogo from "../public/favicon/Taiko.svg";
 import {
@@ -18,6 +19,8 @@ import { setIsEditing, useIsEditing } from "../redux/editSlice";
 import { post } from "../lib/api";
 import Spin from "./Icons/Spin";
 import { useError } from "../redux/errorSlice";
+import PopupMenu from "./PopupMenu";
+import SaveDialog from "./SaveDialog";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -27,9 +30,42 @@ const Header = () => {
   const { query } = useRouter();
   const { songslug } = query;
   const [isSaving, setIsSaving] = useState(false);
+  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+  const [dialogLeft, setDialogLeft] = useState(0);
+  const [dialogTop, setDialogTop] = useState(0);
+  const buttonRef = useRef();
+  useEffect(() => {
+    const { x, y } = buttonRef.current.getBoundingClientRect();
+    setDialogLeft(x);
+    setDialogTop(y);
+  }, [saveDialogOpen]);
+
+  const saveMethod = useCallback(async () => {
+    setSaveDialogOpen(false);
+    setIsSaving(true);
+    const state = {
+      ...getMainState(),
+      slug: songslug,
+    };
+    await post(`/api/saveSong/${songslug}`, state);
+    setIsSaving(false);
+  }, [songslug]);
+
   return (
     <div className="settings p-1 mb-3 flex flex-col md:flex-row">
       <div className="w-full md:w-8/12 lg:w-6/12 grid logoGrid mr-3">
+        {saveDialogOpen && (
+          <SaveDialog
+            left={dialogLeft}
+            top={dialogTop}
+            open={saveDialogOpen}
+            onOpenChange={(open) => {
+              setSaveDialogOpen(open);
+            }}
+            className="max-w-sm p-4"
+            saveMethod={saveMethod}
+          />
+        )}
         <Image src={TaikoLogo} className="w-full p-2" alt="taiko logo" />
         {isEditing ? (
           <label htmlFor="songname">
@@ -66,15 +102,10 @@ const Header = () => {
                 Remove Last Section
               </HeaderButton>
               <HeaderButton
-                onClick={async () => {
-                  setIsSaving(true);
-                  const state = {
-                    ...getMainState(),
-                    slug: songslug,
-                  };
-                  await post(`/api/saveSong/${songslug}`, state);
-                  setIsSaving(false);
+                onClick={() => {
+                  setSaveDialogOpen(true);
                 }}
+                ref={buttonRef}
               >
                 Save
                 {isSaving && (

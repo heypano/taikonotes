@@ -1,13 +1,14 @@
-import { memo } from "react";
+import { memo, forwardRef } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-const HeaderButton = ({ className, ...props }) => (
+const HeaderButton = forwardRef(({ className, ...props }, ref) => (
   <Button
     className={`p-3 flex items-center justify-between text-left bg-blue-100 hover:bg-blue-50 ${className}`}
+    ref={ref}
     {...props}
   />
-);
+));
 HeaderButton.propTypes = {
   className: PropTypes.string,
 };

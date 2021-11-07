@@ -75,7 +75,7 @@ const TaikoGridSettings = ({ sectionId }) => {
         <input
           id={`sounds_${sectionId}`}
           name="sounds"
-          className="border-black border p-1 ml-5"
+          className="filter drop-shadow p-1 ml-5"
           onChange={onFormChange}
           value={sounds}
         />
