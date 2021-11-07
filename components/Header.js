@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { createPortal } from "react-dom";
 import Image from "next/image";
 import TaikoLogo from "../public/favicon/Taiko.svg";
 import {
@@ -18,15 +17,12 @@ import Icon from "./Icons/Icon";
 import { setIsEditing, useIsEditing } from "../redux/editSlice";
 import { post } from "../lib/api";
 import Spin from "./Icons/Spin";
-import { useError } from "../redux/errorSlice";
-import PopupMenu from "./PopupMenu";
 import SaveDialog from "./SaveDialog";
 
 const Header = () => {
   const dispatch = useDispatch();
   const title = useSongTitle();
   const isEditing = useIsEditing();
-  const error = useError();
   const { query } = useRouter();
   const { songslug } = query;
   const [isSaving, setIsSaving] = useState(false);

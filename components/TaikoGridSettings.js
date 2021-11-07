@@ -16,7 +16,6 @@ const TaikoGridSettings = ({ sectionId }) => {
     (e) => {
       const { name, value, dataType } = e.target;
       const usedValue = dataType === "number" ? Number(value) : value;
-      console.log(sectionId, usedValue, name);
       dispatch(
         setSettings({
           sectionId,

@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import PopupMenu from "./PopupMenu";
 import TaikoGridSettings from "./TaikoGridSettings";

@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import PopupMenu from "./PopupMenu";
 
@@ -13,21 +12,11 @@ const Modal = ({ open, onOpenChange, className, style, children, left, top }) =>
   );
 
 Modal.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onOpenChange: PropTypes.func.isRequired,
-  children: PropTypes.node,
-  left: PropTypes.number,
-  top: PropTypes.number,
-  className: PropTypes.string,
-  style: PropTypes.shape({}),
+  ...PopupMenu.propTypes,
 };
 
 Modal.defaultProps = {
-  className: "",
-  style: null,
-  children: undefined,
-  left: undefined,
-  top: undefined,
+  ...PopupMenu.defaultProps,
 };
 
 export default Modal;

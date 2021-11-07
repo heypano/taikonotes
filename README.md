@@ -8,6 +8,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - section array
 - drag and drop reorder
 - CSRF
+- propTypes -> typescript?
 
 
 ## Getting Started
