@@ -3,7 +3,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Todo
 - Overall song notes
 - Change textarea to rich
-- Password stuff
+- error handling
+- section map and repetition
+- section array
+- drag and drop reorder
 - CSRF
 
 
