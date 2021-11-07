@@ -6,7 +6,7 @@ import { saveSongBySlug } from "../../../lib/mongoUtil";
 export default async function handler(req, res) {
   const client = await clientPromise;
 
-  const { slug } = req.query;
+  const { slug, password } = req.query;
 
   try {
     const insert = await saveSongBySlug(client, slug, req.body);

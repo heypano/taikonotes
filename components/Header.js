@@ -40,16 +40,20 @@ const Header = () => {
     setDialogTop(y);
   }, [saveDialogOpen]);
 
-  const saveMethod = useCallback(async () => {
-    setSaveDialogOpen(false);
-    setIsSaving(true);
-    const state = {
-      ...getMainState(),
-      slug: songslug,
-    };
-    await post(`/api/saveSong/${songslug}`, state);
-    setIsSaving(false);
-  }, [songslug]);
+  const saveMethod = useCallback(
+    async ({ password }) => {
+      setSaveDialogOpen(false);
+      setIsSaving(true);
+      const saveData = {
+        ...getMainState(),
+        slug: songslug,
+        password,
+      };
+      await post(`/api/saveSong/${songslug}`, saveData);
+      setIsSaving(false);
+    },
+    [songslug]
+  );
 
   return (
     <div className="settings p-1 mb-3 flex flex-col md:flex-row">
