@@ -8,6 +8,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - summary structure view with reorder
 - duplicate section ? "are you sure you want to make this a separate"
 -- plus button should ask if it should be a completely different / slightly different / same 
+-- Line A (again) to show linkage perhaps
 - Change textarea to rich
 - error handling
 - section map and repetition
