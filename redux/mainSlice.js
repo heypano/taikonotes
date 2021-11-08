@@ -1,17 +1,19 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 import { shallowEqual, useSelector } from "react-redux";
+import { v4 as uuidV4 } from "uuid";
 
 export const name = "main";
 
+const initialSectionId1 = uuidV4();
 export const initialState = {
   title: "New Song",
   slug: undefined,
-  sections: [1, 1, 1],
+  sections: [initialSectionId1, initialSectionId1, initialSectionId1],
   sectionsMap: {
-    1: {
+    [initialSectionId1]: {
       cells: [],
-      id: 1,
+      id: initialSectionId1,
       sectionName: "New Section",
       totalLines: 4,
       settings: {
@@ -87,10 +89,10 @@ export const useCell = (sectionId, cellIndex) =>
     shallowEqual
   );
 
-const getNewSection = (index = 0) => ({
+const getNewSection = (sectionId) => ({
   cells: [],
-  id: index,
-  sectionName: `Line ${index}`,
+  id: sectionId,
+  sectionName: `Line ${sectionId}`,
   totalLines: 1,
   settings: {
     cellsPerLine: 4,
@@ -110,9 +112,10 @@ export const mainSlice = createSlice({
   initialState,
   reducers: {
     clearState: (state, action) => {
-      state.sections = [1];
+      const newSectionId = uuidV4();
+      state.sections = [newSectionId];
       state.sectionsMap = {
-        1: getNewSection(),
+        [newSectionId]: getNewSection(newSectionId),
       };
     },
     setSongTitle: (state, action) => {
@@ -169,10 +172,13 @@ export const mainSlice = createSlice({
     },
     setMainState: (state, action) => action.payload,
     addSection: (state, action) => {
-      state.sections.push(1);
+      const newSectionId = uuidV4();
+      state.sections.push(newSectionId);
+      state.sectionsMap[newSectionId] = getNewSection(newSectionId);
     },
     removeLastSection: (state, action) => {
       state.sections.pop();
+      // TODO remove from sectionsMap if no longer relevant
     },
   },
 });
