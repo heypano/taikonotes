@@ -102,7 +102,7 @@ Cell.propTypes = {
   isStartingCell: PropTypes.bool.isRequired,
   isFirstCellInLine: PropTypes.bool.isRequired,
   cellIndex: PropTypes.number.isRequired,
-  sectionId: PropTypes.number.isRequired,
+  sectionId: PropTypes.string.isRequired,
   cellsPerLine: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool,
 };

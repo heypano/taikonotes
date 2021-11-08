@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import Cell from "./Cell";
 import {
+  cloneSection,
   setSectionName,
   setTotalLines,
   useSectionNoCells,
@@ -19,9 +20,10 @@ import {
   useIsEditing,
 } from "../redux/editSlice";
 import { getCoordinatesFromEvent } from "../keyboard/util";
+import Duplicate from "./Icons/Duplicate";
 
 const Section = (props) => {
-  const { sectionId } = props;
+  const { sectionId, sectionIndex } = props;
   const { cellsPerLine, divideEvery } = useSettings(sectionId);
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
@@ -75,6 +77,18 @@ const Section = (props) => {
               aria-label="Minus"
             >
               <Minus />
+            </SectionButton>
+            <SectionButton
+              onClick={() => {
+                dispatch(
+                  cloneSection({
+                    sectionIndex,
+                  })
+                );
+              }}
+              aria-label="Duplicate"
+            >
+              <Duplicate />
             </SectionButton>
             <SectionButton
               onClick={(e) => {
@@ -144,10 +158,12 @@ const Section = (props) => {
 };
 
 Section.propTypes = {
-  sectionId: PropTypes.number,
+  sectionId: PropTypes.string,
+  sectionIndex: PropTypes.number,
 };
 
 Section.defaultProps = {
   sectionId: undefined,
+  sectionIndex: undefined,
 };
 export default memo(Section);

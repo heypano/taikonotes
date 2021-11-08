@@ -11,7 +11,11 @@ const TaikoGrid = () => {
       <Header />
       <div>
         {sectionsIds.map((sectionId, sectionIndex) => (
-          <Section key={sectionIndex} sectionId={sectionId} />
+          <Section
+            key={sectionIndex}
+            sectionId={sectionId}
+            sectionIndex={sectionIndex}
+          />
         ))}
       </div>
     </div>

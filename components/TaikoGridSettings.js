@@ -84,7 +84,7 @@ const TaikoGridSettings = ({ sectionId }) => {
 };
 
 TaikoGridSettings.propTypes = {
-  sectionId: PropTypes.number.isRequired,
+  sectionId: PropTypes.string.isRequired,
 };
 
 TaikoGridSettings.defaultProps = {};
