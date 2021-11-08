@@ -7,8 +7,9 @@ export const name = "main";
 export const initialState = {
   title: "New Song",
   slug: undefined,
-  sections: [
-    {
+  sections: [1, 1, 1],
+  sectionsMap: {
+    1: {
       cells: [],
       id: 1,
       sectionName: "New Section",
@@ -34,26 +35,20 @@ export const initialState = {
         },
       },
     },
-  ],
+  },
 };
-export const useSettings = (sectionIndex) =>
+export const useSettings = (sectionId) =>
   useSelector(
-    (state) => state[name].sections[sectionIndex].settings,
+    (state) => state[name]?.sectionsMap?.[sectionId]?.settings || {},
     shallowEqual
   );
 
-export const useSoundObj = (sectionIndex) =>
+export const useSoundObj = (sectionId) =>
   useSelector((state) => {
-    if (sectionIndex !== undefined) {
-      return state[name].sections[sectionIndex].settings.soundObj;
+    if (sectionId !== undefined) {
+      return state[name]?.sectionsMap?.[sectionId]?.settings?.soundObj;
     }
     return null;
-  }, shallowEqual);
-
-export const useSections = () =>
-  useSelector((state) => {
-    const { sections } = state[name];
-    return sections;
   }, shallowEqual);
 
 export const useSongTitle = () =>
@@ -62,36 +57,35 @@ export const useSongTitle = () =>
     return title;
   }, shallowEqual);
 
-export const useSectionIds = () =>
+export const useSectionList = () =>
   useSelector((state) => {
     const { sections } = state[name];
-    return sections.map((s) => s.id);
+    return sections;
   }, shallowEqual);
 
-export const useSectionNoCells = (index) =>
+export const useSectionNoCells = (sectionId) =>
   useSelector((state) => {
-    const { sections } = state[name];
+    const { sectionsMap } = state[name];
     const section = {
-      ...sections[index],
+      ...sectionsMap[sectionId],
     };
     delete section.cells;
     return section;
   }, shallowEqual);
 
-export const useSectionComment = (index) =>
+export const useSectionComment = (sectionId) =>
   useSelector((state) => {
-    const { sections } = state[name];
-    if (index !== undefined) {
-      return sections?.[index]?.comment;
+    if (sectionId !== undefined) {
+      return state[name]?.sectionsMap?.[sectionId]?.comment;
     }
     return null;
   }, shallowEqual);
 
-export const useCell = (sectionIndex, cellIndex) =>
-  useSelector((state) => {
-    const { sections } = state[name];
-    return sections[sectionIndex]?.cells[cellIndex] || {};
-  }, shallowEqual);
+export const useCell = (sectionId, cellIndex) =>
+  useSelector(
+    (state) => state[name]?.sectionsMap?.[sectionId]?.cells?.[cellIndex] || {},
+    shallowEqual
+  );
 
 const getNewSection = (index = 0) => ({
   cells: [],
@@ -116,7 +110,10 @@ export const mainSlice = createSlice({
   initialState,
   reducers: {
     clearState: (state, action) => {
-      state.sections = [getNewSection()];
+      state.sections = [1];
+      state.sectionsMap = {
+        1: getNewSection(),
+      };
     },
     setSongTitle: (state, action) => {
       state.title = action.payload;
@@ -124,63 +121,55 @@ export const mainSlice = createSlice({
     setSettings: (state, action) => {
       const { sectionId, settings } = action.payload;
       Object.keys(settings).forEach((key) => {
-        state.sections[sectionId].settings[key] = settings[key];
+        state.sectionsMap[sectionId].settings[key] = settings[key];
       });
-      state.sections[sectionId].settings.soundObj = Object.fromEntries(
-        `,${state.sections[sectionId].settings.sounds}`
+      state.sectionsMap[sectionId].settings.soundObj = Object.fromEntries(
+        `,${state.sectionsMap[sectionId].settings.sounds}`
           .split(",")
           .map((s) => [s.trim(), s.trim()])
       );
-      // Erase sounds that don't match
-      // state.sections.forEach((section) => {
-      //   section.cells.forEach((cell) => {
-      //     if (cell) {
-      //       cell.sound = state.settings.soundObj[cell.sound] ? cell.sound : "";
-      //     }
-      //   });
-      // });
     },
     setTotalLines: (state, action) => {
-      const { sectionIndex, totalLines } = action.payload;
+      const { sectionId, totalLines } = action.payload;
       const final = Math.max(totalLines, 1);
-      const { cellsPerLine } = state.sections[sectionIndex].settings;
-      state.sections[sectionIndex].totalLines = final;
-      state.sections[sectionIndex].cells = state.sections[
-        sectionIndex
+      const { cellsPerLine } = state.sectionsMap[sectionId].settings;
+      state.sectionsMap[sectionId].totalLines = final;
+      state.sectionsMap[sectionId].cells = state.sectionsMap[
+        sectionId
       ].cells.slice(0, final * cellsPerLine);
     },
     setSectionName: (state, action) => {
-      const { sectionIndex, sectionName } = action.payload;
-      state.sections[sectionIndex].sectionName = sectionName;
+      const { sectionId, sectionName } = action.payload;
+      state.sectionsMap[sectionId].sectionName = sectionName;
     },
     setSectionComment: (state, action) => {
-      const { sectionIndex, comment } = action.payload;
-      state.sections[sectionIndex].comment = comment;
+      const { sectionId, comment } = action.payload;
+      state.sectionsMap[sectionId].comment = comment;
     },
     setSound: (state, action) => {
-      const { sectionIndex, cellIndex, sound } = action.payload;
-      const section = state.sections[sectionIndex];
+      const { sectionId, cellIndex, sound } = action.payload;
+      const section = state.sectionsMap[sectionId];
       const cell = section.cells[cellIndex] || {};
       cell.sound = sound;
-      state.sections[sectionIndex].cells[cellIndex] = cell;
+      state.sectionsMap[sectionId].cells[cellIndex] = cell;
     },
     setCellComment: (state, action) => {
-      const { sectionIndex, cellIndex, comment } = action.payload;
-      const section = state.sections[sectionIndex];
+      const { sectionId, cellIndex, comment } = action.payload;
+      const section = state.sectionsMap[sectionId];
       const cell = section.cells[cellIndex] || {};
       cell.comment = comment;
-      state.sections[sectionIndex].cells[cellIndex] = cell;
+      state.sectionsMap[sectionId].cells[cellIndex] = cell;
     },
     setIntensity: (state, action) => {
-      const { sectionIndex, cellIndex, intensity } = action.payload;
-      const section = state.sections[sectionIndex];
+      const { sectionId, cellIndex, intensity } = action.payload;
+      const section = state.sectionsMap[sectionId];
       const cell = section.cells[cellIndex] || {};
       cell.intensity = intensity;
-      state.sections[sectionIndex].cells[cellIndex] = cell;
+      state.sectionsMap[sectionId].cells[cellIndex] = cell;
     },
     setMainState: (state, action) => action.payload,
     addSection: (state, action) => {
-      state.sections.push(getNewSection(state.sections.length + 1));
+      state.sections.push(1);
     },
     removeLastSection: (state, action) => {
       state.sections.pop();
@@ -190,13 +179,10 @@ export const mainSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  setCellsPerLine,
-  setDivideEvery,
   setSongTitle,
   setTotalLines,
   setSectionName,
   setSectionComment,
-  setSounds,
   setSettings,
   setSound,
   setCellComment,

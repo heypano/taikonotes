@@ -1,17 +1,17 @@
 import { memo } from "react";
-import { useSectionIds } from "../redux/mainSlice";
+import { useSectionList } from "../redux/mainSlice";
 import Section from "./Section";
 import Header from "./Header";
 
 const TaikoGrid = () => {
-  const sectionsIds = useSectionIds();
+  const sectionsIds = useSectionList();
 
   return (
     <div>
       <Header />
       <div>
         {sectionsIds.map((sectionId, sectionIndex) => (
-          <Section key={sectionId} sectionId={sectionIndex} />
+          <Section key={sectionIndex} sectionId={sectionId} />
         ))}
       </div>
     </div>

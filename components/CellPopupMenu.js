@@ -13,15 +13,15 @@ import {
   useCellIndex,
   useCellMenuCoordinates,
   useCellPopupOpen,
-  useCellSectionIndex,
+  useCellSectionId,
 } from "../redux/cellSlice";
 import Comment from "./Icons/Comment";
 import PopupCell from "./PopupCell";
 import { useIsEditing } from "../redux/editSlice";
 
 const CellPopupMenu = () => {
-  const sectionIndex = useCellSectionIndex();
-  const soundObj = useSoundObj(sectionIndex);
+  const sectionId = useCellSectionId();
+  const soundObj = useSoundObj(sectionId);
   const tooltipColumns = soundObj
     ? Math.ceil(Object.keys(soundObj).length / 4)
     : 0;
@@ -33,7 +33,7 @@ const CellPopupMenu = () => {
   const isEditing = useIsEditing();
   const [isCommenting, setIsCommenting] = useState(false);
   const textareaRef = useRef();
-  const { comment } = useCell(sectionIndex, cellIndex);
+  const { comment } = useCell(sectionId, cellIndex);
 
   useEffect(() => {
     if (isCommenting && textareaRef.current) {
@@ -75,7 +75,7 @@ const CellPopupMenu = () => {
                 dispatch(
                   setSound({
                     cellIndex,
-                    sectionIndex,
+                    sectionId,
                     sound,
                   })
                 );
@@ -109,7 +109,7 @@ const CellPopupMenu = () => {
                 dispatch(
                   setCellComment({
                     cellIndex,
-                    sectionIndex,
+                    sectionId,
                     comment: e.target.value,
                   })
                 );

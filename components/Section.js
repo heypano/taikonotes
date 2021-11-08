@@ -40,7 +40,7 @@ const Section = (props) => {
         isFirstCellInLine={cellIndex % cellsPerLine === 0}
         cellsPerLine={cellsPerLine}
         cellIndex={cellIndex}
-        sectionIndex={sectionId}
+        sectionId={sectionId}
       />
     );
   }
@@ -53,7 +53,7 @@ const Section = (props) => {
               onClick={() => {
                 dispatch(
                   setTotalLines({
-                    sectionIndex: sectionId,
+                    sectionId,
                     totalLines: totalLines + 1,
                   })
                 );
@@ -67,7 +67,7 @@ const Section = (props) => {
               onClick={() => {
                 dispatch(
                   setTotalLines({
-                    sectionIndex: sectionId,
+                    sectionId,
                     totalLines: totalLines - 1,
                   })
                 );
@@ -123,7 +123,7 @@ const Section = (props) => {
               onChange={(e) => {
                 dispatch(
                   setSectionName({
-                    sectionIndex: sectionId,
+                    sectionId,
                     sectionName: e.target.value,
                   })
                 );

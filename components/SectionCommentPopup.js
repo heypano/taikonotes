@@ -48,7 +48,7 @@ const SectionCommentPopup = () => {
           onChange={(e) => {
             dispatch(
               setSectionComment({
-                sectionIndex: sectionCommentSectionId,
+                sectionId: sectionCommentSectionId,
                 comment: e.target.value,
               })
             );
