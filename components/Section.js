@@ -21,9 +21,10 @@ import {
 } from "../redux/editSlice";
 import { getCoordinatesFromEvent } from "../keyboard/util";
 import Duplicate from "./Icons/Duplicate";
+import Lock from "./Icons/Lock";
 
 const Section = (props) => {
-  const { sectionId, sectionIndex } = props;
+  const { sectionId, sectionIndex, isLinkedSection } = props;
   const { cellsPerLine, divideEvery } = useSettings(sectionId);
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
@@ -52,6 +53,8 @@ const Section = (props) => {
         {isEditing && (
           <>
             <SectionButton
+              title="Add line"
+              aria-label="Add line"
               onClick={() => {
                 dispatch(
                   setTotalLines({
@@ -60,12 +63,13 @@ const Section = (props) => {
                   })
                 );
               }}
-              aria-label="Plus"
             >
               <Plus />
             </SectionButton>
 
             <SectionButton
+              title="Remove last line"
+              aria-label="Remove last line"
               onClick={() => {
                 dispatch(
                   setTotalLines({
@@ -74,23 +78,13 @@ const Section = (props) => {
                   })
                 );
               }}
-              aria-label="Minus"
             >
               <Minus />
             </SectionButton>
+
             <SectionButton
-              onClick={() => {
-                dispatch(
-                  cloneSection({
-                    sectionIndex,
-                  })
-                );
-              }}
-              aria-label="Duplicate"
-            >
-              <Duplicate />
-            </SectionButton>
-            <SectionButton
+              title="Settings"
+              aria-label="Settings"
               onClick={(e) => {
                 dispatch(
                   setSectionSettingData({
@@ -102,13 +96,14 @@ const Section = (props) => {
                 e.preventDefault();
                 e.stopPropagation();
               }}
-              aria-label="Settings"
             >
               <GearIcon />
             </SectionButton>
           </>
         )}
         <SectionButton
+          title="Section Comment"
+          aria-label="Section Comment"
           onClick={(e) => {
             dispatch(
               setSectionCommentData({
@@ -118,10 +113,37 @@ const Section = (props) => {
               })
             );
           }}
-          aria-label="Section Comment"
         >
           <Comment />
         </SectionButton>
+        <SectionButton
+          title="Duplicate"
+          aria-label="Duplicate"
+          onClick={() => {
+            dispatch(
+              cloneSection({
+                sectionIndex,
+              })
+            );
+          }}
+        >
+          <Duplicate />
+        </SectionButton>
+        {isLinkedSection && (
+          <SectionButton
+            title="Unlink"
+            aria-label="Unlink"
+            onClick={() => {
+              dispatch(
+                cloneSection({
+                  sectionIndex,
+                })
+              );
+            }}
+          >
+            <Lock />
+          </SectionButton>
+        )}
         {isEditing ? (
           <label
             htmlFor={`section_${sectionId}_name`}
@@ -160,10 +182,12 @@ const Section = (props) => {
 Section.propTypes = {
   sectionId: PropTypes.string,
   sectionIndex: PropTypes.number,
+  isLinkedSection: PropTypes.bool,
 };
 
 Section.defaultProps = {
   sectionId: undefined,
   sectionIndex: undefined,
+  isLinkedSection: undefined,
 };
 export default memo(Section);
