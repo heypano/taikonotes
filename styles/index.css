@@ -17,7 +17,7 @@
 
 .spinIcon:hover svg,
 .spinIcon:focus svg {
-  @apply animate-spin;
+  /*@apply animate-spin;*/
 }
 
 .popupmenu {

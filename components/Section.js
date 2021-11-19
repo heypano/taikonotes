@@ -6,6 +6,7 @@ import {
   cloneSection,
   setSectionName,
   setTotalLines,
+  unlinkSection,
   useSectionNoCells,
   useSettings,
 } from "../redux/mainSlice";
@@ -135,7 +136,7 @@ const Section = (props) => {
             aria-label="Unlink"
             onClick={() => {
               dispatch(
-                cloneSection({
+                unlinkSection({
                   sectionIndex,
                 })
               );

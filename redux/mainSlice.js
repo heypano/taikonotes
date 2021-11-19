@@ -184,6 +184,17 @@ export const mainSlice = createSlice({
       const { sectionIndex } = action.payload;
       state.sections.splice(sectionIndex, 0, state.sections[sectionIndex]);
     },
+    unlinkSection: (state, action) => {
+      const { sectionIndex } = action.payload;
+      const newId = uuidV4();
+      const oldId = state.sections[sectionIndex];
+      const oldSection = state.sectionsMap[oldId];
+      state.sectionsMap[newId] = {
+        ...oldSection,
+        id: newId,
+      };
+      state.sections[sectionIndex] = newId;
+    },
   },
 });
 
@@ -202,6 +213,7 @@ export const {
   removeLastSection,
   clearState,
   cloneSection,
+  unlinkSection,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;
