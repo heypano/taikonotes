@@ -8,7 +8,7 @@ export const initialState = {
   open: false,
   menuCoordinates: undefined,
   cellIndex: undefined,
-  sectionIndex: undefined,
+  sectionId: undefined,
 };
 
 export const useCellPopupOpen = () =>
@@ -29,10 +29,10 @@ export const useCellIndex = () =>
     return cellIndex;
   }, shallowEqual);
 
-export const useCellSectionIndex = () =>
+export const useCellSectionId = () =>
   useSelector((state) => {
-    const { sectionIndex } = state[name];
-    return sectionIndex;
+    const { sectionId } = state[name];
+    return sectionId;
   }, shallowEqual);
 
 export const cellSlice = createSlice({
@@ -40,8 +40,8 @@ export const cellSlice = createSlice({
   initialState,
   reducers: {
     setCellPopupState: (state, action) => {
-      const { sectionIndex, cellIndex, menuCoordinates, open } = action.payload;
-      return { ...state, sectionIndex, cellIndex, menuCoordinates, open };
+      const { sectionId, cellIndex, menuCoordinates, open } = action.payload;
+      return { ...state, sectionId, cellIndex, menuCoordinates, open };
     },
     setCellPopupOpen: (state, action) => {
       state.open = action.payload;
@@ -52,8 +52,8 @@ export const cellSlice = createSlice({
     setCellPopupCellIndex: (state, action) => {
       state.cellIndex = action.payload;
     },
-    setCellPopupSectionIndex: (state, action) => {
-      state.sectionIndex = action.payload;
+    setCellPopupsectionId: (state, action) => {
+      state.sectionId = action.payload;
     },
   },
 });
@@ -63,7 +63,7 @@ export const {
   setCellPopupOpen,
   setCellPopupMenuCoordinates,
   setCellPopupCellIndex,
-  setCellPopupSectionIndex,
+  setCellPopupsectionId,
   setCellPopupState,
 } = cellSlice.actions;
 

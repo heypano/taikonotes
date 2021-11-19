@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import Cell from "./Cell";
 import {
+  cloneSection,
   setSectionName,
   setTotalLines,
+  unlinkSection,
   useSectionNoCells,
   useSettings,
 } from "../redux/mainSlice";
@@ -19,9 +21,11 @@ import {
   useIsEditing,
 } from "../redux/editSlice";
 import { getCoordinatesFromEvent } from "../keyboard/util";
+import Duplicate from "./Icons/Duplicate";
+import Lock from "./Icons/Lock";
 
 const Section = (props) => {
-  const { sectionId } = props;
+  const { sectionId, sectionIndex, isLinkedSection } = props;
   const { cellsPerLine, divideEvery } = useSettings(sectionId);
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
@@ -40,7 +44,7 @@ const Section = (props) => {
         isFirstCellInLine={cellIndex % cellsPerLine === 0}
         cellsPerLine={cellsPerLine}
         cellIndex={cellIndex}
-        sectionIndex={sectionId}
+        sectionId={sectionId}
       />
     );
   }
@@ -50,33 +54,38 @@ const Section = (props) => {
         {isEditing && (
           <>
             <SectionButton
+              title="Add line"
+              aria-label="Add line"
               onClick={() => {
                 dispatch(
                   setTotalLines({
-                    sectionIndex: sectionId,
+                    sectionId,
                     totalLines: totalLines + 1,
                   })
                 );
               }}
-              aria-label="Plus"
             >
               <Plus />
             </SectionButton>
 
             <SectionButton
+              title="Remove last line"
+              aria-label="Remove last line"
               onClick={() => {
                 dispatch(
                   setTotalLines({
-                    sectionIndex: sectionId,
+                    sectionId,
                     totalLines: totalLines - 1,
                   })
                 );
               }}
-              aria-label="Minus"
             >
               <Minus />
             </SectionButton>
+
             <SectionButton
+              title="Settings"
+              aria-label="Settings"
               onClick={(e) => {
                 dispatch(
                   setSectionSettingData({
@@ -88,13 +97,14 @@ const Section = (props) => {
                 e.preventDefault();
                 e.stopPropagation();
               }}
-              aria-label="Settings"
             >
               <GearIcon />
             </SectionButton>
           </>
         )}
         <SectionButton
+          title="Section Comment"
+          aria-label="Section Comment"
           onClick={(e) => {
             dispatch(
               setSectionCommentData({
@@ -104,10 +114,37 @@ const Section = (props) => {
               })
             );
           }}
-          aria-label="Section Comment"
         >
           <Comment />
         </SectionButton>
+        <SectionButton
+          title="Duplicate"
+          aria-label="Duplicate"
+          onClick={() => {
+            dispatch(
+              cloneSection({
+                sectionIndex,
+              })
+            );
+          }}
+        >
+          <Duplicate />
+        </SectionButton>
+        {isLinkedSection && (
+          <SectionButton
+            title="Unlink"
+            aria-label="Unlink"
+            onClick={() => {
+              dispatch(
+                unlinkSection({
+                  sectionIndex,
+                })
+              );
+            }}
+          >
+            <Lock />
+          </SectionButton>
+        )}
         {isEditing ? (
           <label
             htmlFor={`section_${sectionId}_name`}
@@ -123,7 +160,7 @@ const Section = (props) => {
               onChange={(e) => {
                 dispatch(
                   setSectionName({
-                    sectionIndex: sectionId,
+                    sectionId,
                     sectionName: e.target.value,
                   })
                 );
@@ -144,10 +181,14 @@ const Section = (props) => {
 };
 
 Section.propTypes = {
-  sectionId: PropTypes.number,
+  sectionId: PropTypes.string,
+  sectionIndex: PropTypes.number,
+  isLinkedSection: PropTypes.bool,
 };
 
 Section.defaultProps = {
   sectionId: undefined,
+  sectionIndex: undefined,
+  isLinkedSection: undefined,
 };
 export default memo(Section);

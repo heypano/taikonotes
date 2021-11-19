@@ -10,7 +10,7 @@ import { useIsEditing } from "../redux/editSlice";
 const Cell = (props) => {
   const {
     cellIndex,
-    sectionIndex,
+    sectionId,
     isPlaying,
     isStartingCell,
     isFirstCellInLine,
@@ -18,10 +18,10 @@ const Cell = (props) => {
   } = props;
   const ref = useRef();
   const dispatch = useDispatch();
-  const soundObj = useSoundObj(sectionIndex);
+  const soundObj = useSoundObj(sectionId);
   const isEditing = useIsEditing();
   const { sound: currentSound = 0, intensity, comment } = useCell(
-    sectionIndex,
+    sectionId,
     cellIndex
   );
   const sound = (currentSound && soundObj[currentSound]) || "";
@@ -45,7 +45,7 @@ const Cell = (props) => {
     dispatch(
       setCellPopupState({
         cellIndex,
-        sectionIndex,
+        sectionId,
         open: true,
         menuCoordinates,
       })
@@ -58,7 +58,7 @@ const Cell = (props) => {
       dispatch(
         setIntensity({
           cellIndex,
-          sectionIndex,
+          sectionId,
           intensity: intensity ? 0 : 1,
         })
       );
@@ -73,7 +73,7 @@ const Cell = (props) => {
       ref={ref}
       className={`fadeBg relative select-none h-10 cursor-pointer ${borderClass} ${backgroundClass}`}
       role="button"
-      aria-label={`Cell ${cellIndex} from section ${sectionIndex}`}
+      aria-label={`Cell ${cellIndex} from section ${sectionId}`}
       tabIndex={0}
       onContextMenu={onContextMenu}
       onClick={onClick}
@@ -102,7 +102,7 @@ Cell.propTypes = {
   isStartingCell: PropTypes.bool.isRequired,
   isFirstCellInLine: PropTypes.bool.isRequired,
   cellIndex: PropTypes.number.isRequired,
-  sectionIndex: PropTypes.number.isRequired,
+  sectionId: PropTypes.string.isRequired,
   cellsPerLine: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool,
 };
