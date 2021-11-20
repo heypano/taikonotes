@@ -209,7 +209,6 @@ Section.defaultProps = {
   sectionId: undefined,
   sectionIndex: undefined,
   isLinkedSection: undefined,
-  isDragging: undefined,
   dragSnapshot: undefined,
   dragProvided: undefined,
 };
