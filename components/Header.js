@@ -60,8 +60,8 @@ const Header = () => {
   );
 
   return (
-    <div className="settings p-1 mb-3 flex flex-col md:flex-row">
-      <div className="w-full md:w-8/12 lg:w-6/12 grid logoGrid mr-3">
+    <div className="settings p-1 mb-3 flex flex-col md:flex-row justify-between items-center">
+      <div className="w-full md:w-8/12 lg:w-5/12 grid logoGrid mr-3">
         {saveDialogOpen && (
           <SaveDialog
             left={dialogLeft}
@@ -94,8 +94,8 @@ const Header = () => {
           <div className="text-2xl w-full p-2">{title}</div>
         )}
       </div>
-      <div className="w-full md:w-4/12 lg:w-6/12 flex flex-col justify-between">
-        <div className="mt-2 md:mt-0 grid grid-rows-2 grid-cols-3 grid-flow-col gap-1">
+      <div className="w-full md:w-8/12 lg:w-5/12 flex flex-col justify-between">
+        <div className="mt-2 md:mt-0 grid grid-rows-2 grid-cols-2 grid-flow-col gap-1">
           {isEditing && (
             <>
               <HeaderButton
@@ -104,13 +104,6 @@ const Header = () => {
                 }}
               >
                 Add Section
-              </HeaderButton>
-              <HeaderButton
-                onClick={() => {
-                  dispatch(removeLastSection());
-                }}
-              >
-                Remove Last Section
               </HeaderButton>
               <HeaderButton
                 onClick={() => {

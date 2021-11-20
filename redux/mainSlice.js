@@ -180,6 +180,10 @@ export const mainSlice = createSlice({
       state.sections.pop();
       // TODO remove from sectionsMap if no longer relevant
     },
+    removeSection: (state, action) => {
+      const { sectionIndex } = action.payload;
+      state.sections.splice(sectionIndex, 1);
+    },
     cloneSection: (state, action) => {
       const { sectionIndex } = action.payload;
       state.sections.splice(sectionIndex, 0, state.sections[sectionIndex]);
@@ -216,6 +220,7 @@ export const {
   setMainState,
   addSection,
   removeLastSection,
+  removeSection,
   clearState,
   cloneSection,
   unlinkSection,

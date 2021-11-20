@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import Cell from "./Cell";
 import {
   cloneSection,
+  removeSection,
   setSectionName,
   setTotalLines,
   unlinkSection,
@@ -24,6 +25,7 @@ import { getCoordinatesFromEvent } from "../keyboard/util";
 import Duplicate from "./Icons/Duplicate";
 import Lock from "./Icons/Lock";
 import { getItemStyle } from "../lib/dnd";
+import Trash from "./Icons/Trash";
 
 const Section = (props) => {
   const {
@@ -98,7 +100,34 @@ const Section = (props) => {
               >
                 <Minus />
               </SectionButton>
-
+              <SectionButton
+                title="Duplicate"
+                aria-label="Duplicate"
+                onClick={() => {
+                  dispatch(
+                    cloneSection({
+                      sectionIndex,
+                    })
+                  );
+                }}
+              >
+                <Duplicate />
+              </SectionButton>
+              {isLinkedSection && (
+                <SectionButton
+                  title="Unlink"
+                  aria-label="Unlink"
+                  onClick={() => {
+                    dispatch(
+                      unlinkSection({
+                        sectionIndex,
+                      })
+                    );
+                  }}
+                >
+                  <Lock />
+                </SectionButton>
+              )}
               <SectionButton
                 title="Settings"
                 aria-label="Settings"
@@ -133,34 +162,21 @@ const Section = (props) => {
           >
             <Comment />
           </SectionButton>
+
           <SectionButton
-            title="Duplicate"
-            aria-label="Duplicate"
+            title="Delete Section"
+            aria-label="Delete Section"
+            bgClassName="bg-red-100 hover:bg-red-50"
             onClick={() => {
               dispatch(
-                cloneSection({
+                removeSection({
                   sectionIndex,
                 })
               );
             }}
           >
-            <Duplicate />
+            <Trash />
           </SectionButton>
-          {isLinkedSection && (
-            <SectionButton
-              title="Unlink"
-              aria-label="Unlink"
-              onClick={() => {
-                dispatch(
-                  unlinkSection({
-                    sectionIndex,
-                  })
-                );
-              }}
-            >
-              <Lock />
-            </SectionButton>
-          )}
           {isEditing ? (
             <label
               htmlFor={`section_${sectionId}_name`}
