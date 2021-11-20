@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
+import debounce from "lodash.debounce";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 
 const PopupMenu = ({
@@ -13,6 +14,8 @@ const PopupMenu = ({
 }) => {
   const ref = useRef();
   const [actualPosition, setActualPosition] = useState();
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [innerHeight, setInnerHeight] = useState(window.innerHeight);
   const onClickOutside = useCallback(
     (e) => {
       if (open) {
@@ -25,18 +28,30 @@ const PopupMenu = ({
   useOnClickOutside(ref, onClickOutside);
 
   useEffect(() => {
+    const handleResize = debounce(() => {
+      setInnerWidth(window.innerWidth);
+      setInnerHeight(window.innerHeight);
+    }, 100);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
     if (ref.current && left !== undefined && top !== undefined) {
       const minLeft = 10;
       const minTop = 10;
-      const maxLeft = window.innerWidth - ref.current.clientWidth - 10;
-      const maxTop = window.innerHeight - ref.current.clientHeight - 10;
+      const maxLeft = innerWidth - ref.current.clientWidth - 10;
+      const maxTop = innerHeight - ref.current.clientHeight - 10;
       const usedLeft = Math.max(Math.min(left, maxLeft), minLeft);
       const usedTop = Math.max(Math.min(top, maxTop), minTop);
       setActualPosition({ left: usedLeft, top: usedTop });
     } else {
       setActualPosition(null);
     }
-  }, [left, open, top]);
+  }, [innerHeight, innerWidth, left, open, top]);
 
   const visibleClass = actualPosition ? "" : "invisible";
 
