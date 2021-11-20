@@ -15,9 +15,8 @@
   grid-template-columns: 1fr 3fr;
 }
 
-.spinIcon:hover svg,
-.spinIcon:focus svg {
-  /*@apply animate-spin;*/
+.spinIcon:hover svg {
+  @apply animate-spin;
 }
 
 .popupmenu {

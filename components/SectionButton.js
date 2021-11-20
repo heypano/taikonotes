@@ -4,7 +4,7 @@ import Button from "./Button";
 
 const SectionButton = ({ children, onClick, bgClassName, ...rest }) => (
   <Button
-    className={`mr-2 spinIcon w-10 p-2 ${bgClassName}`}
+    className={`mr-2 spinIcon w-10 p-1 xl:p-2 ${bgClassName}`}
     onClick={onClick}
     {...rest}
   >
