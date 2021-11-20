@@ -49,8 +49,8 @@ const TaikoGrid = () => {
             >
               {sectionsIds.map((sectionId, sectionIndex) => (
                 <Draggable
-                  key={sectionId}
-                  draggableId={String(sectionId)}
+                  key={`${sectionId}_${sectionIndex}`}
+                  draggableId={`${sectionId}_${sectionIndex}`}
                   index={sectionIndex}
                 >
                   {(dragProvided, dragSnapshot) => (

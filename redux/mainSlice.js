@@ -14,8 +14,8 @@ export const initialState = {
     [initialSectionId1]: {
       cells: [],
       id: initialSectionId1,
-      sectionName: "New Section",
-      totalLines: 4,
+      sectionName: "Line A",
+      totalLines: 1,
       settings: {
         cellsPerLine: 16,
         divideEvery: 4,
