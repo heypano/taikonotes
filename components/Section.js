@@ -23,9 +23,16 @@ import {
 import { getCoordinatesFromEvent } from "../keyboard/util";
 import Duplicate from "./Icons/Duplicate";
 import Lock from "./Icons/Lock";
+import { getItemStyle } from "../lib/dnd";
 
 const Section = (props) => {
-  const { sectionId, sectionIndex, isLinkedSection } = props;
+  const {
+    sectionId,
+    sectionIndex,
+    isLinkedSection,
+    dragProvided,
+    dragSnapshot,
+  } = props;
   const { cellsPerLine, divideEvery } = useSettings(sectionId);
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
@@ -49,132 +56,142 @@ const Section = (props) => {
     );
   }
   return (
-    <div key={`section_${sectionId}`} className="mb-8 p-1">
-      <div className="flex flex-row align-baseline">
-        {isEditing && (
-          <>
-            <SectionButton
-              title="Add line"
-              aria-label="Add line"
-              onClick={() => {
-                dispatch(
-                  setTotalLines({
-                    sectionId,
-                    totalLines: totalLines + 1,
-                  })
-                );
-              }}
-            >
-              <Plus />
-            </SectionButton>
+    <div
+      ref={dragProvided.innerRef}
+      {...dragProvided.draggableProps}
+      {...dragProvided.dragHandleProps}
+      style={getItemStyle(
+        dragSnapshot.isDragging,
+        dragProvided.draggableProps.style
+      )}
+    >
+      <div className="mb-8 p-1">
+        <div className="flex flex-row align-baseline">
+          {isEditing && (
+            <>
+              <SectionButton
+                title="Add line"
+                aria-label="Add line"
+                onClick={() => {
+                  dispatch(
+                    setTotalLines({
+                      sectionId,
+                      totalLines: totalLines + 1,
+                    })
+                  );
+                }}
+              >
+                <Plus />
+              </SectionButton>
 
-            <SectionButton
-              title="Remove last line"
-              aria-label="Remove last line"
-              onClick={() => {
-                dispatch(
-                  setTotalLines({
-                    sectionId,
-                    totalLines: totalLines - 1,
-                  })
-                );
-              }}
-            >
-              <Minus />
-            </SectionButton>
+              <SectionButton
+                title="Remove last line"
+                aria-label="Remove last line"
+                onClick={() => {
+                  dispatch(
+                    setTotalLines({
+                      sectionId,
+                      totalLines: totalLines - 1,
+                    })
+                  );
+                }}
+              >
+                <Minus />
+              </SectionButton>
 
-            <SectionButton
-              title="Settings"
-              aria-label="Settings"
-              onClick={(e) => {
-                dispatch(
-                  setSectionSettingData({
-                    sectionSettingOpen: true,
-                    sectionSettingSectionId: sectionId,
-                    sectionSettingCoordinates: getCoordinatesFromEvent(e),
-                  })
-                );
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-            >
-              <GearIcon />
-            </SectionButton>
-          </>
-        )}
-        <SectionButton
-          title="Section Comment"
-          aria-label="Section Comment"
-          onClick={(e) => {
-            dispatch(
-              setSectionCommentData({
-                sectionCommentOpen: true,
-                sectionCommentSectionId: sectionId,
-                sectionCommentCoordinates: getCoordinatesFromEvent(e),
-              })
-            );
-          }}
-        >
-          <Comment />
-        </SectionButton>
-        <SectionButton
-          title="Duplicate"
-          aria-label="Duplicate"
-          onClick={() => {
-            dispatch(
-              cloneSection({
-                sectionIndex,
-              })
-            );
-          }}
-        >
-          <Duplicate />
-        </SectionButton>
-        {isLinkedSection && (
+              <SectionButton
+                title="Settings"
+                aria-label="Settings"
+                onClick={(e) => {
+                  dispatch(
+                    setSectionSettingData({
+                      sectionSettingOpen: true,
+                      sectionSettingSectionId: sectionId,
+                      sectionSettingCoordinates: getCoordinatesFromEvent(e),
+                    })
+                  );
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
+              >
+                <GearIcon />
+              </SectionButton>
+            </>
+          )}
           <SectionButton
-            title="Unlink"
-            aria-label="Unlink"
+            title="Section Comment"
+            aria-label="Section Comment"
+            onClick={(e) => {
+              dispatch(
+                setSectionCommentData({
+                  sectionCommentOpen: true,
+                  sectionCommentSectionId: sectionId,
+                  sectionCommentCoordinates: getCoordinatesFromEvent(e),
+                })
+              );
+            }}
+          >
+            <Comment />
+          </SectionButton>
+          <SectionButton
+            title="Duplicate"
+            aria-label="Duplicate"
             onClick={() => {
               dispatch(
-                unlinkSection({
+                cloneSection({
                   sectionIndex,
                 })
               );
             }}
           >
-            <Lock />
+            <Duplicate />
           </SectionButton>
-        )}
-        {isEditing ? (
-          <label
-            htmlFor={`section_${sectionId}_name`}
-            aria-label="Section name"
-            className="w-full"
-          >
-            <textarea
-              id={`section_${sectionId}_name`}
-              type="text"
-              value={sectionName}
-              className="flex filter drop-shadow text-2xl w-full outline-none p-2 resize-none"
-              rows={1}
-              onChange={(e) => {
+          {isLinkedSection && (
+            <SectionButton
+              title="Unlink"
+              aria-label="Unlink"
+              onClick={() => {
                 dispatch(
-                  setSectionName({
-                    sectionId,
-                    sectionName: e.target.value,
+                  unlinkSection({
+                    sectionIndex,
                   })
                 );
               }}
-            />
-          </label>
-        ) : (
-          <div className="text-2xl w-full p-2">{sectionName}</div>
-        )}
-      </div>
-      <div
-        className={`bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-blue-800`}
-      >
-        {sectionCells}
+            >
+              <Lock />
+            </SectionButton>
+          )}
+          {isEditing ? (
+            <label
+              htmlFor={`section_${sectionId}_name`}
+              aria-label="Section name"
+              className="w-full"
+            >
+              <textarea
+                id={`section_${sectionId}_name`}
+                type="text"
+                value={sectionName}
+                className="flex filter drop-shadow text-2xl w-full outline-none p-2 resize-none"
+                rows={1}
+                onChange={(e) => {
+                  dispatch(
+                    setSectionName({
+                      sectionId,
+                      sectionName: e.target.value,
+                    })
+                  );
+                }}
+              />
+            </label>
+          ) : (
+            <div className="text-2xl w-full p-2">{sectionName}</div>
+          )}
+        </div>
+        <div
+          className={`bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-blue-800`}
+        >
+          {sectionCells}
+        </div>
       </div>
     </div>
   );
@@ -184,11 +201,16 @@ Section.propTypes = {
   sectionId: PropTypes.string,
   sectionIndex: PropTypes.number,
   isLinkedSection: PropTypes.bool,
+  dragSnapshot: PropTypes.shape({}),
+  dragProvided: PropTypes.shape({}),
 };
 
 Section.defaultProps = {
   sectionId: undefined,
   sectionIndex: undefined,
   isLinkedSection: undefined,
+  isDragging: undefined,
+  dragSnapshot: undefined,
+  dragProvided: undefined,
 };
 export default memo(Section);

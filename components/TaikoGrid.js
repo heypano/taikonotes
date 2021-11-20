@@ -1,9 +1,13 @@
-import { memo, useMemo } from "react";
-import { useSectionList } from "../redux/mainSlice";
+import { memo, useCallback, useMemo } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
+import { moveSection, useSectionList } from "../redux/mainSlice";
 import Section from "./Section";
 import Header from "./Header";
+import { getListStyle } from "../lib/dnd";
 
 const TaikoGrid = () => {
+  const dispatch = useDispatch();
   const sectionsIds = useSectionList();
   const sectionIdMap = useMemo(() => {
     const result = {};
@@ -13,21 +17,59 @@ const TaikoGrid = () => {
     return result;
   }, [sectionsIds]);
   const isLinkedSection = (sectionId) => sectionIdMap[sectionId] > 1;
+  const onDragStart = useCallback(() => {
+    // Add a little vibration if the browser supports it.
+    // Add's a nice little physical feedback
+    if (window.navigator.vibrate) {
+      window.navigator.vibrate(100);
+    }
+  }, []);
+  const onDragEnd = useCallback(
+    (result) => {
+      dispatch(
+        moveSection({
+          fromIndex: result?.source?.index,
+          toIndex: result?.destination?.index,
+        })
+      );
+    },
+    [dispatch]
+  );
 
   return (
-    <div>
-      <Header />
+    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <div>
-        {sectionsIds.map((sectionId, sectionIndex) => (
-          <Section
-            key={sectionIndex}
-            isLinkedSection={isLinkedSection(sectionId)}
-            sectionId={sectionId}
-            sectionIndex={sectionIndex}
-          />
-        ))}
+        <Header />
+        <Droppable droppableId="sectionsList">
+          {(dropProvided, dropSnapshot) => (
+            <div
+              {...dropProvided.droppableProps}
+              ref={dropProvided.innerRef}
+              style={getListStyle(dropSnapshot.isDraggingOver)}
+            >
+              {sectionsIds.map((sectionId, sectionIndex) => (
+                <Draggable
+                  key={sectionId}
+                  draggableId={String(sectionId)}
+                  index={sectionIndex}
+                >
+                  {(dragProvided, dragSnapshot) => (
+                    <Section
+                      isLinkedSection={isLinkedSection(sectionId)}
+                      sectionId={sectionId}
+                      sectionIndex={sectionIndex}
+                      dragProvided={dragProvided}
+                      dragSnapshot={dragSnapshot}
+                    />
+                  )}
+                </Draggable>
+              ))}
+              {dropProvided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </div>
-    </div>
+    </DragDropContext>
   );
 };
 
