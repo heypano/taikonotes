@@ -163,20 +163,22 @@ const Section = (props) => {
             <Comment />
           </SectionButton>
 
-          <SectionButton
-            title="Delete Section"
-            aria-label="Delete Section"
-            bgClassName="bg-red-100 hover:bg-red-50"
-            onClick={() => {
-              dispatch(
-                removeSection({
-                  sectionIndex,
-                })
-              );
-            }}
-          >
-            <Trash />
-          </SectionButton>
+          {isEditing && (
+            <SectionButton
+              title="Delete Section"
+              aria-label="Delete Section"
+              bgClassName="bg-red-100 hover:bg-red-50"
+              onClick={() => {
+                dispatch(
+                  removeSection({
+                    sectionIndex,
+                  })
+                );
+              }}
+            >
+              <Trash />
+            </SectionButton>
+          )}
           {isEditing ? (
             <label
               htmlFor={`section_${sectionId}_name`}

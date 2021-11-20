@@ -95,7 +95,7 @@ const Header = () => {
         )}
       </div>
       <div className="w-full md:w-8/12 lg:w-5/12 flex flex-col justify-between">
-        <div className="mt-2 md:mt-0 grid grid-rows-2 grid-cols-2 grid-flow-col gap-1">
+        <div className="mt-2 md:mt-0 flex justify-between flex-wrap w-100">
           {isEditing && (
             <>
               <HeaderButton
@@ -131,12 +131,18 @@ const Header = () => {
             onClick={() => {
               dispatch(setIsEditing(!isEditing));
             }}
-            className={isEditing ? "bg-blue-50" : "bg-red-50"}
+            className={isEditing ? "" : "ml-auto"}
           >
-            Toggle Edit
-            <Icon className="w-8">
-              <Pencil />
-            </Icon>
+            {isEditing ? (
+              "View Mode"
+            ) : (
+              <>
+                Edit Mode
+                <Icon className="w-8">
+                  <Pencil />
+                </Icon>
+              </>
+            )}
           </HeaderButton>
         </div>
       </div>
