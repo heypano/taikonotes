@@ -62,21 +62,19 @@ const Header = () => {
   return (
     <div className="settings p-1 mb-3 flex flex-col md:flex-row justify-between items-center">
       <div className="w-full md:w-8/12 lg:w-5/12 grid logoGrid mr-3">
-        {saveDialogOpen && (
-          <SaveDialog
-            left={dialogLeft}
-            top={dialogTop}
-            open={saveDialogOpen}
-            onOpenChange={(open) => {
-              setSaveDialogOpen(open);
-            }}
-            className="max-w-sm p-4"
-            saveMethod={saveMethod}
-            isSaving={isSaving}
-            songslug={songslug}
-            error={saveError}
-          />
-        )}
+        <SaveDialog
+          left={dialogLeft}
+          top={dialogTop}
+          open={saveDialogOpen}
+          onOpenChange={(open) => {
+            setSaveDialogOpen(open);
+          }}
+          className="max-w-sm p-4"
+          saveMethod={saveMethod}
+          isSaving={isSaving}
+          songslug={songslug}
+          error={saveError}
+        />
         <Image src={TaikoLogo} className="w-full p-2" alt="taiko logo" />
         {isEditing ? (
           <label htmlFor="songname">

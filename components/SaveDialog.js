@@ -7,6 +7,7 @@ import Spin from "./Icons/Spin";
 const SaveDialog = ({ saveMethod, songslug, error, isSaving, ...rest }) => {
   const passwordInputRef = useRef();
   const songslugInputRef = useRef();
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -39,8 +40,11 @@ const SaveDialog = ({ saveMethod, songslug, error, isSaving, ...rest }) => {
             <input
               id="save_password"
               className="filter drop-shadow p-1 my-1 mr-2"
-              ref={passwordInputRef}
               type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
           </label>
           <label

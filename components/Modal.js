@@ -1,15 +1,28 @@
 import { createPortal } from "react-dom";
 import PopupMenu from "./PopupMenu";
 
-const Modal = ({ open, onOpenChange, className, style, children, left, top }) =>
-  createPortal(
-    <PopupMenu
-      {...{ open, onOpenChange, className, style, children, left, top }}
-    >
-      {children}
-    </PopupMenu>,
-    document.getElementById("modalPortal")
+const Modal = ({
+  open,
+  onOpenChange,
+  className,
+  style,
+  children,
+  left,
+  top,
+}) => {
+  const portalDom = document.getElementById("modalPortal");
+  return (
+    portalDom &&
+    createPortal(
+      <PopupMenu
+        {...{ open, onOpenChange, className, style, children, left, top }}
+      >
+        {children}
+      </PopupMenu>,
+      portalDom
+    )
   );
+};
 
 Modal.propTypes = {
   ...PopupMenu.propTypes,
