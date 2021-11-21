@@ -5,7 +5,6 @@ import Button from "./Button";
 import Spin from "./Icons/Spin";
 
 const SaveDialog = ({ saveMethod, songslug, error, isSaving, ...rest }) => {
-  const passwordInputRef = useRef();
   const songslugInputRef = useRef();
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -90,7 +89,7 @@ const SaveDialog = ({ saveMethod, songslug, error, isSaving, ...rest }) => {
         className="p-3 flex items-center justify-between text-left bg-gray-200 hover:bg-gray-300"
         onClick={() =>
           saveMethod({
-            password: passwordInputRef?.current?.value,
+            password,
             songslug: songslugInputRef?.current?.value,
           })
         }
