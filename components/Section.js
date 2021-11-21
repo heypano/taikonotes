@@ -8,6 +8,7 @@ import {
   setSectionName,
   setTotalLines,
   unlinkSection,
+  useSectionComment,
   useSectionNoCells,
   useSettings,
 } from "../redux/mainSlice";
@@ -41,6 +42,7 @@ const Section = (props) => {
   const section = useSectionNoCells(sectionId);
   const { sectionName, totalLines } = section;
   const sectionCells = [];
+  const comment = useSectionComment(sectionId);
   const numCells = cellsPerLine * totalLines;
   const mobileDisplayedCells =
     cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
@@ -145,39 +147,38 @@ const Section = (props) => {
               >
                 <GearIcon />
               </SectionButton>
-            </>
-          )}
-          <SectionButton
-            title="Section Comment"
-            aria-label="Section Comment"
-            onClick={(e) => {
-              dispatch(
-                setSectionCommentData({
-                  sectionCommentOpen: true,
-                  sectionCommentSectionId: sectionId,
-                  sectionCommentCoordinates: getCoordinatesFromEvent(e),
-                })
-              );
-            }}
-          >
-            <Comment />
-          </SectionButton>
 
-          {isEditing && (
-            <SectionButton
-              title="Delete Section"
-              aria-label="Delete Section"
-              bgClassName="bg-red-100 hover:bg-red-50"
-              onClick={() => {
-                dispatch(
-                  removeSection({
-                    sectionIndex,
-                  })
-                );
-              }}
-            >
-              <Trash />
-            </SectionButton>
+              <SectionButton
+                title="Section Comment"
+                aria-label="Section Comment"
+                onClick={(e) => {
+                  dispatch(
+                    setSectionCommentData({
+                      sectionCommentOpen: true,
+                      sectionCommentSectionId: sectionId,
+                      sectionCommentCoordinates: getCoordinatesFromEvent(e),
+                    })
+                  );
+                }}
+              >
+                <Comment />
+              </SectionButton>
+
+              <SectionButton
+                title="Delete Section"
+                aria-label="Delete Section"
+                bgClassName="bg-red-100 hover:bg-red-50"
+                onClick={() => {
+                  dispatch(
+                    removeSection({
+                      sectionIndex,
+                    })
+                  );
+                }}
+              >
+                <Trash />
+              </SectionButton>
+            </>
           )}
           {isEditing ? (
             <label
@@ -202,7 +203,10 @@ const Section = (props) => {
               />
             </label>
           ) : (
-            <div className="text-2xl w-full p-2">{sectionName}</div>
+            <div className="flex flex-col p-2">
+              <div className="text-2xl w-full">{sectionName}</div>
+              {comment && <p>{comment}</p>}
+            </div>
           )}
         </div>
         <div

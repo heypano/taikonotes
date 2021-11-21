@@ -5,10 +5,12 @@ import { moveSection, useSectionList } from "../redux/mainSlice";
 import Section from "./Section";
 import Header from "./Header";
 import { getListStyle } from "../lib/dnd";
+import { useIsEditing } from "../redux/editSlice";
 
 const TaikoGrid = () => {
   const dispatch = useDispatch();
   const sectionsIds = useSectionList();
+  const isEditing = useIsEditing();
   const sectionIdMap = useMemo(() => {
     const result = {};
     sectionsIds.forEach((sectionId) => {
@@ -52,6 +54,7 @@ const TaikoGrid = () => {
                   key={`${sectionId}_${sectionIndex}`}
                   draggableId={`${sectionId}_${sectionIndex}`}
                   index={sectionIndex}
+                  isDragDisabled={!isEditing}
                 >
                   {(dragProvided, dragSnapshot) => (
                     <Section

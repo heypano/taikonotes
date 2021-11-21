@@ -77,6 +77,7 @@ const Cell = (props) => {
       tabIndex={0}
       onContextMenu={onContextMenu}
       onClick={onClick}
+      onMouseEnter={isEditing ? null : onClick}
       onKeyPress={(e) => {
         onEnter(onContextMenu)(e);
         onSpace(onClick)(e);

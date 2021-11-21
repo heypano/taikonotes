@@ -32,7 +32,7 @@ const Header = () => {
   const [saveError, setSaveError] = useState();
   const buttonRef = useRef();
   useEffect(() => {
-    const { x, y } = buttonRef.current.getBoundingClientRect();
+    const { x, y } = buttonRef?.current?.getBoundingClientRect() || {};
     setDialogLeft(x);
     setDialogTop(y);
   }, [saveDialogOpen]);
