@@ -205,7 +205,7 @@ const Section = (props) => {
           ) : (
             <div className="flex flex-col p-2">
               <div className="text-2xl w-full">{sectionName}</div>
-              {comment && <p>{comment}</p>}
+              {comment && <pre>{comment}</pre>}
             </div>
           )}
         </div>
