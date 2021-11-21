@@ -31,12 +31,12 @@ const Cell = (props) => {
   } else if (isStartingCell) {
     backgroundClass = "bg-gray-300 hover:bg-blue-400";
   }
-  let borderClass = "border border-blue-800";
+  const borderClass = "border border-blue-800";
 
   // when we show fewer cells per line, help identify the start of every line
-  if (isFirstCellInLine && cellsPerLine % 2 === 1) {
-    borderClass = "border-2 border-red-400 md:border md:border-blue-800";
-  }
+  // if (isFirstCellInLine && cellsPerLine % 2 === 1) {
+  //   borderClass = "border-2 border-red-400 md:border md:border-blue-800";
+  // }
 
   // console.debug(`Cell rerender ${cellIndex}`);
 
