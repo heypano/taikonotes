@@ -38,20 +38,21 @@ const Header = () => {
   }, [saveDialogOpen]);
 
   const saveMethod = useCallback(
-    async ({ password, songslug: inputSongSlug }) => {
+    async ({ password, inputSongSlug, isNew }) => {
       setIsSaving(true);
-      const slug = inputSongSlug || songslug;
+      const slug = isNew ? inputSongSlug : songslug;
       const saveData = {
         ...getMainState(),
         slug,
         password,
+        isNew,
       };
       const { error } = await post(`/api/saveSong/${slug}`, saveData);
       setSaveError(error);
       setIsSaving(false);
       if (!error) {
         setSaveDialogOpen(false);
-        if (inputSongSlug) {
+        if (isNew) {
           await push(`/${inputSongSlug}`);
         }
       }

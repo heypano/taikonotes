@@ -8,10 +8,11 @@ const SaveDialog = ({ saveMethod, songslug, error, isSaving, ...rest }) => {
   const songslugInputRef = useRef();
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const isNew = !songslug;
 
   return (
     <Modal {...rest}>
-      {!songslug && (
+      {isNew && (
         <label htmlFor="song_slug" className="block mb-4">
           <p>What is a short name (slug) for this song? </p>
           <input
@@ -76,11 +77,9 @@ const SaveDialog = ({ saveMethod, songslug, error, isSaving, ...rest }) => {
           )}
           {error && (
             <p className="text-sm text-red-500">
-              (
               {error === "incorrect_password"
                 ? "Incorrect password, try again"
                 : error}
-              )
             </p>
           )}
         </div>
@@ -90,7 +89,8 @@ const SaveDialog = ({ saveMethod, songslug, error, isSaving, ...rest }) => {
         onClick={() =>
           saveMethod({
             password,
-            songslug: songslugInputRef?.current?.value,
+            isNew,
+            inputSongSlug: songslugInputRef?.current?.value,
           })
         }
       >
