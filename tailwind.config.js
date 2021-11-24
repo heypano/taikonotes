@@ -14,7 +14,17 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        slowFadeOut: "slowFadeOut 5s ease-in-out forwards",
+      },
+      keyframes: {
+        slowFadeOut: {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
+        },
+      },
+    },
     gridTemplateColumns: {
       none: "none",
       1: "repeat(1, minmax(0, 1fr))",

@@ -18,6 +18,8 @@ import { setIsEditing, useIsEditing } from "../redux/editSlice";
 import { post } from "../lib/api";
 import Spin from "./Icons/Spin";
 import SaveDialog from "./SaveDialog";
+import Notification from "./Notification";
+import { setNotification } from "../redux/errorSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -52,6 +54,12 @@ const Header = () => {
       setIsSaving(false);
       if (!error) {
         setSaveDialogOpen(false);
+        dispatch(
+          setNotification({
+            message: `Song saved successfully at /${slug}`,
+          })
+        );
+
         if (isNew) {
           await push(`/${inputSongSlug}`);
         }
@@ -144,6 +152,7 @@ const Header = () => {
             )}
           </HeaderButton>
         </div>
+        <Notification />
       </div>
     </div>
   );

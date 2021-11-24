@@ -1,16 +1,13 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Todo
-- Do not save over existing song in creation case!
-- Back button? route change state stuff
-- Overall song notes
-- overall song structure + reorder
 - summary structure view with reorder
+- Back button? route change state stuff
 - Change textarea to rich
-- error handling
-- Saved successfully message
-- CSRF
+- Undo
 - propTypes -> typescript?
+- CSRF
+- Overall song notes
 
 
 ## Getting Started
