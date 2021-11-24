@@ -65,7 +65,7 @@ const Header = () => {
         }
       }
     },
-    [push, songslug]
+    [dispatch, push, songslug]
   );
 
   return (
