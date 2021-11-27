@@ -98,7 +98,7 @@ const Header = () => {
             }}
           />
         ) : (
-          <div className="text-2xl w-full h-full outline-none p-2 resize-none filter shadow-texty flex-1 mt-2">
+          <div className="text-2xl w-full h-full outline-none p-2 resize-none flex-1 mt-2">
             {title}
           </div>
         )}
