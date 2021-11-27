@@ -47,6 +47,7 @@ const TaikoGrid = () => {
             {...dropProvided.droppableProps}
             ref={dropProvided.innerRef}
             style={getListStyle(dropSnapshot.isDraggingOver)}
+            className="p-2 px-0 lg:px-2"
           >
             {sectionsIds.map((sectionId, sectionIndex) => (
               <Draggable

@@ -69,7 +69,7 @@ const Section = (props) => {
         dragProvided.draggableProps.style
       )}
     >
-      <div className="mb-8 p-1">
+      <div className="my-4 p-8 px-1 lg:px-8">
         <div className="flex flex-row align-baseline">
           {isEditing && (
             <>

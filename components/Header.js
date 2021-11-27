@@ -69,8 +69,8 @@ const Header = () => {
   );
 
   return (
-    <div className="p-1 mb-3 flex flex-col md:flex-row justify-between items-center">
-      <div className="w-full h-full md:w-8/12 lg:w-5/12 flex items-stretch mr-3">
+    <div className="p-1 mb-3 flex flex-col md:flex-row justify-between items-center flex-wrap">
+      <div className="w-full h-full lg:w-6/12 flex items-stretch">
         <SaveDialog
           left={dialogLeft}
           top={dialogTop}
@@ -100,12 +100,12 @@ const Header = () => {
             />
           </label>
         ) : (
-          <div className="text-2xl w-full h-full outline-none p-2 resize-none flex-1 mt-2">
+          <div className="text-4xl w-full h-full outline-none p-2 resize-none flex-1 mt-2">
             {title}
           </div>
         )}
       </div>
-      <div className="w-full md:w-8/12 lg:w-5/12 flex flex-col justify-between">
+      <div className="w-full lg:w-6/12 flex flex-col justify-between lg:pl-3 mt-4">
         <div className="mt-2 md:mt-0 flex justify-between flex-wrap w-100">
           {isEditing && (
             <>
