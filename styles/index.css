@@ -11,10 +11,6 @@
   transition-duration: 0.7s;
 }
 
-.logoGrid {
-  grid-template-columns: 1fr 3fr;
-}
-
 .spinIcon:hover svg {
   @apply animate-spin;
 }

@@ -8,7 +8,7 @@ const Button = forwardRef(({ children, className, ...rest }, ref) => (
   <button
     type="button"
     ref={ref}
-    className={`text-gray-800 cursor-pointer ${className}`}
+    className={`cursor-pointer ${className}`}
     {...rest}
   >
     {children}

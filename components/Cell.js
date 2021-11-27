@@ -25,13 +25,13 @@ const Cell = (props) => {
     cellIndex
   );
   const sound = (currentSound && soundObj[currentSound]) || "";
-  let backgroundClass = "bg-white hover:bg-blue-400";
+  let backgroundClass = "bg-white hover:bg-taikoLightBrown1";
   if (isPlaying) {
     backgroundClass = "bg-red-300 hover:bg-red-600";
   } else if (isStartingCell) {
-    backgroundClass = "bg-gray-300 hover:bg-blue-400";
+    backgroundClass = "bg-taikoLightBrown2 hover:bg-taikoColor3";
   }
-  const borderClass = "border border-blue-800";
+  const borderClass = "border border-taikoColor2";
 
   // when we show fewer cells per line, help identify the start of every line
   // if (isFirstCellInLine && cellsPerLine % 2 === 1) {

@@ -69,8 +69,8 @@ const Header = () => {
   );
 
   return (
-    <div className="settings p-1 mb-3 flex flex-col md:flex-row justify-between items-center">
-      <div className="w-full md:w-8/12 lg:w-5/12 grid logoGrid mr-3">
+    <div className="h-48 p-1 mb-3 flex flex-col md:flex-row justify-between items-center">
+      <div className="w-full h-full md:w-8/12 lg:w-5/12 flex items-stretch mr-3">
         <SaveDialog
           left={dialogLeft}
           top={dialogTop}
@@ -84,21 +84,23 @@ const Header = () => {
           songslug={songslug}
           error={saveError}
         />
-        <Image src={TaikoLogo} className="w-full p-2" alt="taiko logo" />
+        <div className="p-2 mr-4">
+          <Image src={TaikoLogo} alt="taiko logo" />
+        </div>
         {isEditing ? (
-          <label htmlFor="songname">
-            <textarea
-              id="songname"
-              aria-label="song name"
-              className="text-2xl w-full outline-none p-2 resize-none"
-              value={title}
-              onChange={(e) => {
-                dispatch(setSongTitle(e.target.value));
-              }}
-            />
-          </label>
+          <textarea
+            id="songname"
+            aria-label="song name"
+            className="text-2xl w-full h-full outline-none p-2 resize-none filter shadow-texty flex-1 mt-2"
+            value={title}
+            onChange={(e) => {
+              dispatch(setSongTitle(e.target.value));
+            }}
+          />
         ) : (
-          <div className="text-2xl w-full p-2">{title}</div>
+          <div className="text-2xl w-full h-full outline-none p-2 resize-none filter shadow-texty flex-1 mt-2">
+            {title}
+          </div>
         )}
       </div>
       <div className="w-full md:w-8/12 lg:w-5/12 flex flex-col justify-between">

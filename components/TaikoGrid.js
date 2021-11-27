@@ -40,40 +40,66 @@ const TaikoGrid = () => {
 
   return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-      <div>
-        <Header />
-        <Droppable droppableId="sectionsList">
-          {(dropProvided, dropSnapshot) => (
-            <div
-              {...dropProvided.droppableProps}
-              ref={dropProvided.innerRef}
-              style={getListStyle(dropSnapshot.isDraggingOver)}
-            >
-              {sectionsIds.map((sectionId, sectionIndex) => (
-                <Draggable
-                  key={`${sectionId}_${sectionIndex}`}
-                  draggableId={`${sectionId}_${sectionIndex}`}
-                  index={sectionIndex}
-                  isDragDisabled={!isEditing}
-                >
-                  {(dragProvided, dragSnapshot) => (
-                    <Section
-                      isLinkedSection={isLinkedSection(sectionId)}
-                      sectionId={sectionId}
-                      sectionIndex={sectionIndex}
-                      dragProvided={dragProvided}
-                      dragSnapshot={dragSnapshot}
-                    />
-                  )}
-                </Draggable>
-              ))}
-              {dropProvided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </div>
+      <Header />
+      <Droppable droppableId="sectionsList">
+        {(dropProvided, dropSnapshot) => (
+          <div
+            {...dropProvided.droppableProps}
+            ref={dropProvided.innerRef}
+            style={getListStyle(dropSnapshot.isDraggingOver)}
+          >
+            {sectionsIds.map((sectionId, sectionIndex) => (
+              <Draggable
+                key={`${sectionId}_${sectionIndex}`}
+                draggableId={`${sectionId}_${sectionIndex}`}
+                index={sectionIndex}
+                isDragDisabled={!isEditing}
+              >
+                {(dragProvided, dragSnapshot) => (
+                  <Section
+                    isLinkedSection={isLinkedSection(sectionId)}
+                    sectionId={sectionId}
+                    sectionIndex={sectionIndex}
+                    dragProvided={dragProvided}
+                    dragSnapshot={dragSnapshot}
+                  />
+                )}
+              </Draggable>
+            ))}
+            {dropProvided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </DragDropContext>
   );
 };
 
 export default memo(TaikoGrid);
+
+const solution = (angles) => {
+  const characters = [...angles];
+  let total = 0;
+  const result = [];
+  characters.forEach((char, index) => {
+    if (char === "<") {
+      total += 1;
+      result.push("<");
+    } else if (char === ">") {
+      total -= 1;
+      if (total < 0) {
+        result.unshift("<");
+        result.push(">");
+        total += 1;
+      }
+    }
+  });
+  if (total > 0) {
+    result.push(">".repeat(total));
+  } else if (total < 0) {
+    result.unshift("<".repeat(total));
+  }
+
+  return result.join("");
+};
+
+console.log(solution("<<>>>>><<<>>"));

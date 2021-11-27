@@ -167,7 +167,7 @@ const Section = (props) => {
               <SectionButton
                 title="Delete Section"
                 aria-label="Delete Section"
-                bgClassName="bg-red-100 hover:bg-red-50"
+                bgClassName="bg-red-400 hover:bg-red-50"
                 onClick={() => {
                   dispatch(
                     removeSection({
@@ -184,13 +184,13 @@ const Section = (props) => {
             <label
               htmlFor={`section_${sectionId}_name`}
               aria-label="Section name"
-              className="w-full"
+              className="w-full mb-2"
             >
               <textarea
                 id={`section_${sectionId}_name`}
                 type="text"
                 value={sectionName}
-                className="flex filter drop-shadow text-2xl w-full outline-none p-2 resize-none"
+                className="flex filter text-2xl w-full outline-none p-2 resize-none shadow-texty"
                 rows={1}
                 onChange={(e) => {
                   dispatch(

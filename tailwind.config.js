@@ -1,4 +1,11 @@
 const tailwindCustomForms = require("@tailwindcss/custom-forms");
+const {
+  taikoLightBrown1,
+  taikoLightBrown2,
+  taikoColor1,
+  taikoColor2,
+  taikoColor3: taikoMiddleBrown,
+} = require("./lib/colors");
 
 module.exports = {
   purge: {
@@ -15,6 +22,16 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      boxShadow: {
+        texty: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+      },
+      colors: {
+        taikoLightBrown1,
+        taikoLightBrown2,
+        taikoColor1,
+        taikoColor2,
+        taikoMiddleBrown,
+      },
       animation: {
         slowFadeOut: "slowFadeOut 5s ease-in-out forwards",
       },
