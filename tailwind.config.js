@@ -4,7 +4,8 @@ const {
   taikoLightBrown2,
   taikoColor1,
   taikoColor2,
-  taikoColor3: taikoMiddleBrown,
+  taikoColor3,
+  taikoColor4,
 } = require("./lib/colors");
 
 module.exports = {
@@ -30,7 +31,8 @@ module.exports = {
         taikoLightBrown2,
         taikoColor1,
         taikoColor2,
-        taikoMiddleBrown,
+        taikoColor3,
+        taikoColor4,
       },
       animation: {
         slowFadeOut: "slowFadeOut 5s ease-in-out forwards",

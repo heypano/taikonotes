@@ -20,6 +20,7 @@ import Spin from "./Icons/Spin";
 import SaveDialog from "./SaveDialog";
 import Notification from "./Notification";
 import { setNotification } from "../redux/errorSlice";
+import Taiko from "./Icons/Taiko";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const Header = () => {
   );
 
   return (
-    <div className="p-1 mb-3 flex flex-col md:flex-row justify-between items-center flex-wrap">
+    <div className="p-1 mb-3 flex flex-col md:flex-row justify-between items-stretch flex-wrap">
       {/*  Logo + title */}
       <div className="w-full lg:w-6/12 flex items-stretch">
         <SaveDialog
@@ -85,36 +86,30 @@ const Header = () => {
           songslug={songslug}
           error={saveError}
         />
-        <div className="mr-4 h-full ">
-          <Image
-            src={TaikoLogo}
-            alt="taiko logo"
-            width={159}
-            height={150}
-            objectFit="cover"
-          />
+        <div className="mr-4 h-48 ">
+          {/* <img src="/favicon/Taiko.svg" alt="taiko logo" className="h-full" /> */}
+          <Taiko />
         </div>
         {isEditing ? (
-          <label htmlFor="songname" className="flex-1 flex h-full">
-            <textarea
-              id="songname"
-              aria-label="song name"
-              className="text-2xl w-full h-full outline-none p-2 resize-none filter shadow-texty flex-1 mt-2"
-              value={title}
-              onChange={(e) => {
-                dispatch(setSongTitle(e.target.value));
-              }}
-            />
-          </label>
+          <textarea
+            id="songname"
+            aria-label="song name"
+            className="text-2xl outline-none p-2 resize-none filter shadow-texty flex-1 mt-2"
+            value={title}
+            onChange={(e) => {
+              dispatch(setSongTitle(e.target.value));
+            }}
+          />
         ) : (
-          <div className="text-4xl w-full h-full outline-none p-2 resize-none flex-1 mt-2">
+          <div className="text-4xl outline-none p-2 resize-none flex-1 mt-2">
             {title}
           </div>
         )}
       </div>
-      {/*  Buttons Area */}
-      <div className="w-full lg:w-6/12 flex flex-col justify-between lg:pl-3 mt-4">
-        <div className="mt-2 md:mt-0 flex justify-between flex-wrap w-100">
+      {/*  Buttons + Notification Area */}
+      <div className="w-full lg:w-6/12 flex flex-col justify-start lg:pl-3 mt-4 lg:mt-0 items-stretch lg:items-end">
+        {/*  Buttons */}
+        <div className="mt-2 md:mt-0 flex align-start justify-between lg:justify-start flex-wrap w-100">
           {isEditing && (
             <>
               <HeaderButton

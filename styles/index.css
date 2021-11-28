@@ -52,3 +52,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.taikoStroke {
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  fill: none;
+}
