@@ -3,6 +3,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Todo
 - escape or close button
 - summary structure view with reorder
+- help button
 - Back button? route change state stuff
 - Change textarea to rich
 - Undo

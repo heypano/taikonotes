@@ -76,31 +76,3 @@ const TaikoGrid = () => {
 };
 
 export default memo(TaikoGrid);
-
-const solution = (angles) => {
-  const characters = [...angles];
-  let total = 0;
-  const result = [];
-  characters.forEach((char, index) => {
-    if (char === "<") {
-      total += 1;
-      result.push("<");
-    } else if (char === ">") {
-      total -= 1;
-      if (total < 0) {
-        result.unshift("<");
-        result.push(">");
-        total += 1;
-      }
-    }
-  });
-  if (total > 0) {
-    result.push(">".repeat(total));
-  } else if (total < 0) {
-    result.unshift("<".repeat(total));
-  }
-
-  return result.join("");
-};
-
-console.log(solution("<<>>>>><<<>>"));
