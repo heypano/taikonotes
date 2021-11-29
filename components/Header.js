@@ -70,7 +70,7 @@ const Header = () => {
   );
 
   return (
-    <div className="p-1 mb-3 flex flex-col md:flex-row justify-between items-stretch flex-wrap">
+    <div className="px-1 lg:px-0 py-3 flex flex-col md:flex-row justify-between items-stretch flex-wrap">
       {/*  Logo + title */}
       <div className="w-full lg:w-6/12 flex items-stretch">
         <SaveDialog
@@ -86,7 +86,7 @@ const Header = () => {
           songslug={songslug}
           error={saveError}
         />
-        <div className="mr-4 h-48 ">
+        <div className="mr-4 h-32 lg:h-48 ">
           {/* <img src="/favicon/Taiko.svg" alt="taiko logo" className="h-full" /> */}
           <Taiko />
         </div>
@@ -94,14 +94,14 @@ const Header = () => {
           <textarea
             id="songname"
             aria-label="song name"
-            className="text-2xl outline-none p-2 resize-none filter shadow-texty flex-1 mt-2"
+            className="text-2xl outline-none p-2 resize-none filter shadow-texty flex-1"
             value={title}
             onChange={(e) => {
               dispatch(setSongTitle(e.target.value));
             }}
           />
         ) : (
-          <div className="text-4xl outline-none p-2 resize-none flex-1 mt-2">
+          <div className="text-4xl outline-none resize-none flex-1">
             {title}
           </div>
         )}
