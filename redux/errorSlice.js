@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 import { shallowEqual, useSelector } from "react-redux";
+import { getCurrentState } from "./mainSlice";
 
 export const name = "error";
 
@@ -13,14 +14,18 @@ export const initialState = {
 
 export const useError = () =>
   useSelector((state) => {
-    const { error } = state[name];
+    const { error } = getCurrentState(state, name);
     return error;
   }, shallowEqual);
 
 export const useNotification = () =>
   useSelector(
     (state) => {
-      const { notificationType, notificationMessage, updateFlag } = state[name];
+      const {
+        notificationType,
+        notificationMessage,
+        updateFlag,
+      } = getCurrentState(state, name);
       return { notificationType, notificationMessage, updateFlag };
     },
     () => false

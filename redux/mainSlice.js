@@ -39,35 +39,43 @@ export const initialState = {
     },
   },
 };
+
+// To work with old and new format
+export const getCurrentState = (state, sname) =>
+  state[sname].present || state[sname];
+
 export const useSettings = (sectionId) =>
   useSelector(
-    (state) => state[name]?.sectionsMap?.[sectionId]?.settings || {},
+    (state) =>
+      getCurrentState(state, name)?.sectionsMap?.[sectionId]?.settings || {},
     shallowEqual
   );
 
 export const useSoundObj = (sectionId) =>
   useSelector((state) => {
     if (sectionId !== undefined) {
-      return state[name]?.sectionsMap?.[sectionId]?.settings?.soundObj;
+      return getCurrentState(state, name)?.sectionsMap?.[sectionId]?.settings
+        ?.soundObj;
     }
     return null;
   }, shallowEqual);
 
 export const useSongTitle = () =>
   useSelector((state) => {
-    const { title } = state[name];
+    const { title } = getCurrentState(state, name);
     return title;
   }, shallowEqual);
 
 export const useSectionList = () =>
   useSelector((state) => {
-    const { sections } = state[name];
+    const { sections } = getCurrentState(state, name);
+    console.log(state, name, sections);
     return sections;
   }, shallowEqual);
 
 export const useSectionNoCells = (sectionId) =>
   useSelector((state) => {
-    const { sectionsMap } = state[name];
+    const { sectionsMap } = getCurrentState(state, name);
     const section = {
       ...sectionsMap[sectionId],
     };
@@ -78,14 +86,17 @@ export const useSectionNoCells = (sectionId) =>
 export const useSectionComment = (sectionId) =>
   useSelector((state) => {
     if (sectionId !== undefined) {
-      return state[name]?.sectionsMap?.[sectionId]?.comment;
+      return getCurrentState(state, name)?.sectionsMap?.[sectionId]?.comment;
     }
     return null;
   }, shallowEqual);
 
 export const useCell = (sectionId, cellIndex) =>
   useSelector(
-    (state) => state[name]?.sectionsMap?.[sectionId]?.cells?.[cellIndex] || {},
+    (state) =>
+      getCurrentState(state, name)?.sectionsMap?.[sectionId]?.cells?.[
+        cellIndex
+      ] || {},
     shallowEqual
   );
 
@@ -170,7 +181,7 @@ export const mainSlice = createSlice({
       cell.intensity = intensity;
       state.sectionsMap[sectionId].cells[cellIndex] = cell;
     },
-    setMainState: (state, action) => action.payload,
+    setMainState: (state, action) => action.payload.present || action.payload,
     addSection: (state, action) => {
       const newSectionId = uuidV4();
       state.sections.push(newSectionId);

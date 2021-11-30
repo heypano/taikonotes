@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { ActionCreators } from "redux-undo";
 import TaikoLogo from "../public/favicon/Taiko.svg";
 import {
   addSection,
@@ -131,6 +132,13 @@ const Header = () => {
                     <Spin />
                   </div>
                 )}
+              </HeaderButton>
+              <HeaderButton
+                onClick={() => {
+                  dispatch(ActionCreators.undo());
+                }}
+              >
+                Undo
               </HeaderButton>
               <HeaderButton
                 onClick={() => {
