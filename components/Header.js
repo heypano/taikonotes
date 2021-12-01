@@ -9,6 +9,7 @@ import {
   clearState,
   removeLastSection,
   setSongTitle,
+  useHistoryIndex,
   useSongTitle,
 } from "../redux/mainSlice";
 import { getMainState } from "../redux/store";
@@ -34,6 +35,7 @@ const Header = () => {
   const [dialogLeft, setDialogLeft] = useState(0);
   const [dialogTop, setDialogTop] = useState(0);
   const [saveError, setSaveError] = useState();
+  const historyIndex = useHistoryIndex();
   const buttonRef = useRef();
   useEffect(() => {
     const { x, y } = buttonRef?.current?.getBoundingClientRect() || {};
@@ -110,7 +112,7 @@ const Header = () => {
       {/*  Buttons + Notification Area */}
       <div className="w-full lg:w-6/12 flex flex-col justify-start lg:pl-3 mt-4 lg:mt-0 items-stretch lg:items-end">
         {/*  Buttons */}
-        <div className="mt-2 md:mt-0 flex align-start justify-between lg:justify-start flex-wrap w-100">
+        <div className="mt-2 md:mt-0 flex align-start  justify-between lg:justify-start flex-wrap w-100">
           {isEditing && (
             <>
               <HeaderButton
@@ -135,10 +137,20 @@ const Header = () => {
               </HeaderButton>
               <HeaderButton
                 onClick={() => {
-                  dispatch(ActionCreators.undo());
+                  if (historyIndex > 1) {
+                    // Do not go back into initialState
+                    dispatch(ActionCreators.undo());
+                  }
                 }}
               >
                 Undo
+              </HeaderButton>
+              <HeaderButton
+                onClick={() => {
+                  dispatch(ActionCreators.redo());
+                }}
+              >
+                Redo
               </HeaderButton>
               <HeaderButton
                 onClick={() => {

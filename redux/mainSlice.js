@@ -44,6 +44,9 @@ export const initialState = {
 export const getCurrentState = (state, sname) =>
   state[sname].present || state[sname];
 
+export const useHistoryIndex = () =>
+  useSelector((state) => state[name].index, shallowEqual);
+
 export const useSettings = (sectionId) =>
   useSelector(
     (state) =>

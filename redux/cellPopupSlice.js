@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { shallowEqual, useSelector } from "react-redux";
 import { getCurrentState } from "./mainSlice";
 
-export const name = "cell";
+export const name = "cellPopup";
 
 export const initialState = {
   open: false,
@@ -36,7 +36,7 @@ export const useCellSectionId = () =>
     return sectionId;
   }, shallowEqual);
 
-export const cellSlice = createSlice({
+export const cellPopupSlice = createSlice({
   name,
   initialState,
   reducers: {
@@ -66,6 +66,6 @@ export const {
   setCellPopupCellIndex,
   setCellPopupsectionId,
   setCellPopupState,
-} = cellSlice.actions;
+} = cellPopupSlice.actions;
 
-export default cellSlice.reducer;
+export default cellPopupSlice.reducer;
