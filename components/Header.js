@@ -23,6 +23,7 @@ import SaveDialog from "./SaveDialog";
 import Notification from "./Notification";
 import { setNotification } from "../redux/errorSlice";
 import Taiko from "./Icons/Taiko";
+import Eye from "./Icons/Eye";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -110,9 +111,9 @@ const Header = () => {
         )}
       </div>
       {/*  Buttons + Notification Area */}
-      <div className="w-full lg:w-6/12 flex flex-col justify-start lg:pl-3 mt-4 lg:mt-0 items-stretch lg:items-end">
+      <div className="w-full lg:w-6/12 flex flex-col justify-start lg:pl-3 mt-4 lg:mt-0 items-stretch lg:items-end flex-1">
         {/*  Buttons */}
-        <div className="mt-2 md:mt-0 flex align-start  justify-between lg:justify-start flex-wrap w-100">
+        <div className="mt-2 md:mt-0  flex align-start content-between justify-between lg:justify-end flex-wrap w-100 flex-1">
           {isEditing && (
             <>
               <HeaderButton
@@ -120,20 +121,14 @@ const Header = () => {
                   dispatch(addSection());
                 }}
               >
-                Add Section
+                Add Line
               </HeaderButton>
               <HeaderButton
                 onClick={() => {
-                  setSaveDialogOpen(true);
+                  dispatch(clearState());
                 }}
-                ref={buttonRef}
               >
-                Save
-                {isSaving && (
-                  <div className="w-6">
-                    <Spin />
-                  </div>
-                )}
+                Clear
               </HeaderButton>
               <HeaderButton
                 onClick={() => {
@@ -154,10 +149,16 @@ const Header = () => {
               </HeaderButton>
               <HeaderButton
                 onClick={() => {
-                  dispatch(clearState());
+                  setSaveDialogOpen(true);
                 }}
+                ref={buttonRef}
               >
-                Clear
+                Save
+                {isSaving && (
+                  <div className="w-6">
+                    <Spin />
+                  </div>
+                )}
               </HeaderButton>
             </>
           )}
@@ -165,10 +166,15 @@ const Header = () => {
             onClick={() => {
               dispatch(setIsEditing(!isEditing));
             }}
-            className={isEditing ? "" : "ml-auto"}
+            // className={isEditing ? "" : "ml-auto"}
           >
             {isEditing ? (
-              "View Mode"
+              <>
+                View Mode
+                <Icon className="w-8">
+                  <Eye />
+                </Icon>
+              </>
             ) : (
               <>
                 Edit Mode
