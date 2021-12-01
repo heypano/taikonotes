@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setIntensity, useCell, useSoundObj } from "../redux/mainSlice";
 import { getCoordinatesFromEvent, onEnter, onSpace } from "../keyboard/util";
-import { setCellPopupState } from "../redux/cellSlice";
+import { setCellPopupState } from "../redux/cellPopupSlice";
 import Comment from "./Icons/Comment";
 import { useIsEditing } from "../redux/editSlice";
 
@@ -41,15 +41,17 @@ const Cell = (props) => {
   // console.debug(`Cell rerender ${cellIndex}`);
 
   const onClick = (e) => {
-    const menuCoordinates = getCoordinatesFromEvent(e);
-    dispatch(
-      setCellPopupState({
-        cellIndex,
-        sectionId,
-        open: true,
-        menuCoordinates,
-      })
-    );
+    if (isEditing) {
+      const menuCoordinates = getCoordinatesFromEvent(e);
+      dispatch(
+        setCellPopupState({
+          cellIndex,
+          sectionId,
+          open: true,
+          menuCoordinates,
+        })
+      );
+    }
     e.preventDefault();
   };
 

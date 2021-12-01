@@ -1,13 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
+import undoable from "redux-undo";
 import mainReducer, { name as mainName } from "./mainSlice";
-import cellReducer, { name as cellName } from "./cellSlice";
+import cellPopupReducer, { name as cellPopupName } from "./cellPopupSlice";
 import editReducer, { name as editName } from "./editSlice";
 import errorReducer, { name as errorName } from "./errorSlice";
 
 const configureStoreOptions = {
   reducer: {
-    [mainName]: mainReducer,
-    [cellName]: cellReducer,
+    [mainName]: undoable(mainReducer),
+    [cellPopupName]: cellPopupReducer,
     [editName]: editReducer,
     [errorName]: errorReducer,
   },

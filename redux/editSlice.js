@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 import { shallowEqual, useSelector } from "react-redux";
-import { setMainState } from "./mainSlice";
+import { getCurrentState, setMainState } from "./mainSlice";
 
 export const name = "edit";
 
@@ -16,8 +16,10 @@ export const initialState = {
   sectionSettingCoordinates: null,
 };
 
-export const useIsEditing = () => useSelector((state) => state[name].isEditing);
-export const useIsLoading = () => useSelector((state) => state[name].isLoading);
+export const useIsEditing = () =>
+  useSelector((state) => getCurrentState(state, name).isEditing);
+export const useIsLoading = () =>
+  useSelector((state) => getCurrentState(state, name).isLoading);
 
 export const useSectionCommentData = () =>
   useSelector((state) => {
@@ -25,7 +27,7 @@ export const useSectionCommentData = () =>
       sectionCommentOpen,
       sectionCommentSectionId,
       sectionCommentCoordinates,
-    } = state[name];
+    } = getCurrentState(state, name);
     return {
       sectionCommentOpen,
       sectionCommentSectionId,
@@ -39,7 +41,7 @@ export const useSectionSettingData = () =>
       sectionSettingOpen,
       sectionSettingSectionId,
       sectionSettingCoordinates,
-    } = state[name];
+    } = getCurrentState(state, name);
     return {
       sectionSettingOpen,
       sectionSettingSectionId,

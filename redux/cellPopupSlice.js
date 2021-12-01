@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 import { shallowEqual, useSelector } from "react-redux";
+import { getCurrentState } from "./mainSlice";
 
-export const name = "cell";
+export const name = "cellPopup";
 
 export const initialState = {
   open: false,
@@ -13,29 +14,29 @@ export const initialState = {
 
 export const useCellPopupOpen = () =>
   useSelector((state) => {
-    const { open } = state[name];
+    const { open } = getCurrentState(state, name);
     return open;
   }, shallowEqual);
 
 export const useCellMenuCoordinates = () =>
   useSelector((state) => {
-    const { menuCoordinates } = state[name];
+    const { menuCoordinates } = getCurrentState(state, name);
     return menuCoordinates;
   }, shallowEqual);
 
 export const useCellIndex = () =>
   useSelector((state) => {
-    const { cellIndex } = state[name];
+    const { cellIndex } = getCurrentState(state, name);
     return cellIndex;
   }, shallowEqual);
 
 export const useCellSectionId = () =>
   useSelector((state) => {
-    const { sectionId } = state[name];
+    const { sectionId } = getCurrentState(state, name);
     return sectionId;
   }, shallowEqual);
 
-export const cellSlice = createSlice({
+export const cellPopupSlice = createSlice({
   name,
   initialState,
   reducers: {
@@ -65,6 +66,6 @@ export const {
   setCellPopupCellIndex,
   setCellPopupsectionId,
   setCellPopupState,
-} = cellSlice.actions;
+} = cellPopupSlice.actions;
 
-export default cellSlice.reducer;
+export default cellPopupSlice.reducer;

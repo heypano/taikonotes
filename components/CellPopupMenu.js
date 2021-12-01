@@ -14,7 +14,7 @@ import {
   useCellMenuCoordinates,
   useCellPopupOpen,
   useCellSectionId,
-} from "../redux/cellSlice";
+} from "../redux/cellPopupSlice";
 import Comment from "./Icons/Comment";
 import PopupCell from "./PopupCell";
 import { useIsEditing } from "../redux/editSlice";
@@ -66,7 +66,7 @@ const CellPopupMenu = () => {
       }}
     >
       <div className="flex">
-        {!isCommenting && isEditing && (
+        {!isCommenting && isEditing && soundObj && (
           <div
             className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max max-h-48`}
           >
