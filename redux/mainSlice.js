@@ -72,7 +72,6 @@ export const useSongTitle = () =>
 export const useSectionList = () =>
   useSelector((state) => {
     const { sections } = getCurrentState(state, name);
-    console.log(state, name, sections);
     return sections;
   }, shallowEqual);
 

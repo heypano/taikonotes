@@ -32,12 +32,21 @@ const PopupMenu = ({
       setInnerWidth(window.innerWidth);
       setInnerHeight(window.innerHeight);
     }, 100);
+    const handleKeypress = (e) => {
+      if (open && e.key === "Escape") {
+        onOpenChange(false);
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
     window.addEventListener("resize", handleResize);
+    window.addEventListener("keyup", handleKeypress);
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("keypress", handleKeypress);
     };
-  }, []);
+  }, [open, onOpenChange]);
 
   useEffect(() => {
     if (ref.current && left !== undefined && top !== undefined) {

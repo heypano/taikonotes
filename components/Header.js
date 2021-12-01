@@ -72,6 +72,9 @@ const Header = () => {
     },
     [dispatch, push, songslug]
   );
+  const onOpenChange = useCallback((open) => {
+    setSaveDialogOpen(open);
+  }, []);
 
   return (
     <div className="px-1 lg:px-0 py-3 flex flex-col md:flex-row justify-between items-stretch flex-wrap">
@@ -81,9 +84,7 @@ const Header = () => {
           left={dialogLeft}
           top={dialogTop}
           open={saveDialogOpen}
-          onOpenChange={(open) => {
-            setSaveDialogOpen(open);
-          }}
+          onOpenChange={onOpenChange}
           className="max-w-sm p-4"
           saveMethod={saveMethod}
           isSaving={isSaving}

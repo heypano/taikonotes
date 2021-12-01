@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import PopupMenu from "./PopupMenu";
 import {
@@ -29,14 +29,18 @@ const SectionCommentPopup = () => {
   }, [sectionCommentOpen]);
 
   const hasContent = isEditing || comment;
+  const onOpenChange = useCallback(
+    (isOpen) => {
+      dispatch(setSectionCommentOpen(isOpen));
+    },
+    [dispatch]
+  );
   return sectionCommentOpen && hasContent ? (
     <PopupMenu
       open={sectionCommentOpen}
       left={sectionCommentCoordinates[0]}
       top={sectionCommentCoordinates[1]}
-      onOpenChange={(isOpen) => {
-        dispatch(setSectionCommentOpen(isOpen));
-      }}
+      onOpenChange={onOpenChange}
       className={isEditing ? "w-1/2 h-1/2" : "max-w-lg"}
     >
       {isEditing ? (

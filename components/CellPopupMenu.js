@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   setCellComment,
@@ -55,15 +55,18 @@ const CellPopupMenu = () => {
   // console.debug("CellPopupMenu rerender");
 
   const hasContent = isEditing || comment;
-
+  const onOpenChange = useCallback(
+    (isOpen) => {
+      dispatch(setCellPopupOpen(isOpen));
+    },
+    [dispatch]
+  );
   return open && hasContent ? (
     <PopupMenu
       open={open}
       left={menuCoordinates[0]}
       top={menuCoordinates[1]}
-      onOpenChange={(isOpen) => {
-        dispatch(setCellPopupOpen(isOpen));
-      }}
+      onOpenChange={onOpenChange}
     >
       <div className="flex">
         {!isCommenting && isEditing && soundObj && (

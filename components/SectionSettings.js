@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { useCallback } from "react";
 import PopupMenu from "./PopupMenu";
 import TaikoGridSettings from "./TaikoGridSettings";
 import {
@@ -13,12 +14,16 @@ const SectionSettings = () => {
     sectionSettingCoordinates,
   } = useSectionSettingData();
   const dispatch = useDispatch();
+  const onOpenChange = useCallback(
+    (isOpen) => {
+      dispatch(setSectionSettingOpen(isOpen));
+    },
+    [dispatch]
+  );
   return (
     <PopupMenu
       open={sectionSettingOpen}
-      onOpenChange={(isOpen) => {
-        dispatch(setSectionSettingOpen(isOpen));
-      }}
+      onOpenChange={onOpenChange}
       left={sectionSettingCoordinates?.[0]}
       top={sectionSettingCoordinates?.[1]}
       className="grid grid-rows-1 grid-cols-1 w-max max-h-48 p-4"
