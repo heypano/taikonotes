@@ -9,7 +9,7 @@ const initialSectionId1 = uuidV4();
 export const initialState = {
   title: "New Song",
   slug: undefined,
-  sections: [initialSectionId1, initialSectionId1, initialSectionId1],
+  sections: [initialSectionId1],
   sectionsMap: {
     [initialSectionId1]: {
       cells: [],
@@ -199,7 +199,15 @@ export const mainSlice = createSlice({
     },
     cloneSection: (state, action) => {
       const { sectionIndex } = action.payload;
-      state.sections.splice(sectionIndex, 0, state.sections[sectionIndex]);
+      const newId = uuidV4();
+      const oldId = state.sections[sectionIndex];
+      const oldSection = state.sectionsMap[oldId];
+      const newSection = {
+        ...oldSection,
+        id: newId,
+      };
+      state.sectionsMap[newId] = newSection;
+      state.sections.push(newId);
     },
     unlinkSection: (state, action) => {
       const { sectionIndex } = action.payload;
