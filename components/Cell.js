@@ -67,7 +67,8 @@ const Cell = (props) => {
   };
 
   const finalSound = intensity ? sound.toLocaleUpperCase() : sound;
-
+  const shouldOnClick = isEditing || comment;
+  const shouldOnHover = !isEditing && comment;
   return (
     <div
       ref={ref}
@@ -76,8 +77,8 @@ const Cell = (props) => {
       aria-label={`Cell ${cellIndex} from section ${sectionId}`}
       tabIndex={0}
       onContextMenu={onContextMenu}
-      onClick={onClick}
-      onMouseEnter={isEditing ? null : onClick}
+      onClick={shouldOnClick ? onClick : null}
+      onMouseEnter={shouldOnHover ? onClick : null}
       onKeyPress={(e) => {
         onEnter(onContextMenu)(e);
         onSpace(onClick)(e);
