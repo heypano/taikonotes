@@ -41,17 +41,15 @@ const Cell = (props) => {
   // console.debug(`Cell rerender ${cellIndex}`);
 
   const onClick = (e) => {
-    if (isEditing) {
-      const menuCoordinates = getCoordinatesFromEvent(e);
-      dispatch(
-        setCellPopupState({
-          cellIndex,
-          sectionId,
-          open: true,
-          menuCoordinates,
-        })
-      );
-    }
+    const menuCoordinates = getCoordinatesFromEvent(e);
+    dispatch(
+      setCellPopupState({
+        cellIndex,
+        sectionId,
+        open: true,
+        menuCoordinates,
+      })
+    );
     e.preventDefault();
   };
 

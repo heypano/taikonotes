@@ -1,6 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Todo
+- SEO
 - summary structure view with reorder
 - help button
 - Back button? route change state stuff
