@@ -147,7 +147,7 @@ export const mainSlice = createSlice({
     },
     setTotalLines: (state, action) => {
       const { sectionId, totalLines } = action.payload;
-      const final = Math.max(totalLines, 1);
+      const final = Math.max(totalLines, 0);
       const { cellsPerLine } = state.sectionsMap[sectionId].settings;
       state.sectionsMap[sectionId].totalLines = final;
       state.sectionsMap[sectionId].cells = state.sectionsMap[
