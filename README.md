@@ -9,6 +9,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - propTypes -> typescript?
 - CSRF
 - Overall song notes
+- title
+- swing
+- keyboard picking
+- duplicate line
 
 
 ## Getting Started

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import Cell from "./Cell";
 import {
   cloneSection,
+  duplicateLastLine,
   removeSection,
   setSectionName,
   setTotalLines,
@@ -85,6 +86,30 @@ const Section = (props) => {
                   );
                 }}
               >
+                <Plus />
+              </SectionButton>
+              <SectionButton
+                title="Duplicate last line"
+                aria-label="Duplicate last line"
+                onClick={() => {
+                  dispatch(
+                    duplicateLastLine({
+                      sectionId,
+                    })
+                  );
+                }}
+                style={{
+                  position: "relative",
+                }}
+              >
+                <Duplicate
+                  style={{
+                    width: "40%",
+                    position: "absolute",
+                    bottom: 3,
+                    right: 3,
+                  }}
+                />
                 <Plus />
               </SectionButton>
 

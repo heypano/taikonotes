@@ -17,6 +17,7 @@ const configureStoreOptions = {
 export const store = configureStore(configureStoreOptions);
 
 export const getMainState = () => store.getState()[mainName];
+window.getMainState = getMainState;
 
 const localStorageKey = "taikoNotesState";
 

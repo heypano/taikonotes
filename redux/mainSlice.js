@@ -225,6 +225,23 @@ export const mainSlice = createSlice({
       const removed = state.sections.splice(fromIndex, 1);
       state.sections.splice(toIndex, 0, removed);
     },
+    duplicateLastLine: (state, action) => {
+      const { sectionId } = action.payload;
+      const oldSection = state.sectionsMap[sectionId];
+      const { cellsPerLine } = oldSection.settings;
+      const newSection = {
+        ...oldSection,
+        totalLines: oldSection.totalLines + 1,
+        cells: [
+          ...oldSection.cells,
+          ...oldSection.cells.slice(
+            cellsPerLine * (oldSection.totalLines - 1),
+            cellsPerLine * oldSection.totalLines
+          ),
+        ],
+      };
+      state.sectionsMap[sectionId] = newSection;
+    },
   },
 });
 
@@ -246,6 +263,7 @@ export const {
   cloneSection,
   unlinkSection,
   moveSection,
+  duplicateLastLine,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;
