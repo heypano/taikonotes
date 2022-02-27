@@ -34,11 +34,12 @@ const Main = ({ song, error }) => {
       dispatch(setMainState(song));
     }
   }, [dispatch, song, songslug, error]);
+  console.log(song);
 
   return (
     <div className="app">
       <Head>
-        <title>Taiko Notes -- {song ? song.title : "New Song"}</title>
+        <title>Taiko Notes -- {song?.present?.title || "New Song"}</title>
       </Head>
       <PageContainer>
         {isLoading ? (
