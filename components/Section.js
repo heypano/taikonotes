@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import Cell from "./Cell";
@@ -28,6 +28,7 @@ import Duplicate from "./Icons/Duplicate";
 import Lock from "./Icons/Lock";
 import { getItemStyle } from "../lib/dnd";
 import Trash from "./Icons/Trash";
+import VideoPlayer from "./VideoPlayer";
 
 const Section = (props) => {
   const {
@@ -37,7 +38,7 @@ const Section = (props) => {
     dragProvided,
     dragSnapshot,
   } = props;
-  const { cellsPerLine, divideEvery } = useSettings(sectionId);
+  const { cellsPerLine, divideEvery, videoURL } = useSettings(sectionId);
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
   const section = useSectionNoCells(sectionId);
@@ -60,6 +61,14 @@ const Section = (props) => {
       />
     );
   }
+  const videoId = useMemo(() => {
+    if (videoURL) {
+      const url = new URL(videoURL);
+      return url.searchParams.get("v");
+    }
+    return null;
+  }, [videoURL]);
+
   return (
     <div
       ref={dragProvided.innerRef}
@@ -71,9 +80,9 @@ const Section = (props) => {
       )}
     >
       <div className="my-4 p-8 px-1 lg:px-8">
-        <div className="flex flex-row align-baseline">
+        <div className="flex flex-row flex-wrap align-baseline">
           {isEditing && (
-            <>
+            <div className="flex align-bottom">
               <SectionButton
                 title="Add line"
                 aria-label="Add line"
@@ -203,13 +212,13 @@ const Section = (props) => {
               >
                 <Trash />
               </SectionButton>
-            </>
+            </div>
           )}
-          {isEditing ? (
+          {isEditing && (
             <label
               htmlFor={`section_${sectionId}_name`}
               aria-label="Section name"
-              className="w-full mb-2"
+              className="flex flex-1 mb-2"
             >
               <textarea
                 id={`section_${sectionId}_name`}
@@ -227,10 +236,16 @@ const Section = (props) => {
                 }}
               />
             </label>
-          ) : (
-            <div className="flex flex-col p-2">
+          )}
+          {!isEditing && (
+            <div className="flex flex-col p-2 basis-full md:flex-1">
               <div className="text-2xl w-full">{sectionName}</div>
               {comment && <div className="whitespace-pre-wrap">{comment}</div>}
+            </div>
+          )}
+          {!isEditing && videoId && (
+            <div className="mb-2">
+              <VideoPlayer videoId={videoId} />
             </div>
           )}
         </div>

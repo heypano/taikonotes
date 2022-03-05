@@ -10,7 +10,12 @@ const numerators = [...Array(20).keys()].map((key) => key + 1);
 const TaikoGridSettings = ({ sectionId }) => {
   const settings = useSettings(sectionId);
   const dispatch = useDispatch();
-  const { cellsPerLine = 16, divideEvery = 4, sounds = "ka,don" } = settings;
+  const {
+    cellsPerLine = 16,
+    divideEvery = 4,
+    sounds = "ka,don",
+    videoURL,
+  } = settings;
 
   const onFormChange = useCallback(
     (e) => {
@@ -77,6 +82,16 @@ const TaikoGridSettings = ({ sectionId }) => {
           className="filter drop-shadow p-1 ml-5"
           onChange={onFormChange}
           value={sounds}
+        />
+      </SettingInput>
+      <SettingInput>
+        Video URL
+        <input
+          id={`videoURL_${sectionId}`}
+          name="videoURL"
+          className="filter drop-shadow p-1 ml-5"
+          onChange={onFormChange}
+          value={videoURL}
         />
       </SettingInput>
     </form>

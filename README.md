@@ -2,6 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Todo
 - SEO
+- add dirty check
 - don't save as user is typing comments
 - reduce and optimize past states
 - summary structure view with reorder
