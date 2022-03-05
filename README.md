@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Todo
 - SEO
+- don't save as user is typing comments
+- reduce and optimize past states
 - summary structure view with reorder
 - help button
 - Back button? route change state stuff

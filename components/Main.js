@@ -34,7 +34,6 @@ const Main = ({ song, error }) => {
       dispatch(setMainState(song));
     }
   }, [dispatch, song, songslug, error]);
-  console.log(song);
 
   return (
     <div className="app">

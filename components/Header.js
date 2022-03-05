@@ -49,12 +49,19 @@ const Header = () => {
       setIsSaving(true);
       const slug = isNew ? inputSongSlug : songslug;
       const saveData = {
-        ...getMainState(),
+        ...getMainState({ trim: true }),
         slug,
         password,
         isNew,
       };
-      const { error } = await post(`/api/saveSong/${slug}`, saveData);
+      let error;
+      const response = await post(`/api/saveSong/${slug}`, saveData);
+      const { acknowledged } = response;
+      if (!acknowledged) {
+        error = response.toString(); // this is for the 413 (Body exceeded 1mb limit) case
+      } else {
+        error = response.error;
+      }
       setSaveError(error);
       setIsSaving(false);
       if (!error) {

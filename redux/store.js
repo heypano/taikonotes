@@ -16,13 +16,25 @@ const configureStoreOptions = {
 
 export const store = configureStore(configureStoreOptions);
 
-export const getMainState = () => store.getState()[mainName];
+export const getMainState = (config = {}) => {
+  const { trim } = config;
+  const main = store.getState()[mainName];
+  const result = {
+    ...main,
+  };
+  if (trim) {
+    console.log("unsliced", result.past);
+    result.past = result.past.slice(0, 100);
+    console.log("sliced", result.past);
+  }
+  return result;
+};
 window.getMainState = getMainState;
 
 const localStorageKey = "taikoNotesState";
 
 export const saveMainToLocal = () => {
-  const state = getMainState();
+  const state = getMainState({ trim: true });
   localStorage.setItem(localStorageKey, JSON.stringify(state));
 };
 
