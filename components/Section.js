@@ -29,6 +29,7 @@ import Lock from "./Icons/Lock";
 import { getItemStyle } from "../lib/dnd";
 import Trash from "./Icons/Trash";
 import VideoPlayer from "./VideoPlayer";
+import NoteGrid from "./NoteGrid";
 
 const Section = (props) => {
   const {
@@ -43,24 +44,11 @@ const Section = (props) => {
   const isEditing = useIsEditing();
   const section = useSectionNoCells(sectionId);
   const { sectionName, totalLines } = section;
-  const sectionCells = [];
   const comment = useSectionComment(sectionId);
   const numCells = cellsPerLine * totalLines;
-  const mobileDisplayedCells =
-    cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
+
   // console.debug(`Section rerender ${sectionName} - ${id}`);
-  for (let cellIndex = 0; cellIndex < numCells; cellIndex++) {
-    sectionCells.push(
-      <Cell
-        key={`cell_${sectionId}_${cellIndex}`}
-        isStartingCell={cellIndex % divideEvery === 0}
-        isFirstCellInLine={cellIndex % cellsPerLine === 0}
-        cellsPerLine={cellsPerLine}
-        cellIndex={cellIndex}
-        sectionId={sectionId}
-      />
-    );
-  }
+
   const videoId = useMemo(() => {
     if (videoURL) {
       const url = new URL(videoURL);
@@ -249,11 +237,12 @@ const Section = (props) => {
             </div>
           )}
         </div>
-        <div
-          className={`bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-blue-800`}
-        >
-          {sectionCells}
-        </div>
+        <NoteGrid
+          sectionId={sectionId}
+          cellsPerLine={cellsPerLine}
+          numCells={numCells}
+          divideEvery={divideEvery}
+        />
       </div>
     </div>
   );
