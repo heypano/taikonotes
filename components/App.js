@@ -1,8 +1,7 @@
-import { Provider } from "react-redux";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
-import { store } from "../redux/store";
 import Main from "./Main";
+import { useIsDirty } from "../redux/mainSlice";
 
 const beforeUnloadHandler = (event) => {
   const question = "Are you sure you want to exit?";
@@ -12,17 +11,21 @@ const beforeUnloadHandler = (event) => {
 };
 
 function App({ song, error }) {
+  const isDirty = useIsDirty();
   useEffect(() => {
-    window.addEventListener("beforeunload", beforeUnloadHandler, {
-      capture: true,
-    });
-  }, []);
-  return (
-    <Provider store={store}>
-      <Main song={song} error={error} />
-    </Provider>
-  );
+    if (isDirty) {
+      window.addEventListener("beforeunload", beforeUnloadHandler, {
+        capture: true,
+      });
+    }
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnloadHandler);
+    };
+  }, [isDirty]);
+  return <Main song={song} error={error} />;
 }
+
 App.propTypes = {
   song: PropTypes.shape({}),
   error: PropTypes.string,

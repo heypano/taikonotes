@@ -8,6 +8,7 @@ export const name = "main";
 const initialSectionId1 = uuidV4();
 export const initialState = {
   title: "New Song",
+  isDirty: false,
   slug: undefined,
   sections: [initialSectionId1],
   sectionsMap: {
@@ -39,6 +40,8 @@ export const initialState = {
     },
   },
 };
+export const mainActionRegExp = new RegExp(`^${name}/`);
+const isMainAction = ({ type }) => mainActionRegExp.test(type);
 
 // To work with old and new format
 export const getCurrentState = (state, sname) =>
@@ -102,6 +105,9 @@ export const useCell = (sectionId, cellIndex) =>
     shallowEqual
   );
 
+export const useIsDirty = () =>
+  useSelector((state) => getCurrentState(state, name)?.isDirty, shallowEqual);
+
 const getNewSection = (sectionId) => ({
   cells: [],
   id: sectionId,
@@ -150,9 +156,14 @@ export const mainSlice = createSlice({
       const final = Math.max(totalLines, 0);
       const { cellsPerLine } = state.sectionsMap[sectionId].settings;
       state.sectionsMap[sectionId].totalLines = final;
-      state.sectionsMap[sectionId].cells = state.sectionsMap[
-        sectionId
-      ].cells.slice(0, final * cellsPerLine);
+      state.sectionsMap[sectionId].cells = state.sectionsMap[sectionId].cells
+        .slice(0, final * cellsPerLine)
+        .map((i) => {
+          if (i === undefined) {
+            return null; // no undefined items
+          }
+          return i;
+        });
     },
     setSectionName: (state, action) => {
       const { sectionId, sectionName } = action.payload;
@@ -242,6 +253,11 @@ export const mainSlice = createSlice({
       };
       state.sectionsMap[sectionId] = newSection;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(isMainAction, (state) => {
+      state.isDirty = true;
+    });
   },
 });
 
