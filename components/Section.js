@@ -238,7 +238,7 @@ const Section = (props) => {
             </label>
           )}
           {!isEditing && (
-            <div className="flex flex-col p-2 basis-full md:flex-1">
+            <div className="flex flex-col pb-2 basis-full md:flex-1">
               <div className="text-2xl w-full">{sectionName}</div>
               {comment && <div className="whitespace-pre-wrap">{comment}</div>}
             </div>
