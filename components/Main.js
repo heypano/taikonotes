@@ -50,10 +50,16 @@ const Main = ({ song, error }) => {
       window.addEventListener("beforeunload", beforeUnloadHandler, {
         capture: true,
       });
+    } else {
+      window.removeEventListener("beforeunload", beforeUnloadHandler, {
+        capture: true,
+      });
     }
 
     return () => {
-      window.removeEventListener("beforeunload", beforeUnloadHandler);
+      window.removeEventListener("beforeunload", beforeUnloadHandler, {
+        capture: true,
+      });
     };
   }, [isDirty]);
 

@@ -1,13 +1,11 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import { ActionCreators } from "redux-undo";
-import TaikoLogo from "../public/favicon/Taiko.svg";
 import {
   addSection,
   clearState,
-  removeLastSection,
+  setIsDirty,
   setSongTitle,
   useHistoryIndex,
   useSongTitle,
@@ -71,7 +69,7 @@ const Header = () => {
             message: `Song saved successfully at /${slug}`,
           })
         );
-
+        dispatch(setIsDirty({ isDirty: false }));
         if (isNew) {
           await push(`/${inputSongSlug}`);
         }

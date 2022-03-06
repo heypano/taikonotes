@@ -41,7 +41,11 @@ export const initialState = {
   },
 };
 export const mainActionRegExp = new RegExp(`^${name}/`);
-const isMainAction = ({ type }) => mainActionRegExp.test(type);
+export const cleanActionsRegExp = new RegExp(
+  `^${name}/(setIsDirty|setMainState)`
+);
+const isMainDirtyAction = ({ type }) =>
+  mainActionRegExp.test(type) && !cleanActionsRegExp.test(type);
 
 // To work with old and new format
 export const getCurrentState = (state, sname) =>
@@ -236,6 +240,10 @@ export const mainSlice = createSlice({
       const removed = state.sections.splice(fromIndex, 1);
       state.sections.splice(toIndex, 0, removed);
     },
+    setIsDirty: (state, action) => {
+      const { isDirty } = action.payload;
+      state.isDirty = isDirty;
+    },
     duplicateLastLine: (state, action) => {
       const { sectionId } = action.payload;
       const oldSection = state.sectionsMap[sectionId];
@@ -255,7 +263,8 @@ export const mainSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(isMainAction, (state) => {
+    builder.addMatcher(isMainDirtyAction, (state, action) => {
+      console.log("dity", action.type);
       state.isDirty = true;
     });
   },
@@ -279,6 +288,7 @@ export const {
   cloneSection,
   unlinkSection,
   moveSection,
+  setIsDirty,
   duplicateLastLine,
 } = mainSlice.actions;
 
