@@ -15,6 +15,7 @@ module.exports = {
   safelist: [
     {
       pattern: /grid-cols/,
+      variants: ["md", "lg", "xl"],
     },
   ],
   theme: {

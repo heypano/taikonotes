@@ -20,7 +20,7 @@ const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, numCells }) => {
   }
   return (
     <div
-      className={`bg-blue-500 grid md:grid-cols-${cellsPerLine} grid-cols-${mobileDisplayedCells} border border-blue-800`}
+      className={`bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-blue-800`}
     >
       {sectionCells}
     </div>
