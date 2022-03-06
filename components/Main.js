@@ -7,18 +7,27 @@ import PageContainer from "./PageContainer";
 import TaikoGrid from "./TaikoGrid";
 import CellPopupMenu from "./CellPopupMenu";
 import SectionCommentPopup from "./SectionCommentPopup";
-import { setMainState } from "../redux/mainSlice";
+import { setMainState, useIsDirty } from "../redux/mainSlice";
 import { setIsLoading, useIsLoading } from "../redux/editSlice";
 import SectionSettings from "./SectionSettings";
 import Loader from "./Loader";
 import { setError } from "../redux/errorSlice";
+
+const beforeUnloadHandler = (event) => {
+  const question = "Are you sure you want to exit?";
+  event.preventDefault();
+  // eslint-disable-next-line no-param-reassign,no-return-assign
+  return (event.returnValue = question);
+};
 
 const Main = ({ song, error }) => {
   const { query } = useRouter();
   const { songslug } = query;
   const dispatch = useDispatch();
   const isLoading = useIsLoading();
+  const isDirty = useIsDirty();
 
+  // Loading, error and main state
   useEffect(() => {
     if (songslug && !song && !error) {
       dispatch(setIsLoading(true));
@@ -34,6 +43,19 @@ const Main = ({ song, error }) => {
       dispatch(setMainState(song));
     }
   }, [dispatch, song, songslug, error]);
+
+  // onbeforeunload handler
+  useEffect(() => {
+    if (isDirty) {
+      window.addEventListener("beforeunload", beforeUnloadHandler, {
+        capture: true,
+      });
+    }
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnloadHandler);
+    };
+  }, [isDirty]);
 
   return (
     <div className="app">
