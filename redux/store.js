@@ -23,9 +23,7 @@ export const getMainState = (config = {}) => {
     ...main,
   };
   if (trim) {
-    console.log("unsliced", result.past);
-    result.past = result.past.slice(0, 100);
-    console.log("sliced", result.past);
+    result.past = [];
   }
   return result;
 };

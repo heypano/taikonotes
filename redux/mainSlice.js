@@ -264,7 +264,6 @@ export const mainSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(isMainDirtyAction, (state, action) => {
-      console.log("dity", action.type);
       state.isDirty = true;
     });
   },
