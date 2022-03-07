@@ -22,10 +22,10 @@ export default async function handler(req, res) {
     res.status(200).json({ error: e.message });
   }
 }
-// export const config = {
-//   api: {
-//     bodyParser: {
-//       sizeLimit: "3mb",
-//     },
-//   },
-// };
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "3mb",
+    },
+  },
+};
