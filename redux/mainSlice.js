@@ -1,43 +1,38 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { shallowEqual, useSelector } from "react-redux";
 import { v4 as uuidV4 } from "uuid";
 
 export const name = "main";
 
 const initialSectionId1 = uuidV4();
+const defaultCellsPerLine = 16;
+const defaultDivideEvery = 4;
+const defaultTotaleLines = 1;
+const getNewSection = (sectionId) => ({
+  cells: new Array(defaultTotaleLines * defaultCellsPerLine).fill(null),
+  id: sectionId,
+  sectionName: `Line ${sectionId.substring(0, 2)}`,
+  totalLines: 1,
+  settings: {
+    cellsPerLine: defaultCellsPerLine,
+    divideEvery: defaultDivideEvery,
+    sounds: "don, kon, ka",
+    soundObj: {
+      "": "",
+      don: "don",
+      kon: "kon",
+      ka: "ka",
+    },
+  },
+});
 export const initialState = {
   title: "New Song",
   isDirty: false,
   slug: undefined,
   sections: [initialSectionId1],
   sectionsMap: {
-    [initialSectionId1]: {
-      cells: [],
-      id: initialSectionId1,
-      sectionName: "Line A",
-      totalLines: 1,
-      settings: {
-        cellsPerLine: 16,
-        divideEvery: 4,
-        sounds: "don, kon, ka, do, ko, ro, su, tsu,ku, kara, ra, doko",
-        soundObj: {
-          "": "",
-          don: "don",
-          kon: "kon",
-          ka: "ka",
-          do: "do",
-          ko: "ko",
-          ro: "ro",
-          su: "su",
-          tsu: "tsu",
-          ku: "ku",
-          kara: "kara",
-          ra: "ra",
-          doko: "doko",
-        },
-      },
-    },
+    [initialSectionId1]: getNewSection(initialSectionId1),
   },
 };
 export const mainActionRegExp = new RegExp(`^${name}/`);
@@ -111,24 +106,6 @@ export const useCell = (sectionId, cellIndex) =>
 
 export const useIsDirty = () =>
   useSelector((state) => getCurrentState(state, name)?.isDirty, shallowEqual);
-
-const getNewSection = (sectionId) => ({
-  cells: [],
-  id: sectionId,
-  sectionName: `Line ${sectionId}`,
-  totalLines: 1,
-  settings: {
-    cellsPerLine: 4,
-    divideEvery: 2,
-    sounds: "don, kon, ka",
-    soundObj: {
-      "": "",
-      don: "don",
-      kon: "kon",
-      ka: "ka",
-    },
-  },
-});
 
 export const mainSlice = createSlice({
   name,
