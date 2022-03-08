@@ -10,11 +10,9 @@ import Plus from "./Icons/Plus";
 import Minus from "./Icons/Minus";
 import { moveSection, setTotalLines } from "../redux/mainSlice";
 import { getItemStyle, getListStyle } from "../lib/dnd";
+import NoteGridLine from "./NoteGridLine";
 
 const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
-  const dispatch = useDispatch();
-  const mobileDisplayedCells =
-    cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
   const lines = [];
   const isEditing = useIsEditing();
   const onDragStart = useCallback(() => {
@@ -29,23 +27,6 @@ const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
   }, []);
 
   for (let lineNum = 0; lineNum < totalLines; lineNum++) {
-    const lineCells = [];
-    // Collect the cells for this line
-    for (let i = 0; i < cellsPerLine; i++) {
-      const cellIndex = cellsPerLine * lineNum + i;
-      lineCells.push(
-        <Cell
-          key={`cell_${sectionId}_${cellIndex}`}
-          isStartingCell={cellIndex % divideEvery === 0}
-          isFirstCellInLine={cellIndex % cellsPerLine === 0}
-          isLastCellInLine={cellIndex % cellsPerLine === cellsPerLine - 1}
-          isLastLine={lineNum === totalLines - 1}
-          cellsPerLine={cellsPerLine}
-          cellIndex={cellIndex}
-          sectionId={sectionId}
-        />
-      );
-    }
     lines.push(
       <Draggable
         key={`${sectionId}_line_${lineNum}`}
@@ -54,63 +35,15 @@ const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
         isDragDisabled={!isEditing}
       >
         {(dragProvided, dragSnapshot) => (
-          <div
-            className="flex"
-            ref={dragProvided.innerRef}
-            {...dragProvided.draggableProps}
-            {...dragProvided.dragHandleProps}
-            style={getItemStyle(
-              dragSnapshot.isDragging,
-              dragProvided.draggableProps.style
-            )}
-          >
-            {isEditing && (
-              <div className="flex items-center">
-                <NoteGridButton
-                  sectionId={sectionId}
-                  title="Add line here"
-                  lineNum={lineNum}
-                  onClick={() => {
-                    dispatch(
-                      setTotalLines({
-                        sectionId,
-                        totalLines: totalLines + 1,
-                        lineNum,
-                      })
-                    );
-                  }}
-                >
-                  <Plus />
-                </NoteGridButton>
-                <NoteGridButton
-                  sectionId={sectionId}
-                  title="Duplicate line"
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <Duplicate
-                    style={{
-                      width: "40%",
-                      position: "absolute",
-                      bottom: 3,
-                      right: 3,
-                    }}
-                  />
-                  <Plus />
-                </NoteGridButton>
-                <NoteGridButton sectionId={sectionId} title="Remove this line">
-                  <Minus />
-                </NoteGridButton>
-              </div>
-            )}
-            <div
-              className={`flex-1 bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-1 border-taikoColor1`}
-              key={lineNum}
-            >
-              {lineCells}
-            </div>
-          </div>
+          <NoteGridLine
+            sectionId={sectionId}
+            lineNum={lineNum}
+            cellsPerLine={cellsPerLine}
+            totalLines={totalLines}
+            divideEvery={divideEvery}
+            dragProvided={dragProvided}
+            dragSnapshot={dragSnapshot}
+          />
         )}
       </Draggable>
     );
