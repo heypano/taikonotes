@@ -50,11 +50,16 @@ const Section = (props) => {
   // console.debug(`Section rerender ${sectionName} - ${id}`);
 
   const videoId = useMemo(() => {
+    let result = null;
     if (videoURL) {
-      const url = new URL(videoURL);
-      return url.searchParams.get("v");
+      try {
+        const url = new URL(videoURL);
+        result = url.searchParams.get("v");
+      } catch (e) {
+        console.log("Invalid URL -- TODO handle this", e);
+      }
     }
-    return null;
+    return result;
   }, [videoURL]);
 
   return (
