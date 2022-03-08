@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { setSettings, useSettings } from "../redux/mainSlice";
 import { SettingInput } from "./SettingInput";
 
-const numerators = [...Array(20).keys()].map((key) => key + 1);
+const numerators = [...Array(32).keys()].map((key) => key + 1);
 // export const denominators = [4, 8, 16];
 
 const TaikoGridSettings = ({ sectionId }) => {
