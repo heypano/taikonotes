@@ -13,9 +13,7 @@ const NoteGridButton = ({ children, onClick, title, ...rest }) => (
     {children}
   </Button>
 );
-NoteGridButton.propTypes = {
-  sectionId: PropTypes.string.isRequired,
-};
+NoteGridButton.propTypes = {};
 
 NoteGridButton.defaultProps = {};
 
