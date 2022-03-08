@@ -24,6 +24,7 @@ export const getMainState = (config = {}) => {
   };
   if (trim) {
     result.past = [];
+    delete result.present.isDirty;
   }
   return result;
 };
