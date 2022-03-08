@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -93,4 +93,4 @@ Main.defaultProps = {
   error: undefined,
 };
 
-export default Main;
+export default memo(Main);

@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { memo } from "react";
 
 /**
  * React class to contain a page
@@ -15,4 +16,4 @@ PageContainer.defaultProps = {
   children: "asd",
 };
 
-export default PageContainer;
+export default memo(PageContainer);

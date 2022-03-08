@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Spin from "./Icons/Spin";
 
 const Loader = () => (
@@ -7,4 +8,4 @@ const Loader = () => (
     </div>
   </div>
 );
-export default Loader;
+export default memo(Loader);

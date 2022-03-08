@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 
 const VideoPlayer = ({ videoId, height, width }) => {
@@ -27,4 +27,4 @@ VideoPlayer.defaultProps = {
   height: "",
 };
 
-export default VideoPlayer;
+export default memo(VideoPlayer);

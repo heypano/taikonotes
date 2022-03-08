@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import PopupMenu from "./PopupMenu";
 import TaikoGridSettings from "./TaikoGridSettings";
 import {
@@ -33,4 +33,4 @@ const SectionSettings = () => {
   );
 };
 
-export default SectionSettings;
+export default memo(SectionSettings);

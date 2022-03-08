@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Modal from "./Modal";
 import Button from "./Button";
@@ -115,4 +115,4 @@ SaveDialog.defaultProps = {
   ...Modal.defaultProps,
 };
 
-export default SaveDialog;
+export default memo(SaveDialog);

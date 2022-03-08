@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import debounce from "lodash.debounce";
 import useOnClickOutside from "../hooks/useOnClickOutside";
@@ -96,4 +96,4 @@ PopupMenu.defaultProps = {
   top: undefined,
 };
 
-export default PopupMenu;
+export default memo(PopupMenu);
