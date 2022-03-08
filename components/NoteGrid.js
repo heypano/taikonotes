@@ -20,15 +20,17 @@ const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
   }, []);
   const onDragEnd = useCallback(
     ({ source, destination }) => {
-      const { index: sourceIndex } = source;
-      const { index: destinationIndex } = destination;
-      dispatch(
-        moveLineInSection({
-          sectionId,
-          sourceIndex,
-          destinationIndex,
-        })
-      );
+      const { index: sourceIndex } = source || {};
+      const { index: destinationIndex } = destination || {};
+      if (Number.isInteger(sourceIndex) && Number.isInteger(destinationIndex)) {
+        dispatch(
+          moveLineInSection({
+            sectionId,
+            sourceIndex,
+            destinationIndex,
+          })
+        );
+      }
     },
     [dispatch, sectionId]
   );
