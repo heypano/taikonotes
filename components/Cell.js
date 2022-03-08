@@ -13,6 +13,8 @@ const Cell = (props) => {
     sectionId,
     isPlaying,
     isStartingCell,
+    isLastLine,
+    isLastCellInLine,
     isFirstCellInLine,
     cellsPerLine,
   } = props;
@@ -31,7 +33,7 @@ const Cell = (props) => {
   } else if (isStartingCell) {
     backgroundClass = "bg-taikoLightBrown2 hover:bg-taikoColor3";
   }
-  const borderClass = "border border-taikoColor2";
+  const borderClass = `border border-1 border-taikoColor1 border-y-0`;
 
   // when we show fewer cells per line, help identify the start of every line
   // if (isFirstCellInLine && cellsPerLine % 2 === 1) {
@@ -103,6 +105,8 @@ const Cell = (props) => {
 Cell.propTypes = {
   isStartingCell: PropTypes.bool.isRequired,
   isFirstCellInLine: PropTypes.bool.isRequired,
+  isLastCellInLine: PropTypes.bool.isRequired,
+  isLastLine: PropTypes.bool.isRequired,
   cellIndex: PropTypes.number.isRequired,
   sectionId: PropTypes.string.isRequired,
   cellsPerLine: PropTypes.number.isRequired,
