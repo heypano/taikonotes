@@ -30,6 +30,7 @@ import { getItemStyle } from "../lib/dnd";
 import Trash from "./Icons/Trash";
 import VideoPlayer from "./VideoPlayer";
 import NoteGrid from "./NoteGrid";
+import Move from "./Icons/Move";
 
 const SectionTitle = ({ titleURL, sectionName }) => (
   <div className="text-2xl w-full">
@@ -79,7 +80,6 @@ const Section = (props) => {
     <div
       ref={dragProvided.innerRef}
       {...dragProvided.draggableProps}
-      {...dragProvided.dragHandleProps}
       style={getItemStyle(
         dragSnapshot.isDragging,
         dragProvided.draggableProps.style
@@ -150,7 +150,9 @@ const Section = (props) => {
               >
                 <Comment />
               </SectionButton>
-
+              <SectionButton {...dragProvided.dragHandleProps} plain>
+                <Move />
+              </SectionButton>
               <SectionButton
                 title="Delete Section"
                 aria-label="Delete Section"

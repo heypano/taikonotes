@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import { getItemStyle } from "../lib/dnd";
 import NoteGridButton from "./NoteGridButton";
-import { setTotalLines } from "../redux/mainSlice";
+import { setTotalLines, moveLineInSection } from "../redux/mainSlice";
 import Plus from "./Icons/Plus";
 import Duplicate from "./Icons/Duplicate";
 import Minus from "./Icons/Minus";
 import { useIsEditing } from "../redux/editSlice";
 import Cell from "./Cell";
+import Move from "./Icons/Move";
 
 const NoteGridLine = ({
   sectionId,
@@ -47,7 +47,6 @@ const NoteGridLine = ({
       data-id={`line ${lineNum}`}
       ref={dragProvided.innerRef}
       {...dragProvided.draggableProps}
-      {...dragProvided.dragHandleProps}
       style={getItemStyle(
         dragSnapshot.isDragging,
         dragProvided.draggableProps.style
@@ -91,6 +90,16 @@ const NoteGridLine = ({
           <NoteGridButton sectionId={sectionId} title="Remove this line">
             <Minus />
           </NoteGridButton>
+          <span {...dragProvided.dragHandleProps}>
+            <NoteGridButton
+              style={{
+                cursor: dragSnapshot.isDragging ? "grabbing" : "grab",
+              }}
+              plain
+            >
+              <Move />
+            </NoteGridButton>
+          </span>
         </div>
       )}
       <div

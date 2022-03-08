@@ -238,6 +238,18 @@ export const mainSlice = createSlice({
       };
       state.sectionsMap[sectionId] = newSection;
     },
+    moveLineInSection: (state, action) => {
+      const { sectionId, sourceIndex, destinationIndex } = action.payload;
+      const { cells, settings } = state.sectionsMap[sectionId];
+      const { cellsPerLine } = settings;
+      const newCells = [...cells];
+      newCells.splice(
+        destinationIndex * cellsPerLine,
+        0,
+        ...newCells.splice(cellsPerLine * sourceIndex, cellsPerLine)
+      );
+      state.sectionsMap[sectionId].cells = newCells;
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(isMainDirtyAction, (state, action) => {
@@ -266,6 +278,7 @@ export const {
   moveSection,
   setIsDirty,
   duplicateLastLine,
+  moveLineInSection,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;

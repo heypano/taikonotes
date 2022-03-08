@@ -1,20 +1,16 @@
 import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import Cell from "./Cell";
-import NoteGridButton from "./NoteGridButton";
-import Duplicate from "./Icons/Duplicate";
+import { useDispatch } from "react-redux";
 import { useIsEditing } from "../redux/editSlice";
-import Plus from "./Icons/Plus";
-import Minus from "./Icons/Minus";
-import { moveSection, setTotalLines } from "../redux/mainSlice";
 import { getItemStyle, getListStyle } from "../lib/dnd";
 import NoteGridLine from "./NoteGridLine";
+import { moveLineInSection } from "../redux/mainSlice";
 
 const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
   const lines = [];
   const isEditing = useIsEditing();
+  const dispatch = useDispatch();
   const onDragStart = useCallback(() => {
     // Add a little vibration if the browser supports it.
     // Add's a nice little physical feedback
@@ -22,9 +18,20 @@ const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
       window.navigator.vibrate(100);
     }
   }, []);
-  const onDragEnd = useCallback((result) => {
-    console.log("aa", result);
-  }, []);
+  const onDragEnd = useCallback(
+    ({ source, destination }) => {
+      const { index: sourceIndex } = source;
+      const { index: destinationIndex } = destination;
+      dispatch(
+        moveLineInSection({
+          sectionId,
+          sourceIndex,
+          destinationIndex,
+        })
+      );
+    },
+    [dispatch, sectionId]
+  );
 
   for (let lineNum = 0; lineNum < totalLines; lineNum++) {
     lines.push(
