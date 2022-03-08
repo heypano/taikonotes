@@ -90,57 +90,21 @@ const Section = (props) => {
           {isEditing && (
             <div className="flex">
               <SectionButton
-                title="Add line"
-                aria-label="Add line"
-                onClick={() => {
+                title="Settings"
+                aria-label="Settings"
+                onClick={(e) => {
                   dispatch(
-                    setTotalLines({
-                      sectionId,
-                      totalLines: totalLines + 1,
+                    setSectionSettingData({
+                      sectionSettingOpen: true,
+                      sectionSettingSectionId: sectionId,
+                      sectionSettingCoordinates: getCoordinatesFromEvent(e),
                     })
                   );
+                  e.preventDefault();
+                  e.stopPropagation();
                 }}
               >
-                <Plus />
-              </SectionButton>
-              <SectionButton
-                title="Duplicate last line"
-                aria-label="Duplicate last line"
-                onClick={() => {
-                  dispatch(
-                    duplicateLastLine({
-                      sectionId,
-                    })
-                  );
-                }}
-                style={{
-                  position: "relative",
-                }}
-              >
-                <Duplicate
-                  style={{
-                    width: "40%",
-                    position: "absolute",
-                    bottom: 3,
-                    right: 3,
-                  }}
-                />
-                <Plus />
-              </SectionButton>
-
-              <SectionButton
-                title="Remove last line"
-                aria-label="Remove last line"
-                onClick={() => {
-                  dispatch(
-                    setTotalLines({
-                      sectionId,
-                      totalLines: totalLines - 1,
-                    })
-                  );
-                }}
-              >
-                <Minus />
+                <GearIcon />
               </SectionButton>
               <SectionButton
                 title="Duplicate"
@@ -170,23 +134,6 @@ const Section = (props) => {
                   <Lock />
                 </SectionButton>
               )}
-              <SectionButton
-                title="Settings"
-                aria-label="Settings"
-                onClick={(e) => {
-                  dispatch(
-                    setSectionSettingData({
-                      sectionSettingOpen: true,
-                      sectionSettingSectionId: sectionId,
-                      sectionSettingCoordinates: getCoordinatesFromEvent(e),
-                    })
-                  );
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              >
-                <GearIcon />
-              </SectionButton>
 
               <SectionButton
                 title="Section Comment"

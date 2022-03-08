@@ -1,11 +1,20 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import Cell from "./Cell";
+import NoteGridButton from "./NoteGridButton";
+import Duplicate from "./Icons/Duplicate";
+import { useIsEditing } from "../redux/editSlice";
+import Plus from "./Icons/Plus";
+import Minus from "./Icons/Minus";
+import { setTotalLines } from "../redux/mainSlice";
 
 const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
+  const dispatch = useDispatch();
   const mobileDisplayedCells =
     cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
   const lines = [];
+  const isEditing = useIsEditing();
   for (let lineNum = 0; lineNum < totalLines; lineNum++) {
     const lineCells = [];
     // Collect the cells for this line
@@ -25,11 +34,51 @@ const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
       );
     }
     lines.push(
-      <div
-        className={`bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-1 border-taikoColor1`}
-        key={lineNum}
-      >
-        {lineCells}
+      <div className="flex">
+        {isEditing && (
+          <div className="flex items-center">
+            <NoteGridButton
+              sectionId={sectionId}
+              title="Add line here"
+              onClick={() => {
+                dispatch(
+                  setTotalLines({
+                    sectionId,
+                    totalLines: totalLines + 1,
+                  })
+                );
+              }}
+            >
+              <Plus />
+            </NoteGridButton>
+            <NoteGridButton
+              sectionId={sectionId}
+              title="Duplicate line"
+              style={{
+                position: "relative",
+              }}
+            >
+              <Duplicate
+                style={{
+                  width: "40%",
+                  position: "absolute",
+                  bottom: 3,
+                  right: 3,
+                }}
+              />
+              <Plus />
+            </NoteGridButton>
+            <NoteGridButton sectionId={sectionId} title="Remove this line">
+              <Minus />
+            </NoteGridButton>
+          </div>
+        )}
+        <div
+          className={`flex-1 bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-1 border-taikoColor1`}
+          key={lineNum}
+        >
+          {lineCells}
+        </div>
       </div>
     );
   }
