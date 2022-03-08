@@ -45,7 +45,6 @@ const Section = (props) => {
   const section = useSectionNoCells(sectionId);
   const { sectionName, totalLines } = section;
   const comment = useSectionComment(sectionId);
-  const numCells = cellsPerLine * totalLines;
 
   // console.debug(`Section rerender ${sectionName} - ${id}`);
 
@@ -245,7 +244,7 @@ const Section = (props) => {
         <NoteGrid
           sectionId={sectionId}
           cellsPerLine={cellsPerLine}
-          numCells={numCells}
+          totalLines={totalLines}
           divideEvery={divideEvery}
         />
       </div>
