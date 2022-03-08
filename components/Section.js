@@ -31,6 +31,18 @@ import Trash from "./Icons/Trash";
 import VideoPlayer from "./VideoPlayer";
 import NoteGrid from "./NoteGrid";
 
+const SectionTitle = ({ titleURL, sectionName }) => (
+  <div className="text-2xl w-full">
+    {titleURL ? (
+      <a href={titleURL} className="text-linkBlue underline">
+        {sectionName}
+      </a>
+    ) : (
+      sectionName
+    )}
+  </div>
+);
+
 const Section = (props) => {
   const {
     sectionId,
@@ -39,7 +51,9 @@ const Section = (props) => {
     dragProvided,
     dragSnapshot,
   } = props;
-  const { cellsPerLine, divideEvery, videoURL } = useSettings(sectionId);
+  const { cellsPerLine, divideEvery, videoURL, titleURL } = useSettings(
+    sectionId
+  );
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
   const section = useSectionNoCells(sectionId);
@@ -231,7 +245,7 @@ const Section = (props) => {
           )}
           {!isEditing && (
             <div className="flex flex-col pb-2 basis-full md:flex-1">
-              <div className="text-2xl w-full">{sectionName}</div>
+              <SectionTitle sectionName={sectionName} titleURL={titleURL} />
               {comment && <div className="whitespace-pre-wrap">{comment}</div>}
             </div>
           )}

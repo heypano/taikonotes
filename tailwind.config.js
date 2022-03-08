@@ -5,6 +5,7 @@ const {
   taikoColor2,
   taikoColor3,
   taikoColor4,
+  linkBlue,
 } = require("./lib/colors");
 
 module.exports = {
@@ -33,6 +34,7 @@ module.exports = {
         taikoColor2,
         taikoColor3,
         taikoColor4,
+        linkBlue,
       },
       animation: {
         slowFadeOut: "slowFadeOut 5s ease-in-out forwards",

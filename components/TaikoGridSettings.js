@@ -15,6 +15,7 @@ const TaikoGridSettings = ({ sectionId }) => {
     divideEvery = 4,
     sounds = "ka,don",
     videoURL,
+    titleURL,
   } = settings;
 
   const onFormChange = useCallback(
@@ -84,6 +85,17 @@ const TaikoGridSettings = ({ sectionId }) => {
           value={sounds}
         />
       </SettingInput>
+      <SettingInput>
+        Title URL
+        <input
+          id={`titleURL_${sectionId}`}
+          name="titleURL"
+          className="filter drop-shadow p-1 ml-5"
+          onChange={onFormChange}
+          value={titleURL}
+        />
+      </SettingInput>
+
       <SettingInput>
         Video URL
         <input

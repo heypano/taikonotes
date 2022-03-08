@@ -26,7 +26,7 @@ const SectionSettings = () => {
       onOpenChange={onOpenChange}
       left={sectionSettingCoordinates?.[0]}
       top={sectionSettingCoordinates?.[1]}
-      className="grid grid-rows-1 grid-cols-1 w-max max-h-48 p-4"
+      className="grid grid-rows-1 grid-cols-1 w-max p-4"
     >
       <TaikoGridSettings sectionId={sectionSettingSectionId} />
     </PopupMenu>

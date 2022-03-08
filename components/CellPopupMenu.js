@@ -71,7 +71,7 @@ const CellPopupMenu = () => {
       <div className="flex">
         {!isCommenting && isEditing && soundObj && (
           <div
-            className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max max-h-48`}
+            className={`grid grid-rows-4 grid-cols-${tooltipColumns} grid-flow-col w-max`}
           >
             {Object.values(soundObj).map((sound, index) => {
               const onClick = (e) => {
@@ -103,7 +103,7 @@ const CellPopupMenu = () => {
           </div>
         )}
         {isCommenting && isEditing && (
-          <div className="grid grid-rows-1 grid-cols-1 grid-flow-col w-max max-h-48">
+          <div className="grid grid-rows-1 grid-cols-1 grid-flow-col w-max">
             <textarea
               ref={textareaRef}
               className="w-full h-full resize-none p-2 outline-none"
@@ -122,7 +122,7 @@ const CellPopupMenu = () => {
           </div>
         )}
         {isEditing && (
-          <div className="border-0 border-l-2 border-gray-200 grid grid-rows-4 grid-cols-1 grid-flow-col w-max max-h-48">
+          <div className="border-0 border-l-2 border-gray-200 grid grid-rows-4 grid-cols-1 grid-flow-col w-max">
             <PopupCell
               className={`${
                 isCommenting ? "bg-blue-300" : ""
