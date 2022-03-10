@@ -198,7 +198,7 @@ const Section = (props) => {
               {comment && <div className="whitespace-pre-wrap">{comment}</div>}
             </div>
           )}
-          {!isEditing && videoId && (
+          {videoId && (
             <div className="mb-2">
               <VideoPlayer videoId={videoId} />
             </div>
