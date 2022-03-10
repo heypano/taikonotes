@@ -10,7 +10,7 @@ const defaultCellsPerLine = 16;
 const defaultDivideEvery = 4;
 const defaultTotaleLines = 1;
 const getNewSection = (sectionId) => ({
-  cells: new Array(defaultTotaleLines * defaultCellsPerLine).fill(null),
+  cells: new Array(defaultTotaleLines * defaultCellsPerLine).fill(""),
   id: sectionId,
   sectionName: `Line ${sectionId.substring(0, 2)}`,
   totalLines: 1,
@@ -135,13 +135,15 @@ export const mainSlice = createSlice({
     setTotalLines: (state, action) => {
       const { sectionId, totalLines } = action.payload;
       const final = Math.max(totalLines, 0);
-      const { cellsPerLine } = state.sectionsMap[sectionId].settings;
+      const cellsPerLine = Number(
+        state.sectionsMap[sectionId].settings.cellsPerLine
+      );
       state.sectionsMap[sectionId].totalLines = final;
       state.sectionsMap[sectionId].cells = state.sectionsMap[sectionId].cells
         .slice(0, final * cellsPerLine)
         .map((i) => {
           if (i === undefined) {
-            return null; // no undefined items
+            return ""; // no undefined items
           }
           return i;
         });
@@ -224,7 +226,7 @@ export const mainSlice = createSlice({
     duplicateLastLine: (state, action) => {
       const { sectionId } = action.payload;
       const oldSection = state.sectionsMap[sectionId];
-      const { cellsPerLine } = oldSection.settings;
+      const cellsPerLine = Number(oldSection.settings.cellsPerLine);
       const newSection = {
         ...oldSection,
         totalLines: oldSection.totalLines + 1,
@@ -237,6 +239,50 @@ export const mainSlice = createSlice({
         ],
       };
       state.sectionsMap[sectionId] = newSection;
+    },
+    moveLineInSection: (state, action) => {
+      const { sectionId, sourceIndex, destinationIndex } = action.payload;
+      const { cells, settings } = state.sectionsMap[sectionId];
+      const cellsPerLine = Number(settings.cellsPerLine);
+      const newCells = [...cells];
+      newCells.splice(
+        destinationIndex * cellsPerLine,
+        0,
+        ...newCells.splice(cellsPerLine * sourceIndex, cellsPerLine)
+      );
+      state.sectionsMap[sectionId].cells = newCells;
+    },
+    removeLineInSection: (state, action) => {
+      const { sectionId, index } = action.payload;
+      const { cells, settings } = state.sectionsMap[sectionId];
+      const cellsPerLine = Number(settings.cellsPerLine);
+      const newCells = [...cells];
+      newCells.splice(index * cellsPerLine, cellsPerLine);
+      state.sectionsMap[sectionId].cells = newCells;
+      state.sectionsMap[sectionId].totalLines -= 1;
+    },
+    addLineInSection: (state, action) => {
+      const { sectionId, index } = action.payload;
+      const { cells, settings } = state.sectionsMap[sectionId];
+      const cellsPerLine = Number(settings.cellsPerLine);
+      const newCells = [...cells];
+      const newLine = new Array(cellsPerLine).fill("");
+      newCells.splice((index + 1) * cellsPerLine, 0, ...newLine);
+      state.sectionsMap[sectionId].cells = newCells;
+      state.sectionsMap[sectionId].totalLines += 1;
+    },
+    duplicateLineInSection: (state, action) => {
+      const { sectionId, index } = action.payload;
+      const { cells, settings } = state.sectionsMap[sectionId];
+      const cellsPerLine = Number(settings.cellsPerLine);
+      const newCells = [...current(cells)];
+      const newLine = newCells.slice(
+        index * cellsPerLine,
+        (index + 1) * cellsPerLine
+      );
+      newCells.splice((index + 1) * cellsPerLine, 0, ...newLine);
+      state.sectionsMap[sectionId].cells = newCells;
+      state.sectionsMap[sectionId].totalLines += 1;
     },
   },
   extraReducers: (builder) => {
@@ -266,6 +312,10 @@ export const {
   moveSection,
   setIsDirty,
   duplicateLastLine,
+  moveLineInSection,
+  removeLineInSection,
+  addLineInSection,
+  duplicateLineInSection,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;

@@ -1,40 +1,77 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
-import Cell from "./Cell";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
+import { useIsEditing } from "../redux/editSlice";
+import { getItemStyle, getListStyle } from "../lib/dnd";
+import NoteGridLine from "./NoteGridLine";
+import { moveLineInSection } from "../redux/mainSlice";
 
 const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
-  const mobileDisplayedCells =
-    cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
   const lines = [];
-  for (let lineNum = 0; lineNum < totalLines; lineNum++) {
-    const lineCells = [];
-    // Collect the cells for this line
-    for (let i = 0; i < cellsPerLine; i++) {
-      const cellIndex = cellsPerLine * lineNum + i;
-      lineCells.push(
-        <Cell
-          key={`cell_${sectionId}_${cellIndex}`}
-          isStartingCell={cellIndex % divideEvery === 0}
-          isFirstCellInLine={cellIndex % cellsPerLine === 0}
-          isLastCellInLine={cellIndex % cellsPerLine === cellsPerLine - 1}
-          isLastLine={lineNum === totalLines - 1}
-          cellsPerLine={cellsPerLine}
-          cellIndex={cellIndex}
-          sectionId={sectionId}
-        />
-      );
+  const isEditing = useIsEditing();
+  const dispatch = useDispatch();
+  const onDragStart = useCallback(() => {
+    // Add a little vibration if the browser supports it.
+    // Add's a nice little physical feedback
+    if (window.navigator.vibrate) {
+      window.navigator.vibrate(100);
     }
+  }, []);
+  const onDragEnd = useCallback(
+    ({ source, destination }) => {
+      const { index: sourceIndex } = source || {};
+      const { index: destinationIndex } = destination || {};
+      if (Number.isInteger(sourceIndex) && Number.isInteger(destinationIndex)) {
+        dispatch(
+          moveLineInSection({
+            sectionId,
+            sourceIndex,
+            destinationIndex,
+          })
+        );
+      }
+    },
+    [dispatch, sectionId]
+  );
+
+  for (let lineNum = 0; lineNum < totalLines; lineNum++) {
     lines.push(
-      <div
-        className={`bg-blue-500 grid grid-cols-${mobileDisplayedCells} md:grid-cols-${cellsPerLine} border border-1 border-taikoColor1`}
-        key={lineNum}
+      <Draggable
+        key={`${sectionId}_line_${lineNum}`}
+        draggableId={`${sectionId}_line_${lineNum}`}
+        index={lineNum}
+        isDragDisabled={!isEditing}
       >
-        {lineCells}
-      </div>
+        {(dragProvided, dragSnapshot) => (
+          <NoteGridLine
+            sectionId={sectionId}
+            lineNum={lineNum}
+            cellsPerLine={cellsPerLine}
+            totalLines={totalLines}
+            divideEvery={divideEvery}
+            dragProvided={dragProvided}
+            dragSnapshot={dragSnapshot}
+          />
+        )}
+      </Draggable>
     );
   }
   return totalLines > 0 ? (
-    <div className="border border-1 border-x-0 border-taikoColor1">{lines}</div>
+    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+      <Droppable droppableId={`section_${sectionId}`}>
+        {(dropProvided, dropSnapshot) => (
+          <div
+            {...dropProvided.droppableProps}
+            ref={dropProvided.innerRef}
+            style={getListStyle(dropSnapshot.isDraggingOver)}
+            className="border border-1 border-x-0 border-taikoColor1"
+          >
+            {lines}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   ) : null;
 };
 
