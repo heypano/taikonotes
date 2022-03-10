@@ -88,7 +88,7 @@ const Section = (props) => {
       <div className="my-4 p-8 px-1 lg:px-8">
         <div className="flex flex-row flex-wrap align-baseline">
           {isEditing && (
-            <div className="flex">
+            <div className="flex items-end">
               <SectionButton
                 title="Settings"
                 aria-label="Settings"
