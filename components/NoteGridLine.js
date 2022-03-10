@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { getItemStyle } from "../lib/dnd";
 import NoteGridButton from "./NoteGridButton";
-import { setTotalLines, moveLineInSection } from "../redux/mainSlice";
+import {
+  setTotalLines,
+  moveLineInSection,
+  duplicateLineInSection,
+  addLineInSection,
+  removeLineInSection,
+} from "../redux/mainSlice";
 import Plus from "./Icons/Plus";
 import Duplicate from "./Icons/Duplicate";
 import Minus from "./Icons/Minus";
@@ -60,10 +66,9 @@ const NoteGridLine = ({
             lineNum={lineNum}
             onClick={() => {
               dispatch(
-                setTotalLines({
+                addLineInSection({
                   sectionId,
-                  totalLines: totalLines + 1,
-                  lineNum,
+                  index: lineNum,
                 })
               );
             }}
@@ -76,6 +81,14 @@ const NoteGridLine = ({
             style={{
               position: "relative",
             }}
+            onClick={() => {
+              dispatch(
+                duplicateLineInSection({
+                  sectionId,
+                  index: lineNum,
+                })
+              );
+            }}
           >
             <Duplicate
               style={{
@@ -87,7 +100,18 @@ const NoteGridLine = ({
             />
             <Plus />
           </NoteGridButton>
-          <NoteGridButton sectionId={sectionId} title="Remove this line">
+          <NoteGridButton
+            sectionId={sectionId}
+            title="Remove this line"
+            onClick={() => {
+              dispatch(
+                removeLineInSection({
+                  sectionId,
+                  index: lineNum,
+                })
+              );
+            }}
+          >
             <Minus />
           </NoteGridButton>
           <span {...dragProvided.dragHandleProps}>
