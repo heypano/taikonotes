@@ -6,6 +6,7 @@ import Section from "./Section";
 import Header from "./Header";
 import { getListStyle } from "../lib/dnd";
 import { useIsEditing } from "../redux/editSlice";
+import Summary from "./Summary";
 
 const TaikoGrid = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const TaikoGrid = () => {
   return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <Header />
+      <Summary />
       <Droppable droppableId="sectionsList">
         {(dropProvided, dropSnapshot) => (
           <div
