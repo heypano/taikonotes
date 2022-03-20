@@ -124,7 +124,12 @@ export const mainSlice = createSlice({
     setSettings: (state, action) => {
       const { sectionId, settings } = action.payload;
       Object.keys(settings).forEach((key) => {
-        state.sectionsMap[sectionId].settings[key] = settings[key];
+        const value = settings[key];
+        state.sectionsMap[sectionId].settings[key] = value;
+        if (key === "cellsPerLine") {
+          const { length } = current(state.sectionsMap[sectionId].cells);
+          state.sectionsMap[sectionId].totalLines = Math.ceil(length / value);
+        }
       });
       state.sectionsMap[sectionId].settings.soundObj = Object.fromEntries(
         `,${state.sectionsMap[sectionId].settings.sounds}`
