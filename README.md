@@ -1,6 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Todo
+- remove totalLines from state
 - SEO
 - add dirty check for routChange https://nextjs.org/docs/api-reference/next/router#usage-6
 - don't save as user is typing comments
