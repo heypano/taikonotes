@@ -15,7 +15,7 @@ const SectionComment = ({ open, sectionId }) => {
 
   const commentRef = useRef(comment);
 
-  return open ? (
+  return open || !isEditing ? (
     <div
       contentEditable={isEditing}
       className="w-full p-2 resize-none border-taikoLightBrown1 border-2 whitespace-pre-wrap overflow-auto"
