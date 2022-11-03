@@ -1,18 +1,19 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Todo
+- Move section comment to inline
+- Change textarea to rich
 - remove totalLines from state
+- don't save as user is typing comments
+- summary structure view with reorder 
 - SEO
 - add dirty check for routChange https://nextjs.org/docs/api-reference/next/router#usage-6
-- don't save as user is typing comments
 - reduce and optimize past states
-- summary structure view with reorder
+- Overall song notes
 - help button
 - Back button? route change state stuff
-- Change textarea to rich
 - propTypes -> typescript?
 - CSRF
-- Overall song notes
 - swing
 - keyboard picking
 

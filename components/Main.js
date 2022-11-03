@@ -6,7 +6,6 @@ import Head from "next/head";
 import PageContainer from "./PageContainer";
 import TaikoGrid from "./TaikoGrid";
 import CellPopupMenu from "./CellPopupMenu";
-import SectionCommentPopup from "./SectionCommentPopup";
 import { setMainState, useIsDirty } from "../redux/mainSlice";
 import { setIsLoading, useIsLoading } from "../redux/editSlice";
 import SectionSettings from "./SectionSettings";
@@ -76,7 +75,6 @@ const Main = ({ song, error }) => {
             <TaikoGrid song={song} />
             <div id="modalPortal" />
             <CellPopupMenu />
-            <SectionCommentPopup />
             <SectionSettings />
           </>
         )}

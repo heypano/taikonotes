@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import Cell from "./Cell";
@@ -31,6 +31,7 @@ import Trash from "./Icons/Trash";
 import VideoPlayer from "./VideoPlayer";
 import NoteGrid from "./NoteGrid";
 import Move from "./Icons/Move";
+import SectionComment from "./SectionComment";
 
 const SectionTitle = ({ titleURL, sectionName }) => (
   <div className="text-2xl w-full">
@@ -52,14 +53,14 @@ const Section = (props) => {
     dragProvided,
     dragSnapshot,
   } = props;
-  const { cellsPerLine, divideEvery, videoURL, titleURL } = useSettings(
-    sectionId
-  );
+  const { cellsPerLine, divideEvery, videoURL, titleURL } =
+    useSettings(sectionId);
   const dispatch = useDispatch();
   const isEditing = useIsEditing();
   const section = useSectionNoCells(sectionId);
   const { sectionName, totalLines } = section;
   const comment = useSectionComment(sectionId);
+  const [sectionCommentOpen, setSectionCommentOpen] = useState(false);
 
   // console.debug(`Section rerender ${sectionName} - ${id}`);
 
@@ -85,7 +86,7 @@ const Section = (props) => {
         dragProvided.draggableProps.style
       )}
     >
-      <div className="my-4 p-8 px-1 lg:px-8 break-inside-avoid ">
+      <div className="my-4 p-8 px-1 lg:px-8 break-inside-avoid flex flex-col">
         <div className="flex flex-row flex-wrap align-baseline">
           {isEditing && (
             <div className="flex items-end">
@@ -139,13 +140,7 @@ const Section = (props) => {
                 title="Section Comment"
                 aria-label="Section Comment"
                 onClick={(e) => {
-                  dispatch(
-                    setSectionCommentData({
-                      sectionCommentOpen: true,
-                      sectionCommentSectionId: sectionId,
-                      sectionCommentCoordinates: getCoordinatesFromEvent(e),
-                    })
-                  );
+                  setSectionCommentOpen(!sectionCommentOpen);
                 }}
               >
                 <Comment />
@@ -195,7 +190,6 @@ const Section = (props) => {
           {!isEditing && (
             <div className="flex flex-col pb-2 basis-full md:flex-1">
               <SectionTitle sectionName={sectionName} titleURL={titleURL} />
-              {comment && <div className="whitespace-pre-wrap">{comment}</div>}
             </div>
           )}
           {videoId && (
@@ -204,6 +198,7 @@ const Section = (props) => {
             </div>
           )}
         </div>
+        <SectionComment sectionId={sectionId} open={sectionCommentOpen} />
         <NoteGrid
           sectionId={sectionId}
           cellsPerLine={cellsPerLine}
