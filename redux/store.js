@@ -28,7 +28,10 @@ export const getMainState = (config = {}) => {
   }
   return result;
 };
-window.getMainState = getMainState;
+
+if (typeof window !== "undefined") {
+  window.getMainState = getMainState;
+}
 
 const localStorageKey = "taikoNotesState";
 

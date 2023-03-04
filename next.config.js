@@ -1,8 +1,8 @@
 module.exports = {
-  reactStrictMode: true,
-  basePath: "",
-  assetPrefix: "",
-  env: {
-    assetPrefix: ''
-  }
-}
+  reactStrictMode: false,
+  // basePath: "",
+  // assetPrefix: "",
+  // env: {
+  //   assetPrefix: ''
+  // }
+};
