@@ -19,7 +19,7 @@ const beforeUnloadHandler = (event) => {
   return (event.returnValue = question);
 };
 
-const Main = ({ song, error }) => {
+function Main({ song, error }) {
   const { query } = useRouter();
   const { songslug } = query;
   const dispatch = useDispatch();
@@ -81,7 +81,7 @@ const Main = ({ song, error }) => {
       </PageContainer>
     </div>
   );
-};
+}
 Main.propTypes = {
   song: PropTypes.shape({ title: PropTypes.string }),
   error: PropTypes.string,

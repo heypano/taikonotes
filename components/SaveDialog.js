@@ -4,7 +4,7 @@ import Modal from "./Modal";
 import Button from "./Button";
 import Spin from "./Icons/Spin";
 
-const SaveDialog = ({ saveMethod, songslug, error, isSaving, ...rest }) => {
+function SaveDialog({ saveMethod, songslug, error, isSaving, ...rest }) {
   const songslugInputRef = useRef();
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
@@ -98,7 +98,7 @@ const SaveDialog = ({ saveMethod, songslug, error, isSaving, ...rest }) => {
       </Button>
     </Modal>
   );
-};
+}
 
 SaveDialog.propTypes = {
   saveMethod: PropTypes.func,

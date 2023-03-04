@@ -7,7 +7,7 @@ const colorMap = {
   success: "text-green-500",
 };
 
-const Notification = () => {
+function Notification() {
   const {
     notificationType = "success",
     notificationMessage,
@@ -33,6 +33,6 @@ const Notification = () => {
       {notificationMessage}
     </div>
   );
-};
+}
 
 export default memo(Notification);

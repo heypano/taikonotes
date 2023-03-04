@@ -2,8 +2,8 @@ import React, { memo } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-const NoteGridButton = ({ children, onClick, title, plain, ...rest }) =>
-  plain ? (
+function NoteGridButton({ children, onClick, title, plain, ...rest }) {
+  return plain ? (
     <div className="mr-2 w-10 p-3 xl:p-3 bg-taikoLightBrown1 text-taikoColor2 hover:bg-taikoColor1 hover:text-white">
       {children}
     </div>
@@ -17,7 +17,8 @@ const NoteGridButton = ({ children, onClick, title, plain, ...rest }) =>
     >
       {children}
     </Button>
-  );
+  )
+}
 NoteGridButton.propTypes = {
   plain: PropTypes.bool,
 };

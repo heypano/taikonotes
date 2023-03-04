@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 
-const VideoPlayer = ({ videoId, height, width }) => {
+function VideoPlayer({ videoId, height, width }) {
   const url = `https://www.youtube.com/embed/${videoId}`;
   return (
     <iframe
@@ -13,7 +13,7 @@ const VideoPlayer = ({ videoId, height, width }) => {
       frameBorder="0"
     />
   );
-};
+}
 
 VideoPlayer.propTypes = {
   videoId: PropTypes.string,

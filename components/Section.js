@@ -33,8 +33,8 @@ import NoteGrid from "./NoteGrid";
 import Move from "./Icons/Move";
 import SectionComment from "./SectionComment";
 
-const SectionTitle = ({ titleURL, sectionName }) => (
-  <div className="text-2xl w-full">
+function SectionTitle({ titleURL, sectionName }) {
+  return <div className="text-2xl w-full">
     {titleURL ? (
       <a href={titleURL} className="text-linkBlue underline">
         {sectionName}
@@ -43,9 +43,9 @@ const SectionTitle = ({ titleURL, sectionName }) => (
       sectionName
     )}
   </div>
-);
+}
 
-const Section = (props) => {
+function Section(props) {
   const {
     sectionId,
     sectionIndex,
@@ -208,7 +208,7 @@ const Section = (props) => {
       </div>
     </div>
   );
-};
+}
 
 Section.propTypes = {
   sectionId: PropTypes.string,

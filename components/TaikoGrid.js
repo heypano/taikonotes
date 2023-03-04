@@ -7,7 +7,7 @@ import Header from "./Header";
 import { getListStyle } from "../lib/dnd";
 import { useIsEditing } from "../redux/editSlice";
 
-const TaikoGrid = () => {
+function TaikoGrid() {
   const dispatch = useDispatch();
   const sectionsIds = useSectionList();
   const isEditing = useIsEditing();
@@ -73,6 +73,6 @@ const TaikoGrid = () => {
       </Droppable>
     </DragDropContext>
   );
-};
+}
 
 export default memo(TaikoGrid);

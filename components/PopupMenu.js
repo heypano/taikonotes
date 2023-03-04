@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import debounce from "lodash.debounce";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 
-const PopupMenu = ({
+function PopupMenu({
   open,
   onOpenChange,
   className,
@@ -11,7 +11,7 @@ const PopupMenu = ({
   children,
   left,
   top,
-}) => {
+}) {
   const ref = useRef();
   const [actualPosition, setActualPosition] = useState();
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
@@ -76,7 +76,7 @@ const PopupMenu = ({
       </div>
     )
   );
-};
+}
 
 PopupMenu.propTypes = {
   open: PropTypes.bool.isRequired,

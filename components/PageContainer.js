@@ -4,9 +4,9 @@ import { memo } from "react";
 /**
  * React class to contain a page
  */
-const PageContainer = ({ children }) => (
-  <div className="lg:container mx-auto h-full">{children}</div>
-);
+function PageContainer({ children }) {
+  return <div className="lg:container mx-auto h-full">{children}</div>
+}
 
 PageContainer.propTypes = {
   children: PropTypes.node,

@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 
-export const SettingInput = ({ children, id }) => (
-  <label
+export function SettingInput({ children, id }) {
+  return <label
     htmlFor={id}
     className="flex flex-row justify-between items-end mt-3 first:mt-0"
   >
     {children}
   </label>
-);
+}
 
 SettingInput.propTypes = {
   id: PropTypes.string,

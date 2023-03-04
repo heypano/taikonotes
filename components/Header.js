@@ -23,7 +23,7 @@ import { setNotification } from "../redux/errorSlice";
 import Taiko from "./Icons/Taiko";
 import Eye from "./Icons/Eye";
 
-const Header = () => {
+function Header() {
   const dispatch = useDispatch();
   const title = useSongTitle();
   const isEditing = useIsEditing();
@@ -195,7 +195,7 @@ const Header = () => {
       </div>
     </div>
   );
-};
+}
 
 Header.propTypes = {};
 

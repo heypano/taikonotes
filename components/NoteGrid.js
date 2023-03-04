@@ -7,7 +7,7 @@ import { getItemStyle, getListStyle } from "../lib/dnd";
 import NoteGridLine from "./NoteGridLine";
 import { moveLineInSection } from "../redux/mainSlice";
 
-const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
+function NoteGrid({ cellsPerLine, divideEvery, sectionId, totalLines }) {
   const lines = [];
   const isEditing = useIsEditing();
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const NoteGrid = ({ cellsPerLine, divideEvery, sectionId, totalLines }) => {
       </Droppable>
     </DragDropContext>
   ) : null;
-};
+}
 
 NoteGrid.propTypes = {
   sectionId: PropTypes.string.isRequired,

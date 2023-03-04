@@ -7,7 +7,7 @@ import { setCellPopupState } from "../redux/cellPopupSlice";
 import Comment from "./Icons/Comment";
 import { useIsEditing } from "../redux/editSlice";
 
-const Cell = (props) => {
+function Cell(props) {
   const {
     cellIndex,
     sectionId,
@@ -100,7 +100,7 @@ const Cell = (props) => {
       )}
     </div>
   );
-};
+}
 
 Cell.propTypes = {
   isStartingCell: PropTypes.bool.isRequired,

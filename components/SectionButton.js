@@ -2,8 +2,8 @@ import { memo } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-const SectionButton = ({ children, onClick, bgClassName, plain, ...rest }) =>
-  plain ? (
+function SectionButton({ children, onClick, bgClassName, plain, ...rest }) {
+  return plain ? (
     <div
       className={`flex mr-2 w-10 p-3 xl:p-3 hover:text-taikoColor2 border-b-8 border-taikoLightBrown1 text-white ${bgClassName}`}
       {...rest}
@@ -18,7 +18,8 @@ const SectionButton = ({ children, onClick, bgClassName, plain, ...rest }) =>
     >
       {children}
     </Button>
-  );
+  )
+}
 
 SectionButton.propTypes = {
   children: PropTypes.node.isRequired,

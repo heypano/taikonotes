@@ -1,5 +1,5 @@
-const Plus = () => (
-  <svg
+function Plus() {
+  return <svg
     xmlns="http://www.w3.org/2000/svg"
     className="max-h-full max-w-full"
     fill="none"
@@ -13,6 +13,6 @@ const Plus = () => (
       d="M12 6v6m0 0v6m0-6h6m-6 0H6"
     />
   </svg>
-);
+}
 
 export default Plus;

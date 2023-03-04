@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Taiko = (props) => (
-  <svg
+function Taiko(props) {
+  return <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 175.55 165.17"
     className="h-full"
@@ -155,6 +155,6 @@ const Taiko = (props) => (
       />
     </g>
   </svg>
-);
+}
 
 export default Taiko;

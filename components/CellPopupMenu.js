@@ -19,7 +19,7 @@ import Comment from "./Icons/Comment";
 import PopupCell from "./PopupCell";
 import { useIsEditing } from "../redux/editSlice";
 
-const CellPopupMenu = () => {
+function CellPopupMenu() {
   const sectionId = useCellSectionId();
   const soundObj = useSoundObj(sectionId);
   const tooltipColumns = soundObj
@@ -141,7 +141,7 @@ const CellPopupMenu = () => {
       </div>
     </PopupMenu>
   ) : null;
-};
+}
 
 CellPopupMenu.propTypes = {};
 

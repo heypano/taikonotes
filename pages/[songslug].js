@@ -4,7 +4,9 @@ import App from "../components/App";
 import clientPromise from "../lib/mongodb";
 import { getSongBySlug, transformFromMongo } from "../lib/mongoUtil";
 
-const SongPage = ({ song, error }) => <App song={song} error={error} />;
+function SongPage({ song, error }) {
+  return <App song={song} error={error} />
+}
 
 SongPage.propTypes = {
   song: PropTypes.shape({}),

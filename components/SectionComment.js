@@ -5,7 +5,7 @@ import { sanitize } from "dompurify";
 import { useIsEditing, useSectionCommentData } from "../redux/editSlice";
 import { setSectionComment, useSectionComment } from "../redux/mainSlice";
 
-const SectionComment = ({ open, sectionId }) => {
+function SectionComment({ open, sectionId }) {
   const comment = useSectionComment(sectionId);
   const textareaRef = useRef();
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const SectionComment = ({ open, sectionId }) => {
       }}
     />
   ) : null;
-};
+}
 
 SectionComment.propTypes = {
   sectionId: PropTypes.string.isRequired,

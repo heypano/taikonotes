@@ -7,7 +7,7 @@ import { SettingInput } from "./SettingInput";
 const numerators = [...Array(32).keys()].map((key) => key + 1);
 // export const denominators = [4, 8, 16];
 
-const TaikoGridSettings = ({ sectionId }) => {
+function TaikoGridSettings({ sectionId }) {
   const settings = useSettings(sectionId);
   const dispatch = useDispatch();
   const {
@@ -108,7 +108,7 @@ const TaikoGridSettings = ({ sectionId }) => {
       </SettingInput>
     </form>
   );
-};
+}
 
 TaikoGridSettings.propTypes = {
   sectionId: PropTypes.string.isRequired,

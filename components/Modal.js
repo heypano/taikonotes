@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 import PopupMenu from "./PopupMenu";
 
-const Modal = ({
+function Modal({
   open,
   onOpenChange,
   className,
@@ -9,7 +9,7 @@ const Modal = ({
   children,
   left,
   top,
-}) => {
+}) {
   const portalDom = document.getElementById("modalPortal");
   return (
     portalDom &&
@@ -22,7 +22,7 @@ const Modal = ({
       portalDom
     )
   );
-};
+}
 
 Modal.propTypes = {
   ...PopupMenu.propTypes,

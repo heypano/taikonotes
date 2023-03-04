@@ -7,7 +7,7 @@ import {
   useSectionSettingData,
 } from "../redux/editSlice";
 
-const SectionSettings = () => {
+function SectionSettings() {
   const {
     sectionSettingOpen,
     sectionSettingSectionId,
@@ -31,6 +31,6 @@ const SectionSettings = () => {
       <TaikoGridSettings sectionId={sectionSettingSectionId} />
     </PopupMenu>
   );
-};
+}
 
 export default memo(SectionSettings);

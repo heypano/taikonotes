@@ -17,7 +17,7 @@ import { useIsEditing } from "../redux/editSlice";
 import Cell from "./Cell";
 import Move from "./Icons/Move";
 
-const NoteGridLine = ({
+function NoteGridLine({
   sectionId,
   lineNum,
   cellsPerLine,
@@ -25,7 +25,7 @@ const NoteGridLine = ({
   divideEvery,
   dragSnapshot,
   dragProvided,
-}) => {
+}) {
   const dispatch = useDispatch();
   const mobileDisplayedCells =
     cellsPerLine > 7 ? Math.floor(cellsPerLine / 2) : cellsPerLine;
@@ -134,7 +134,7 @@ const NoteGridLine = ({
       </div>
     </div>
   );
-};
+}
 
 NoteGridLine.propTypes = {
   sectionId: PropTypes.string.isRequired,
