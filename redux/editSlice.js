@@ -7,7 +7,7 @@ export const name = "edit";
 
 export const initialState = {
   isLoading: true,
-  isEditing: true, // no commit
+  isEditing: false, // no commit
   sectionCommentOpen: false,
   sectionCommentCoordinates: null,
   sectionCommentSectionId: null,
