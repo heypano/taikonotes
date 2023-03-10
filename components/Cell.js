@@ -22,10 +22,11 @@ function Cell(props) {
   const dispatch = useDispatch();
   const soundObj = useSoundObj(sectionId);
   const isEditing = useIsEditing();
-  const { sound: currentSound = 0, intensity, comment } = useCell(
-    sectionId,
-    cellIndex
-  );
+  const {
+    sound: currentSound = 0,
+    intensity,
+    comment,
+  } = useCell(sectionId, cellIndex);
   const sound = (currentSound && soundObj[currentSound]) || "";
   let backgroundClass = "bg-white hover:bg-taikoLightBrown1";
   if (isPlaying) {
@@ -33,7 +34,7 @@ function Cell(props) {
   } else if (isStartingCell) {
     backgroundClass = "bg-taikoLightBrown2 hover:bg-taikoColor3";
   }
-  const borderClass = `border border-1 border-taikoColor1 border-y-0`;
+  const borderClass = `border border-1 border-taikoColor1 md:border-y-0`;
 
   // when we show fewer cells per line, help identify the start of every line
   // if (isFirstCellInLine && cellsPerLine % 2 === 1) {
